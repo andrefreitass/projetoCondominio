@@ -1,0 +1,27 @@
+<!--The content below is only a placeholder and can be replaced.-->
+<div class="ui-g">
+  <div class="ui-g-12 ui-g-nopad" style="position: fixed; width: 99.1%;">
+    <div class="ui-g-2" style="background: blueviolet;">Perfil</div>
+    <div class="ui-g-10" style="background: #006064;">
+      Topo
+    </div>
+  </div>
+
+  <div class="ui-g-12 ui-g-nopad" style="margin-top: 5%; position: inherit; height: 60%; width: 100%; padding-bottom: 25px;">
+
+    <div class="ui-g-2" style="background: #009688; border-right: groove;">
+      <p-panelMenu [model]="items" [style]="{'width':'100%'}"></p-panelMenu>
+    </div>
+
+    <div class="ui-g-10">
+      <p-card>
+        <router-outlet></router-outlet>
+      </p-card>
+    </div>
+
+  </div>
+
+  <div class="ui-g-12" style="background: #006064;bottom: 0; width: 99.1%; position: fixed;">
+    Rodape
+  </div>
+</div>

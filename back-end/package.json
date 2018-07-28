@@ -1,0 +1,21 @@
+{
+  "name": "condominio",
+  "version": "1.0.0",
+  "description": "back-end da aplicacao de gerenciamento de condominio",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon config/index.js"
+  },
+  "author": "Zends",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.4",
+    "express": "^4.16.3",
+    "mongoose": "^5.2.5",
+    "morgan": "^1.9.0",
+    "npm": "^6.2.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.3"
+  }
+}
