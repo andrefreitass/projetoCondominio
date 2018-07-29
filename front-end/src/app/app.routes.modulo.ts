@@ -1,8 +1,12 @@
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from '@angular/router';
 
+//Imports dos Components
+import { ListarComunicadoComponent } from "./comunicado/listar-comunicado/listar-comunicado.component";
+
 const appRoutes: Routes = [  
-   // { path: 'formulario-ata', component: FormularioAtaComponent },
+   { path: 'listar-comunicado', component: ListarComunicadoComponent },
+
     
 ];
 

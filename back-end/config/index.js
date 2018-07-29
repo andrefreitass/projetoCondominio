@@ -16,6 +16,9 @@ app.use(cors({origin: 'http://localhost:4200'}));
 
 // Routes
 app.use('/api/lazer', require('../routes/lazer.routes'));
+app.use('/api/comunicado', require('../routes/comunicado.routes'));
+app.use('/api/enquete', require('../routes/enquete.routes'));
+app.use('/api/pauta', require('../routes/pauta.routes'));
 
 
 // Iniciando o servidor 

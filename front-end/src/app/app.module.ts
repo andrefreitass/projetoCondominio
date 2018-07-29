@@ -6,12 +6,13 @@ import { FormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { AppRoutesModulo } from './app.routes.modulo';
 
+import { ComunicadoModule } from './comunicado/comunicado.module';
+
 //Imports PrimeNG
 import {AccordionModule} from 'primeng/accordion';     
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {MenuItem} from 'primeng/api';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PanelMenuModule } from 'primeng/panelmenu'; 
-import { CardModule } from 'primeng/card';                 
+import { CardModule } from 'primeng/card';
 
 
 @NgModule({
@@ -23,6 +24,7 @@ import { CardModule } from 'primeng/card';
     AppRoutesModulo,
     HttpClientModule,
     FormsModule,
+    ComunicadoModule,
     //Imports PrimeNG
     AccordionModule,
     BrowserModule,
@@ -32,6 +34,6 @@ import { CardModule } from 'primeng/card';
     
   ],
   providers: [],
-  bootstrap: [AppComponent,]
+  bootstrap: [AppComponent]
 })
 export class AppModule { }

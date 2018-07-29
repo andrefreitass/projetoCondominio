@@ -1,0 +1,84 @@
+<form (ngSubmit)="buscarListaComunicado()" #comunicadoForm="ngForm">
+    <p-messages [(value)]="msgs"></p-messages>
+    <p-fieldset legend="Dados Para Consultar  Comunicado">
+
+        <div class="ui-g-12 ui-md-4" class="left">
+            <h3>Data Inicio</h3>
+            <p-calendar [showIcon]="true" required name="dataInicio" [(ngModel)]="comunicado.dataInicio" tabindex="0" [disabledDates]="invalidDates"
+                [disabledDays]="[0,6]" readonlyInput="true" dateFormat="dd/mm/yy"></p-calendar>
+        </div>
+
+        <div class="ui-g-12 ui-md-4" class="center">
+            <h3>Data Fim</h3>
+            <p-calendar [showIcon]="true" required name="dataFim" [(ngModel)]="comunicado.dataFim" tabindex="0" [disabledDates]="invalidDates"
+                [disabledDays]="[0,6]" readonlyInput="true" dateFormat="dd/mm/yy"></p-calendar>
+        </div>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <div>
+            <button pButton type="submit" label="Consultar" style="float:left"></button>
+            <button pButton type="button" (click)="modalComunicado('formulario')" label="Adicionar Comunicado" style="float:right" class="ui-button-warning"></button>
+        </div>
+    </p-fieldset>
+</form>
+<br>
+<br>
+<!--Dados de Resposta-->
+
+<p-fieldset legend="Lista de Comunicado">
+    <p-table [value]="comunicadoService.listaComunicado">
+        <ng-template pTemplate="header">
+            <tr>
+                <th>Data</th>
+                <th>Titulo</th>
+                <th>Descrição</th>
+                <th>Pauta</th>
+                <th></th>
+            </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-comunicado>
+            <tr>
+                <td>{{ comunicado.data | date:'dd/MM/yyyy' }}</td>
+                <td>{{ comunicado.titulo }}</td>
+                <td>{{ comunicado.descricao }}</td>
+                <td>{{ comunicado.pauta }}</td>
+                <td>
+                    <button type="text" (click)="selecionarComunicado(comunicado); modalComunicado('detalhar');" pButton icon="pi pi-search"></button>
+                    <button type="text" (click)="selecionarComunicado(comunicado);modalComunicado('alterar')" pButton icon="pi pi-refresh"></button>
+                    <button type="text" (click)="recebeIdComunicado(comunicado._id);confirmaExclusaoComunicado()" pButton icon="pi pi-times"></button>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+
+ <!--
+    <div *ngIf="comunicadoService.listaComunicado.length==0">
+        Nenhum registro cadastrado
+    </div>
+
+   MODALS -->
+
+    <p-dialog header="Cadastro de Comunicado" [(visible)]="formularioComunicado" [modal]="true" [responsive]="true" [width]="500"
+        [minWidth]="600" [minY]="600" [baseZIndex]="10000">    
+        <formulario-comunicado></formulario-comunicado>    
+    </p-dialog>
+
+
+    <p-dialog header="Detalhar Comunicado" [(visible)]="detalharComunicado" [modal]="true" [responsive]="true" [width]="500"
+        [minWidth]="600" [minY]="600" [baseZIndex]="10000">
+            <detalhar-comunicado  [comunicado]="comunicado"></detalhar-comunicado>         
+    </p-dialog>
+
+
+    <p-dialog header="Alterar Comunicado" [(visible)]="alterarComunicado" [modal]="true" [responsive]="true" [width]="500" [minWidth]="600"
+        [minY]="600" [baseZIndex]="10000">        
+        <alterar-comunicado [comunicado]="comunicado"></alterar-comunicado>        
+    </p-dialog>
+
+    <p-confirmDialog header="Exclusão de Comunicado" icon="pi pi-exclamation-triangle" width="425"></p-confirmDialog>
