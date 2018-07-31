@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-//Imports da Funcionalidade de Comunicado
-import { ComunicadoService } from './comunicado.service';
-import { AlterarComunicadoComponent } from './alterar-comunicado/alterar-comunicado.component';
-import { DetalharComunicadoComponent } from './detalhar-comunicado/detalhar-comunicado.component';
-import { FormularioComunicadoComponent } from './formulario-comunicado/formulario-comunicado.component';
-import { ListarComunicadoComponent } from './listar-comunicado/listar-comunicado.component';
+//Imports da Funcionalidade de Pauta
+import { PautaService } from './pauta.service';
+import { AlterarPautaComponent } from './alterar-pauta/alterar-pauta.component';
+import { DetalharPautaComponent } from './detalhar-pauta/detalhar-pauta.component';
+import { FormularioPautaComponent } from './formulario-pauta/formulario-pauta.component';
+import { ListarPautaComponent } from './listar-pauta/listar-pauta.component';
 
 
 //Imports PRIMENG
@@ -48,22 +48,22 @@ import { InputMaskModule} from 'primeng/inputmask';
     ConfirmDialogModule    
   ],
   declarations: [
-    AlterarComunicadoComponent,
-    DetalharComunicadoComponent, 
-    FormularioComunicadoComponent, 
-    ListarComunicadoComponent
+    AlterarPautaComponent,
+    DetalharPautaComponent,
+    FormularioPautaComponent,
+    ListarPautaComponent   
   ],
   exports: [
-    AlterarComunicadoComponent,
-    DetalharComunicadoComponent, 
-    FormularioComunicadoComponent, 
-    ListarComunicadoComponent
+    AlterarPautaComponent,
+    DetalharPautaComponent,
+    FormularioPautaComponent,
+    ListarPautaComponent   
   ],
   providers: [
-    ComunicadoService,
+    PautaService,
     //Imports do PrimeNg
     MessageService,
     ConfirmationService
   ]
 })
-export class ComunicadoModule { }
+export class PautaModule { }

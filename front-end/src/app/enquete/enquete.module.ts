@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-//Imports da Funcionalidade de Comunicado
-import { ComunicadoService } from './comunicado.service';
-import { AlterarComunicadoComponent } from './alterar-comunicado/alterar-comunicado.component';
-import { DetalharComunicadoComponent } from './detalhar-comunicado/detalhar-comunicado.component';
-import { FormularioComunicadoComponent } from './formulario-comunicado/formulario-comunicado.component';
-import { ListarComunicadoComponent } from './listar-comunicado/listar-comunicado.component';
+//Imports da Funcionalidade de Enquete
+import { EnqueteService } from './enquete.service';
+import { AlterarEnqueteComponent } from './alterar-enquete/alterar-enquete.component';
+import { DetalharEnqueteComponent } from './detalhar-enquete/detalhar-enquete.component';
+import { FormularioEnqueteComponent } from './formulario-enquete/formulario-enquete.component';
+import { ListarEnqueteComponent } from './listar-enquete/listar-enquete.component';
 
 
 //Imports PRIMENG
@@ -48,22 +48,22 @@ import { InputMaskModule} from 'primeng/inputmask';
     ConfirmDialogModule    
   ],
   declarations: [
-    AlterarComunicadoComponent,
-    DetalharComunicadoComponent, 
-    FormularioComunicadoComponent, 
-    ListarComunicadoComponent
+    AlterarEnqueteComponent,
+    DetalharEnqueteComponent,
+    FormularioEnqueteComponent,
+    ListarEnqueteComponent   
   ],
   exports: [
-    AlterarComunicadoComponent,
-    DetalharComunicadoComponent, 
-    FormularioComunicadoComponent, 
-    ListarComunicadoComponent
+    AlterarEnqueteComponent,
+    DetalharEnqueteComponent,
+    FormularioEnqueteComponent,
+    ListarEnqueteComponent   
   ],
   providers: [
-    ComunicadoService,
+    EnqueteService,
     //Imports do PrimeNg
     MessageService,
     ConfirmationService
   ]
 })
-export class ComunicadoModule { }
+export class EnqueteModule { }
