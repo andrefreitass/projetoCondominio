@@ -8,12 +8,15 @@ import { AppRoutesModulo } from './app.routes.modulo';
 
 import { ComunicadoModule } from './comunicado/comunicado.module';
 import { LazerModule } from './lazer/lazer.module';
+import { PautaModule } from './pauta/pauta.module';
+import { EnqueteModule } from './enquete/enquete.module';
 
 //Imports PrimeNG
 import {AccordionModule} from 'primeng/accordion';     
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PanelMenuModule } from 'primeng/panelmenu'; 
 import { CardModule } from 'primeng/card';
+
 
 
 @NgModule({
@@ -27,6 +30,8 @@ import { CardModule } from 'primeng/card';
     FormsModule,
     ComunicadoModule,
     LazerModule,
+    EnqueteModule,
+    PautaModule,
     //Imports PrimeNG
     AccordionModule,
     BrowserModule,

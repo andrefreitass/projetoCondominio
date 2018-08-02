@@ -3,6 +3,8 @@ import { Routes, RouterModule } from '@angular/router';
 
 //Imports dos Components
 import { ListarComunicadoComponent } from "./comunicado/listar-comunicado/listar-comunicado.component";
+import { ListarEnqueteComponent } from "./enquete/listar-enquete/listar-enquete.component";
+import { ListarPautaComponent } from "./pauta/listar-pauta/listar-pauta.component";
 
 import { ListarLazerComponent } from "./lazer/listar-lazer/listar-lazer.component";
 import { FormularioLazerComponent } from "./lazer/formulario-lazer/formulario-lazer.component";
@@ -17,6 +19,8 @@ const appRoutes: Routes = [
    { path: 'alterar-lazer', component: AlterarLazerComponent },
    { path: 'detalhar-lazer', component: DetalharLazerComponent },
     
+   { path: 'listar-enquete', component: ListarEnqueteComponent },
+   { path: 'listar-pauta', component: ListarPautaComponent },    
 ];
 
 @NgModule({
