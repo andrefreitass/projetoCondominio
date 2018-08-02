@@ -18,9 +18,11 @@ const appRoutes: Routes = [
    { path: 'formulario-lazer', component: FormularioLazerComponent },
    { path: 'alterar-lazer', component: AlterarLazerComponent },
    { path: 'detalhar-lazer', component: DetalharLazerComponent },
-    
+
+   { path: 'listar-comunicado', component: ListarComunicadoComponent },
    { path: 'listar-enquete', component: ListarEnqueteComponent },
-   { path: 'listar-pauta', component: ListarPautaComponent },    
+   { path: 'listar-pauta', component: ListarPautaComponent },  
+    
 ];
 
 @NgModule({
