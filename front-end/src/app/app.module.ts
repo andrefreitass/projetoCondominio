@@ -7,6 +7,7 @@ import { AppComponent } from './app.component';
 import { AppRoutesModulo } from './app.routes.modulo';
 
 import { ComunicadoModule } from './comunicado/comunicado.module';
+import { LazerModule } from './lazer/lazer.module';
 
 //Imports PrimeNG
 import {AccordionModule} from 'primeng/accordion';     
@@ -25,6 +26,7 @@ import { CardModule } from 'primeng/card';
     HttpClientModule,
     FormsModule,
     ComunicadoModule,
+    LazerModule,
     //Imports PrimeNG
     AccordionModule,
     BrowserModule,

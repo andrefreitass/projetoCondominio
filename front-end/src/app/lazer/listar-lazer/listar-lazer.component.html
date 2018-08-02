@@ -1,0 +1,76 @@
+<form (ngSubmit)="getlazer()" #lazerForm="ngForm">
+  <p-messages [(value)]="msgs"></p-messages>
+  <p-fieldset legend="Dados Para Consultar Lazer">
+
+      <div class="ui-g-12 ui-md-4" class="left">
+          <h3>Data Inicio</h3>
+          <p-calendar [showIcon]="true" required name="dataInicio" [(ngModel)]="lazer.dataInicio" tabindex="0" [disabledDates]="invalidDates"
+              [disabledDays]="[0,6]" readonlyInput="true" dateFormat="dd/mm/yy"></p-calendar>
+      </div>
+
+      <div class="ui-g-12 ui-md-4" class="center">
+          <h3>Data Fim</h3>
+          <p-calendar [showIcon]="true" required name="dataFim" [(ngModel)]="lazer.dataFim" tabindex="0" [disabledDates]="invalidDates"
+              [disabledDays]="[0,6]" readonlyInput="true" dateFormat="dd/mm/yy"></p-calendar>
+      </div>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <div>
+          <button pButton type="submit" label="Consultar" style="float:left"></button>
+          <button pButton type="button" (click)="modalLazer('formulario')" label="Adicionar Lazer" style="float:right" class="ui-button-warning"></button>
+      </div>
+  </p-fieldset>
+</form>
+<br>
+<br>
+
+<!--Dados de Resposta-->
+
+<p-fieldset legend="Listar lazer">
+  <p-table [value]="lazerService.listaLazer">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Local</th>
+        <th>Data</th>
+        <th>Descricao</th>
+        <th>Operacoes</th>
+      </tr>
+    </ng-template>
+    
+    <ng-template pTemplate="body" let-lazer>
+        <tr>
+        <td>{{ lazer.local }}</td>
+        <td>{{ lazer.data  }}</td>  <!--| date:'dd/MM/yyyy' -->
+        <td>{{ lazer.descricao }}</td>
+        <td>
+          <button type="text" (click)="atualizarLazer(lazer);modalLazer('detalhar');" pButton icon="pi pi-search"></button>
+          <button type="text" (click)="atualizarLazer(lazer);modalLazer('alterar');" pButton icon="pi pi-refresh"></button>
+          <button type="text" (click)="excluirLazer(lazer._id, lazerForm)" pButton icon="pi pi-times"></button>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</p-fieldset>
+
+
+<!-- MODALS-->
+
+<p-dialog header="Cadastro de Lazer" [(visible)]="formularioLazer" [modal]="true" [responsive]="true" [width]="500" [minWidth]="600"
+  [minY]="600" [baseZIndex]="10000" [closeOnEscape]="false">
+  <formulario-lazer></formulario-lazer>
+</p-dialog>
+
+<p-dialog header="Alterar Lazer" [(visible)]="alterarLazer" [modal]="true" [responsive]="true" [width]="500" [minWidth]="600"
+  [minY]="600" [baseZIndex]="10000" [closeOnEscape]="false">
+  <alterar-lazer></alterar-lazer>
+</p-dialog>
+
+<p-dialog header="Detalhar Lazer" [(visible)]="detalharLazer" [modal]="true" [responsive]="true" [width]="500"
+        [minWidth]="600" [minY]="600" [baseZIndex]="10000">
+            <detalhar-lazer></detalhar-lazer>         
+    </p-dialog>

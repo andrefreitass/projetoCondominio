@@ -1,0 +1,31 @@
+<form #lazerForm="ngForm" (ngSubmit)="salvarLazer(lazerForm)">
+    <p-messages [(value)]="msgs"></p-messages>
+     <input type="hidden" name="_id"  [(ngModel)]="lazerService.selecionaLazer._id"> 
+    <div>
+        <h3>Local</h3>
+        <input id="float-input" type="text" class="form-control" [(ngModel)]="lazerService.selecionaLazer.local" name="local" size="30"
+            maxlength="40" pInputText>
+    </div>
+
+    <div>
+        <h3>Data</h3>
+        <input type="text" name="data" [(ngModel)]="lazerService.selecionaLazer.data" placeholder="Digite seu data">
+    </div>
+
+    <!-- <div>
+        <h3>Data</h3>
+        <p-calendar [showIcon]="true" name="data" required tabindex="0" [disabledDates]="invalidDates" [(ngModel)]="lazerService.selecionaLazer.data"
+            [disabledDays]="[0,6]" readonlyInput="true" dateFormat="dd/mm/yy"></p-calendar>
+    </div> -->
+
+    <div>
+        <h3>descricao</h3>
+        <textarea class="form-control" [(ngModel)]="lazerService.selecionaLazer.descricao" name="descricao" required [rows]="5" [cols]="30"
+            maxlength="350" pInputTextarea autoResize="autoResize"></textarea>
+    </div>
+
+    <div>
+            <button  pButton label="Salvar"></button>
+            <button  pButton label="Limpar" (click)="resetForm(lazerForm)"></button>
+        </div>
+</form>

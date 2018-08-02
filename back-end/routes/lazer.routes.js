@@ -1,12 +1,12 @@
 var express = require('express');
 var router = express.Router();
 
-var lazer = require('../controllers/lazer.controller');
+var lazerRouter = require('../controllers/lazer.controller');
 
-router.get('/', lazer.getArraylazer);
-router.post('/', lazer.createLazer);
-router.get('/:id', lazer.getLazer);
-router.put('/:id', lazer.editLazer);
-router.delete('/:id', lazer.deleteLazer);
+router.get('/', lazerRouter.getArraylazer);
+router.post('/', lazerRouter.createLazer);
+router.get('/:id', lazerRouter.getLazer);
+router.put('/:id', lazerRouter.editLazer);
+router.delete('/:id', lazerRouter.deleteLazer);
 
 module.exports = router;
