@@ -25,34 +25,15 @@ export class AlterarComunicadoComponent implements OnInit {
 
   ngOnInit() {    
   }
-/** 
-  atualizarComunicado(id) {
-    this.comunicadoService.atualizarComunicado(id) 
-      .subscribe(res => {        
-        this.aoSalvar.emit(true);
-      }, error => this.aoSalvar.emit(false))
-    ;    
-  }
-*/
-atualizarComunicado(form?) {    
-    if(form.value._id) {
-      this.comunicadoService.atualizarComunicado(form.value)      
-        .subscribe(res => {
-          this.aoSalvar.emit(true);
-          this.resetForm(form);
-          this.comunicadoService.getComunicado();          
-          console.log('atualizado com sucesso');
-        });
-    } 
-    
-  }
- 
-  resetForm(form?) {
-    if (form) {
-      form.reset();
-      this.comunicadoService.comunicado = new ComunicadoModels();      
-    }
-  }
 
+atualizarComunicado(comunicado) {   
+    if(comunicado) {      
+      this.comunicadoService.atualizarComunicado(comunicado)      
+        .subscribe(res => {
+          this.comunicadoService.getComunicado();
+          this.aoSalvar.emit(true);             
+        }, error => this.aoSalvar.emit(false));
+    }     
+  }
 
 }

@@ -28,7 +28,7 @@ export class ComunicadoService {
     return this.http.get(this.URL_API);
   }
 
-  atualizarComunicado(comunicado: ComunicadoModels) {    
+  atualizarComunicado(comunicado: ComunicadoModels) {
     return this.http.put(this.URL_API + `/${comunicado._id}`, comunicado);
   }
 

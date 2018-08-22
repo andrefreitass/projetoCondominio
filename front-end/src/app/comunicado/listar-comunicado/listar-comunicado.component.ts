@@ -78,15 +78,14 @@ export class ListarComunicadoComponent implements OnInit {
         this.mensagem('success', 'Sucesso:', 'Comunicado excluido com sucesso.');        
         this.buscarListaComunicado(); 
       },(error) => {
-        this.mensagem('error', 'Erro:', 'Nao foi possivel realizar o cadastro do comunicado');
-        console.log(error);
+        this.mensagem('error', 'Erro:', 'Nao foi possivel realizar a exclusao do comunicado');        
       }
     );
   }  
   
   confirmaExclusaoComunicado() {
     this.confirmationService.confirm({
-      message: 'Deseja excluir a Comunicado?',
+      message: 'Deseja excluir o Comunicado?',
       accept: () => {
         console.log(this.idComunicado);        
         this.excluirComunicado(this.idComunicado);

@@ -27,18 +27,18 @@ export class FormularioComunicadoComponent implements OnInit {
   }
 
 
-  salvarComunicado(form?) {    
-    this.comunicadoService.inserirComunicado(form.value)
+  salvarComunicado(comunicado) {    
+    this.comunicadoService.inserirComunicado(comunicado.value)
       .subscribe(res => {
         this.comunicadoService.getComunicado();
-        this.resetForm(form);
+        this.resetarFormulario(comunicado);
         this.aoSalvar.emit(true);
       }, error => this.aoSalvar.emit(false))
   }
 
-  resetForm(form?) {
-    if (form) {
-      form.reset();
+  resetarFormulario(comunicado) {
+    if (comunicado) {
+      comunicado.reset();
       this.comunicadoService.comunicado = new ComunicadoModels();
     }
   }
