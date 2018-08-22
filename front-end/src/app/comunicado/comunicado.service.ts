@@ -1,5 +1,8 @@
+import { environment } from '../../environments/environment';
+
 import { Injectable,Input } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { catchError, retry } from 'rxjs/operators';
 
 import { ComunicadoModels } from '../models/comunicado-models';
 
@@ -11,8 +14,7 @@ export class ComunicadoService {
   
   comunicado: ComunicadoModels;
   listaComunicado: ComunicadoModels [];
-
-  readonly URL_API = 'http://localhost:3000/api/comunicado';
+  readonly URL_API = `${environment.url_base}/comunicado`;
 
   constructor(private http: HttpClient) {    
     this.comunicado = new ComunicadoModels();
@@ -32,7 +34,10 @@ export class ComunicadoService {
 
   excluirComunicado(_id: string) {
     console.log(this.URL_API +`/${_id}`)
-      return this.http.delete(this.URL_API +`/${_id}`);    
+      return this.http.delete(this.URL_API +`/${_id}`);/**.pipe(
+        catchError((e: HttpErrorResponse) => throwError(`Error: ${e}`))
+      ); */
+
   }
   
 }

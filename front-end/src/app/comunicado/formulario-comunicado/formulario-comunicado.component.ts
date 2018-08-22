@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Message } from 'primeng/api';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
@@ -17,6 +17,8 @@ export class FormularioComunicadoComponent implements OnInit {
   
   msgs: Message[] = [];
 
+  @Output() aoSalvar: EventEmitter<boolean> = new EventEmitter<boolean>();
+
   constructor(private http: HttpClient, private router: Router, private messageService: MessageService,
     private comunicadoService: ComunicadoService) { }
 
@@ -25,16 +27,16 @@ export class FormularioComunicadoComponent implements OnInit {
   }
 
 
-  salvarComunicado(form?: NgForm) {
-    console.log(form.value);
+  salvarComunicado(form?) {    
     this.comunicadoService.inserirComunicado(form.value)
       .subscribe(res => {
         this.comunicadoService.getComunicado();
         this.resetForm(form);
-      })
+        this.aoSalvar.emit(true);
+      }, error => this.aoSalvar.emit(false))
   }
 
-  resetForm(form?: NgForm) {
+  resetForm(form?) {
     if (form) {
       form.reset();
       this.comunicadoService.comunicado = new ComunicadoModels();

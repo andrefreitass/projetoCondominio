@@ -1,9 +1,8 @@
 <form (ngSubmit)="atualizarComunicado(comunicado._id)" #comunicadoForm="ngForm">
-    <p-messages [(value)]="msgs"></p-messages>
-  
+    
     <div>
       <h3>Data</h3>
-      <p-calendar [showIcon]="true" [(ngModel)]="myDateObject" name="data" tabindex="0" [disabledDates]="invalidDates"
+      <p-calendar [showIcon]="true" [(ngModel)]="comunicado.data" name="data" tabindex="0" [disabledDates]="invalidDates"
         [disabledDays]="[0,6]" readonlyInput="true" dateFormat="dd/mm/yy"></p-calendar>
     </div>
   

@@ -1,12 +1,12 @@
 var express = require('express');
 var router = express.Router();
 
-var enqueteRouter = require('../controllers/enquete.controller');
+var enquete = require('../controllers/enquete.controller');
 
-router.get('/', enqueteRouter.getEnquete);
-router.get('/:id', enqueteRouter.buscaEnqueteId);
-router.post('/', enqueteRouter.inserirEnquete);
-router.put('/:id', enqueteRouter.atualizarEnquete);
-router.delete('/:id', enqueteRouter.excluirEnquete);
+router.get('/', enquete.getArrayEnquete);
+router.post('/', enquete.createEnquete);
+router.get('/:id', enquete.getEnquete);
+router.put('/:id', enquete.editEnquete);
+router.delete('/:id', enquete.deleteEnquete);
 
 module.exports = router;

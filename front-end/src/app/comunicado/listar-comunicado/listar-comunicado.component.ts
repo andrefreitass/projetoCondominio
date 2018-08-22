@@ -48,14 +48,22 @@ export class ListarComunicadoComponent implements OnInit {
       
   }
 
+  aoSalvarFormularioComunicado(event: boolean) {
+    this.formularioComunicado = false;
+    this.mensagem('success', 'Sucesso:', 'Cadastro de comunicado realizado com sucesso.');
+    this.buscarListaComunicado();
+  }
+
   recebeIdComunicado(idComunicado) {
     this.idComunicado = idComunicado;
   } 
 
+  converteDataComunicado = (r: any) => ({...r, data: new Date(r.data) });
+
   buscarListaComunicado() {    
     this.comunicadoService.getComunicado()
-    .subscribe(res => {      
-      this.comunicadoService.listaComunicado = res as ComunicadoModels[];
+    .subscribe((res:any) => {      
+      this.comunicadoService.listaComunicado = res.map(this.converteDataComunicado) as ComunicadoModels[];
     });
     console.log(this.comunicadoService.listaComunicado)
   }
@@ -64,13 +72,16 @@ export class ListarComunicadoComponent implements OnInit {
     this.comunicadoService.comunicado = comunicado;
   }
 
-  excluirComunicado(_id: string, form: NgForm){
-    if(confirm('Deseja excluir o comunicado?')){
+  excluirComunicado(_id: string) {
       this.comunicadoService.excluirComunicado(_id)
       .subscribe(res => {
-        this.buscarListaComunicado();
-      })
-    }
+        this.mensagem('success', 'Sucesso:', 'Comunicado excluido com sucesso.');        
+        this.buscarListaComunicado(); 
+      },(error) => {
+        this.mensagem('error', 'Erro:', 'Nao foi possivel realizar o cadastro do comunicado');
+        console.log(error);
+      }
+    );
   }  
   
   confirmaExclusaoComunicado() {
@@ -78,9 +89,14 @@ export class ListarComunicadoComponent implements OnInit {
       message: 'Deseja excluir a Comunicado?',
       accept: () => {
         console.log(this.idComunicado);        
-        this.comunicadoService.excluirComunicado(this.idComunicado);
+        this.excluirComunicado(this.idComunicado);
       }
     });
+  }
+
+  mensagem(tipoSeverity: string, titulo: string, txtMensagem: string) {
+    this.msgs = [];
+    this.msgs.push({ severity: tipoSeverity, summary: titulo, detail: txtMensagem });
   }
 
 }

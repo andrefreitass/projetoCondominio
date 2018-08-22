@@ -1,44 +1,40 @@
-var enqueteModels = require('../models/enquete.models')
+var Enquete = require('../models/enquete.models')
 var enqueteCrtl = {};
 
-enqueteCrtl.getEnquete = async (req, res) =>{
-    var listaEnquete = await enqueteModels.find();
-    res.json(listaEnquete);
+enqueteCrtl.getArrayEnquete = async (req, res) =>{
+    var arrayEnquete = await Enquete.find();
+    res.json(arrayEnquete);
 }
 
-enqueteCrtl.inserirEnquete = async (req, res) =>{
-    var enquete = new enqueteModels({
-        data: req.body.data,
-        titulo: req.body.titulo,
-        descricao: req.body.descricao,
-        pauta: req.body.pauta
+enqueteCrtl.createEnquete = async (req, res) =>{
+    var enquete = new Enquete({
+        local: req.body.local,
+        descricao: req.body.descricao        
     });
     await enquete.save();
     res.json({
-        'status': 'Enquete Criado com Sucesso'
+        'status': 'lazer salvo'
     });
 }
 
-enqueteCrtl.buscaEnqueteId = async (req, res) =>{
-    var enquete = await enqueteModels.findById(req.params.id);
+enqueteCrtl.getEnquete = async (req, res) =>{
+    var enquete = await Enquete.findById(req.params.id);
     res.json(enquete);
 }
 
-enqueteCrtl.atualizarEnquete = async (req, res) => {
+enqueteCrtl.editEnquete = async (req, res) => {
     var { id } = req.params;
     var enquete = {
-        data: req.body.data,
-        titulo: req.body.titulo,
-        descricao: req.body.descricao,
-        pauta: req.body.pauta
+        local: req.body.local,
+        descricao: req.body.descricao
     };
-    await enqueteModels.findByIdAndUpdate(id, {$set: enquete}, {new: true});
-    res.json({status: 'Enquete Atualizada com Sucesso'});
+    await Enquete.findByIdAndUpdate(id, {$set: enquete}, {new: true});
+    res.json({status: 'Lazer editado'});
 };
 
-enqueteCrtl.excluirEnquete = async (req, res) =>{
-    await enqueteModels.findByIdAndRemove(req.params.id);
-    res.json({status: 'Enquete Excluido com Sucesso'});
+enqueteCrtl.deleteEnquete = async (req, res) =>{
+    await Enquete.findByIdAndRemove(req.params.id);
+    res.json({status: 'Lazer excluido'});
 }
 
 module.exports = enqueteCrtl;
