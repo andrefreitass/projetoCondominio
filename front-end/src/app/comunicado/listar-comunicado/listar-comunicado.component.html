@@ -53,20 +53,12 @@
         </ng-template>
     </p-table>
 
-<!-- 
-    <div *ngIf="comunicadoService.listaComunicado.length==0">
+ 
+    <div *ngIf="comunicadoService?.listaComunicado?.length == 0">
         Nenhum registro cadastrado
     </div>
 
-   MODALS -->
-
-   <!--p-confirmDialog header="Confirmation" [(visible)]="formularioComunicado" icon="pi pi-exclamation-triangle" width="425" #cd>
-        <formulario-comunicado #comunicado-form (aoSalvar)="cd.accept($event)"></formulario-comunicado>
-    <p-footer>
-        <button type="button" pButton icon="pi pi-times" label="No" (click)="cd.reject()"></button>
-        <button type="button" pButton icon="pi pi-check" label="Yes" (click)="cd.accept()"></button>
-    </p-footer>
-</p-confirmDialog-->
+<!--   MODALS -->
 
     <p-dialog header="Cadastro de Comunicado" [(visible)]="formularioComunicado" [modal]="true" [responsive]="true" [width]="500"
         [minWidth]="600" [minY]="600" [baseZIndex]="10000">    
@@ -82,7 +74,7 @@
 
     <p-dialog header="Alterar Comunicado" [(visible)]="alterarComunicado" [modal]="true" [responsive]="true" [width]="500" [minWidth]="600"
         [minY]="600" [baseZIndex]="10000">        
-        <alterar-comunicado [comunicado]="comunicado" (aoSalvar)="aoSalvarFormularioComunicado($event)"></alterar-comunicado>        
+        <alterar-comunicado [comunicado]="comunicado" (aoAlterar)="aoAlterarComunicado($event)"></alterar-comunicado>        
     </p-dialog>
 
     <p-confirmDialog header="Exclusão de Comunicado" icon="pi pi-exclamation-triangle" width="425"></p-confirmDialog>

@@ -1,8 +1,7 @@
 import { environment } from '../../environments/environment';
 
-import { Injectable,Input } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { catchError, retry } from 'rxjs/operators';
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpParams } from '@angular/common/http';
 
 import { ComunicadoModels } from '../models/comunicado-models';
 
@@ -10,34 +9,33 @@ import { ComunicadoModels } from '../models/comunicado-models';
   providedIn: 'root'
 })
 
-export class ComunicadoService {
+export class ComunicadoService {  
   
-  comunicado: ComunicadoModels;
   listaComunicado: ComunicadoModels [];
   readonly URL_API = `${environment.url_base}/comunicado`;
 
-  constructor(private http: HttpClient) {    
-    this.comunicado = new ComunicadoModels();
+  constructor(private http: HttpClient) {        
    }
 
   inserirComunicado(comunicado: ComunicadoModels) {
     return this.http.post(this.URL_API, comunicado);
   }
 
-  getComunicado() {
-    return this.http.get(this.URL_API);
+  getComunicado(dataInicio: string, dataFim: string) {
+    const options = 
+    { params: new HttpParams()
+      .set('dataInicio', dataInicio)
+      .set('dataFim', dataFim) 
+    } ;
+    return this.http.get(this.URL_API, options);
   }
 
   atualizarComunicado(comunicado: ComunicadoModels) {
     return this.http.put(this.URL_API + `/${comunicado._id}`, comunicado);
   }
 
-  excluirComunicado(_id: string) {
-    console.log(this.URL_API +`/${_id}`)
-      return this.http.delete(this.URL_API +`/${_id}`);/**.pipe(
-        catchError((e: HttpErrorResponse) => throwError(`Error: ${e}`))
-      ); */
-
+  excluirComunicado(_id: string) {    
+      return this.http.delete(this.URL_API +`/${_id}`);
   }
   
 }

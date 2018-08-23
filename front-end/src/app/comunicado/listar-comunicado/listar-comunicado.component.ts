@@ -6,7 +6,6 @@ import { MessageService } from 'primeng/components/common/messageservice';
 
 import { ComunicadoService } from './../comunicado.service';
 import { ComunicadoModels } from '../../models/comunicado-models';
-import { NgForm } from '../../../../node_modules/@angular/forms';
 
 @Component({
   selector: 'listar-comunicado',
@@ -17,7 +16,7 @@ export class ListarComunicadoComponent implements OnInit {
 
 
   
-  comunicado = {};
+  comunicado = {dataInicio: new Date(), dataFim: new Date()};
   idComunicado: any;
   formularioComunicado: boolean = false;
   alterarComunicado: boolean = false;
@@ -33,10 +32,17 @@ export class ListarComunicadoComponent implements OnInit {
     this.buscarListaComunicado();    
   }
 
+  
+  recebeIdComunicado(idComunicado) {
+    this.idComunicado = idComunicado;
+  } 
+
+  converteDataComunicado = (r: any) => ({...r, data: new Date(r.data) });
+
   selecionarComunicado(comunicado) {
     this.comunicado = comunicado;
   }
-
+  
   modalComunicado(modal: string) {
     if (modal == "formulario"){
       this.formularioComunicado = true;
@@ -47,29 +53,33 @@ export class ListarComunicadoComponent implements OnInit {
     }
       
   }
+  aoAlterarComunicado(sucesso: boolean){
+    this.alterarComunicado = false;
+    this.mensagem('success', 'Sucesso:', 'Alteracao de comunicado realizado com sucesso.');
+    this.buscarListaComunicado();
+  }
 
-  aoSalvarFormularioComunicado(event: boolean) {
+  aoSalvarFormularioComunicado(sucesso: boolean) {
     this.formularioComunicado = false;
     this.mensagem('success', 'Sucesso:', 'Cadastro de comunicado realizado com sucesso.');
     this.buscarListaComunicado();
   }
 
-  recebeIdComunicado(idComunicado) {
-    this.idComunicado = idComunicado;
-  } 
-
-  converteDataComunicado = (r: any) => ({...r, data: new Date(r.data) });
-
   buscarListaComunicado() {    
-    this.comunicadoService.getComunicado()
+    this.comunicadoService.getComunicado(this.comunicado.dataInicio.toString(), this.comunicado.dataFim.toString())
     .subscribe((res:any) => {      
       this.comunicadoService.listaComunicado = res.map(this.converteDataComunicado) as ComunicadoModels[];
-    });
-    console.log(this.comunicadoService.listaComunicado)
+    });    
   }
 
-  atualizarComunicado(comunicado: ComunicadoModels){
-    this.comunicadoService.comunicado = comunicado;
+   
+  confirmaExclusaoComunicado() {
+    this.confirmationService.confirm({
+      message: 'Deseja excluir o Comunicado?',
+      accept: () => {        
+        this.excluirComunicado(this.idComunicado);
+      }
+    });
   }
 
   excluirComunicado(_id: string) {
@@ -81,17 +91,7 @@ export class ListarComunicadoComponent implements OnInit {
         this.mensagem('error', 'Erro:', 'Nao foi possivel realizar a exclusao do comunicado');        
       }
     );
-  }  
-  
-  confirmaExclusaoComunicado() {
-    this.confirmationService.confirm({
-      message: 'Deseja excluir o Comunicado?',
-      accept: () => {
-        console.log(this.idComunicado);        
-        this.excluirComunicado(this.idComunicado);
-      }
-    });
-  }
+  }   
 
   mensagem(tipoSeverity: string, titulo: string, txtMensagem: string) {
     this.msgs = [];

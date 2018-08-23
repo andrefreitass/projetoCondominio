@@ -14,7 +14,7 @@ import { ComunicadoModels } from '../../models/comunicado-models';
 export class AlterarComunicadoComponent implements OnInit {
 
   @Input() comunicado = {} as any;
-  @Output() aoSalvar: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Output() aoAlterar: EventEmitter<boolean> = new EventEmitter<boolean>();
   msgs: Message[] = [];
   
 
@@ -27,12 +27,11 @@ export class AlterarComunicadoComponent implements OnInit {
   }
 
 atualizarComunicado(comunicado) {   
-    if(comunicado) {      
+    if(comunicado) {          
       this.comunicadoService.atualizarComunicado(comunicado)      
-        .subscribe(res => {
-          this.comunicadoService.getComunicado();
-          this.aoSalvar.emit(true);             
-        }, error => this.aoSalvar.emit(false));
+        .subscribe(res => {          
+          this.aoAlterar.emit(true);             
+        }, error => this.aoAlterar.emit(false));
     }     
   }
 

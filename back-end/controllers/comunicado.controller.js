@@ -2,7 +2,15 @@ var comunicadoModels = require('../models/comunicado.models')
 var comunicadoCrtl = {};
 
 comunicadoCrtl.getComunicado = async (req, res) =>{
-    var listaComunicado = await comunicadoModels.find();
+
+    let {dataInicio, dataFim} = req.query;
+    let listaComunicado = await comunicadoModels.find({
+        data: {
+            $lte: dataFim,
+            $gte: dataInicio
+        }
+    });
+
     console.log(listaComunicado);
     res.json(listaComunicado);
 }
@@ -27,8 +35,7 @@ comunicadoCrtl.buscaComunicadoId = async (req, res) =>{
 
 comunicadoCrtl.atualizarComunicado = async (req, res) => {
     var { id } = req.params;
-    var comunicado = {
-        data: req.body.data,
+    var comunicado = {        
         data: req.body.data,
         titulo: req.body.titulo,
         descricao: req.body.descricao,

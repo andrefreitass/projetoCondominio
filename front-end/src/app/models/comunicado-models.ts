@@ -1,5 +1,5 @@
 export class ComunicadoModels {
-    constructor(_id = '', data = '',titulo = '' , descricao = '', pauta = '') {
+    constructor(_id = '', data = null ,titulo = '' , descricao = '', pauta = '') {
         this._id = _id;
         this.data = data;
         this.titulo = titulo;
@@ -8,7 +8,7 @@ export class ComunicadoModels {
     }
 
     _id: string;
-    data: string;
+    data: Date;
     titulo: string;
     descricao: string;
     pauta: string

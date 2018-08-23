@@ -1,40 +1,48 @@
-var Enquete = require('../models/enquete.models')
+var enqueteModels = require('../models/enquete.models')
 var enqueteCrtl = {};
 
-enqueteCrtl.getArrayEnquete = async (req, res) =>{
-    var arrayEnquete = await Enquete.find();
-    res.json(arrayEnquete);
+enqueteCrtl.getEnquete = async (req, res) =>{
+
+    let {dataInicio, dataFim} = req.query;
+    let listaEnquete = await enqueteModels.find({
+        data: {
+            $lte: dataFim,
+            $gte: dataInicio
+        }
+    });    
+    res.json(listaEnquete);
 }
 
-enqueteCrtl.createEnquete = async (req, res) =>{
-    var enquete = new Enquete({
-        local: req.body.local,
-        descricao: req.body.descricao        
+enqueteCrtl.inserirEnquete = async (req, res) =>{
+    var enquete = new enqueteModels({
+        data: req.body.data,
+        titulo: req.body.titulo,        
+        assuntos: req.body.assuntos
     });
     await enquete.save();
     res.json({
-        'status': 'lazer salvo'
+        'status': 'Enquete Criado com Sucesso'
     });
 }
 
-enqueteCrtl.getEnquete = async (req, res) =>{
-    var enquete = await Enquete.findById(req.params.id);
+enqueteCrtl.buscaEnqueteId = async (req, res) =>{
+    var enquete = await enqueteModels.findById(req.params.id);
     res.json(enquete);
 }
 
-enqueteCrtl.editEnquete = async (req, res) => {
+enqueteCrtl.atualizarEnquete = async (req, res) => {
     var { id } = req.params;
     var enquete = {
-        local: req.body.local,
-        descricao: req.body.descricao
+        data: req.body.data,        
+        titulo: req.body.titulo,        
+        assuntos: req.body.assuntos
     };
-    await Enquete.findByIdAndUpdate(id, {$set: enquete}, {new: true});
-    res.json({status: 'Lazer editado'});
+    await enqueteModels.findByIdAndUpdate(id, {$set: enquete}, {new: true});
+    res.json({status: 'Enquete Atualizado com Sucesso'});
 };
 
-enqueteCrtl.deleteEnquete = async (req, res) =>{
-    await Enquete.findByIdAndRemove(req.params.id);
-    res.json({status: 'Lazer excluido'});
-}
-
+enqueteCrtl.excluirEnquete = async (req, res) =>{    
+    await enqueteModels.findByIdAndRemove(req.params.id);
+    res.json({status: 'Enquete Excluido com Sucesso'});
+    }
 module.exports = enqueteCrtl;

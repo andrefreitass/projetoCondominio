@@ -5,7 +5,6 @@ import { Router } from '@angular/router';
 import { MessageService } from 'primeng/components/common/messageservice';
 
 import { ComunicadoService } from './../comunicado.service';
-import { NgForm } from '../../../../node_modules/@angular/forms';
 import { ComunicadoModels } from '../../models/comunicado-models';
 
 @Component({
@@ -19,18 +18,19 @@ export class FormularioComunicadoComponent implements OnInit {
 
   @Output() aoSalvar: EventEmitter<boolean> = new EventEmitter<boolean>();
 
+  comunicado: ComunicadoModels;
+
   constructor(private http: HttpClient, private router: Router, private messageService: MessageService,
     private comunicadoService: ComunicadoService) { }
 
-  ngOnInit() {
-    this.comunicadoService.getComunicado();
+  ngOnInit() {   
+    this.comunicado = new ComunicadoModels();
   }
 
 
   salvarComunicado(comunicado) {    
     this.comunicadoService.inserirComunicado(comunicado.value)
-      .subscribe(res => {
-        this.comunicadoService.getComunicado();
+      .subscribe(res => {        
         this.resetarFormulario(comunicado);
         this.aoSalvar.emit(true);
       }, error => this.aoSalvar.emit(false))
@@ -39,7 +39,7 @@ export class FormularioComunicadoComponent implements OnInit {
   resetarFormulario(comunicado) {
     if (comunicado) {
       comunicado.reset();
-      this.comunicadoService.comunicado = new ComunicadoModels();
+      this.comunicado = new ComunicadoModels();
     }
   }
 
