@@ -1,3 +1,21 @@
-<p>
-  detalhar-pauta works!
-</p>
+<form #pautaForm="ngForm">
+
+    <div>
+      <h3>Data</h3>
+      <p-calendar [showIcon]="true" [(ngModel)]="pauta.data" name="data" required tabindex="0" [disabled]="true" [disabledDates]="invalidDates"
+        [disabledDays]="[0,6]" readonlyInput="true" dateFormat="dd/mm/yy"></p-calendar>
+    </div>
+  
+  
+    <div>
+      <h3>Local</h3>
+      <input id="local" type="text" class="form-control" [(ngModel)]="pauta.local" [disabled]="true" name="local" maxlength="40" size="60">
+    </div>
+  
+    <div>
+      <h3>Assuntos</h3>
+      <textarea class="form-control" [(ngModel)]="pauta.assuntos" name="assuntos" required [disabled]="true" [rows]="5"
+        [cols]="60" maxlength="350" pInputTextarea autoResize="autoResize"></textarea>
+    </div>
+
+  </form>

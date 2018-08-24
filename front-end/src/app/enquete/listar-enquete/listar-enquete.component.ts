@@ -11,7 +11,9 @@ import { EnqueteModels } from '../../models/enquete-models';
   styleUrls: ['./listar-enquete.component.css']
 })
 export class ListarEnqueteComponent implements OnInit {
-  enquete = {dataInicio: new Date(), dataFim: new Date()};
+  
+  filtroEnquete = {dataInicio: new Date(), dataFim: new Date()};
+  enquete = {};
   idEnquete: any;
   formularioEnquete: boolean = false;
   alterarEnquete: boolean = false;
@@ -32,12 +34,12 @@ export class ListarEnqueteComponent implements OnInit {
     this.idEnquete = idEnquete;
   } 
 
-  converteData = (r: any) => ({...r, data: new Date(r.data) });
-
   selecionarEnquete(enquete) {
     this.enquete = enquete;
   }
-  
+
+  converteData = (r: any) => ({...r, data: new Date(r.data) });
+
   modalEnquete(modal: string) {
     if (modal == "formulario"){
       this.formularioEnquete = true;
@@ -45,13 +47,14 @@ export class ListarEnqueteComponent implements OnInit {
       this.alterarEnquete = true;
     } else if (modal == "detalhar"){
       this.detalharEnquete = true;
-    }
-      
+    }      
   }
-  aoAlterarEnquete(sucesso: boolean){
-    this.alterarEnquete = false;
-    this.mensagem('success', 'Sucesso:', 'Alteracao de enquete realizado com sucesso.');
-    this.buscarListaEnquete();
+
+  buscarListaEnquete() {    
+    this.enqueteService.getEnquete(this.filtroEnquete.dataInicio.toString(), this.filtroEnquete.dataFim.toString())
+    .subscribe((res:any) => {      
+      this.enqueteService.listaEnquete = res.map(this.converteData) as EnqueteModels[];
+    });    
   }
 
   aoSalvarFormularioEnquete(sucesso: boolean) {
@@ -60,14 +63,23 @@ export class ListarEnqueteComponent implements OnInit {
     this.buscarListaEnquete();
   }
 
-  buscarListaEnquete() {    
-    this.enqueteService.getEnquete(this.enquete.dataInicio.toString(), this.enquete.dataFim.toString())
-    .subscribe((res:any) => {      
-      this.enqueteService.listaEnquete = res.map(this.converteData) as EnqueteModels[];
-    });    
+  aoAlterarEnquete(sucesso: boolean){
+    this.alterarEnquete = false;
+    this.mensagem('success', 'Sucesso:', 'Alteracao de enquete realizado com sucesso.');
+    this.buscarListaEnquete();
   }
 
-   
+  excluirEnquete(_id: string) {
+    this.enqueteService.excluirEnquete(_id)
+    .subscribe(res => {
+      this.mensagem('success', 'Sucesso:', 'Enquete excluida com sucesso.');        
+      this.buscarListaEnquete(); 
+    },(error) => {
+      this.mensagem('error', 'Erro:', 'Nao foi possivel realizar a exclusao da enquete');        
+    }
+  );
+}   
+
   confirmaExclusaoEnquete() {
     this.confirmationService.confirm({
       message: 'Deseja excluir a Enquete?',
@@ -76,18 +88,7 @@ export class ListarEnqueteComponent implements OnInit {
       }
     });
   }
-
-  excluirEnquete(_id: string) {
-      this.enqueteService.excluirEnquete(_id)
-      .subscribe(res => {
-        this.mensagem('success', 'Sucesso:', 'Enquete excluida com sucesso.');        
-        this.buscarListaEnquete(); 
-      },(error) => {
-        this.mensagem('error', 'Erro:', 'Nao foi possivel realizar a exclusao da enquete');        
-      }
-    );
-  }   
-
+  
   mensagem(tipoSeverity: string, titulo: string, txtMensagem: string) {
     this.msgs = [];
     this.msgs.push({ severity: tipoSeverity, summary: titulo, detail: txtMensagem });

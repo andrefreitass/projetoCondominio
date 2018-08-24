@@ -4,13 +4,13 @@
 
         <div class="ui-g-12 ui-md-2" class="left">
             <h3>Data Inicio</h3>
-            <p-calendar [showIcon]="true" required name="dataInicio" [(ngModel)]="enquete.dataInicio" tabindex="0" [disabledDates]="invalidDates"
+            <p-calendar [showIcon]="true" required name="dataInicio" [(ngModel)]="filtroEnquete.dataInicio" tabindex="0" [disabledDates]="invalidDates"
                 [disabledDays]="[0,6]" readonlyInput="true" dateFormat="dd/mm/yy"></p-calendar>
         </div>
 
         <div class="ui-g-12 ui-md-2" class="center">
             <h3>Data Fim</h3>
-            <p-calendar [showIcon]="true" required name="dataFim" [(ngModel)]="enquete.dataFim" tabindex="0" [disabledDates]="invalidDates"
+            <p-calendar [showIcon]="true" required name="dataFim" [(ngModel)]="filtroEnquete.dataFim" tabindex="0" [disabledDates]="invalidDates"
                 [disabledDays]="[0,6]" readonlyInput="true" dateFormat="dd/mm/yy"></p-calendar>
         </div>
 
@@ -63,12 +63,12 @@
 <formulario-enquete (aoSalvar)="aoSalvarFormularioEnquete($event)"></formulario-enquete>    
 </p-dialog>
 
-<!--
+
  <p-dialog header="Detalhar Enquete" [(visible)]="detalharEnquete" [modal]="true" [responsive]="true" [width]="500"
  [minWidth]="600" [minY]="600" [baseZIndex]="10000">
      <detalhar-enquete  [enquete]="enquete"></detalhar-enquete>         
 </p-dialog>
--->
+
 
 <p-dialog header="Alterar Enquete" [(visible)]="alterarEnquete" [modal]="true" [responsive]="true" [width]="500" [minWidth]="600"
 [minY]="600" [baseZIndex]="10000">        

@@ -17,17 +17,17 @@ export class ComunicadoService {
   constructor(private http: HttpClient) {        
    }
 
-  inserirComunicado(comunicado: ComunicadoModels) {
-    return this.http.post(this.URL_API, comunicado);
-  }
-
-  getComunicado(dataInicio: string, dataFim: string) {
+   getComunicado(dataInicio: string, dataFim: string) {
     const options = 
     { params: new HttpParams()
       .set('dataInicio', dataInicio)
       .set('dataFim', dataFim) 
     } ;
     return this.http.get(this.URL_API, options);
+  }
+
+  inserirComunicado(comunicado: ComunicadoModels) {
+    return this.http.post(this.URL_API, comunicado);
   }
 
   atualizarComunicado(comunicado: ComunicadoModels) {

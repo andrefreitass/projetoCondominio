@@ -17,8 +17,7 @@ export class AlterarEnqueteComponent implements OnInit {
   msgs: Message[] = [];
   
   constructor(private http: HttpClient, private router: Router, private route: ActivatedRoute,
-    private enqueteService: EnqueteService) {
-            
+    private enqueteService: EnqueteService) {            
      }
 
   ngOnInit() {    

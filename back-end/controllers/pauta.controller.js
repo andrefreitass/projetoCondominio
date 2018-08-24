@@ -2,16 +2,21 @@ var pautaModels = require('../models/pauta.models')
 var pautaCrtl = {};
 
 pautaCrtl.getPauta = async (req, res) =>{
-    var listaPauta = await pautaModels.find();
-    res.json(listaPauta);
+   let {dataInicio, dataFim} = req.query;
+   let listaPauta = await pautaModels.find({
+       data:{
+           $lte:dataFim,
+           $gte: dataInicio
+       }
+   });
+   res.json(listaPauta);
 }
 
 pautaCrtl.inserirPauta = async (req, res) =>{
     var pauta = new pautaModels({
+        local: req.body.local,
         data: req.body.data,
-        titulo: req.body.titulo,
-        descricao: req.body.descricao,
-        pauta: req.body.pauta
+        assuntos: req.body.assuntos        
     });
     await pauta.save();
     res.json({
@@ -27,11 +32,9 @@ pautaCrtl.buscaPautaId = async (req, res) =>{
 pautaCrtl.atualizarPauta = async (req, res) => {
     var { id } = req.params;
     var pauta = {
-        data: req.body.data,
-        data: req.body.data,
-        titulo: req.body.titulo,
-        descricao: req.body.descricao,
-        pauta: req.body.pauta
+        local: req.body.local,
+        data: req.body.data,        
+        assuntos: req.body.assuntos
     };
     await pautaModels.findByIdAndUpdate(id, {$set: pauta}, {new: true});
     res.json({status: 'Pauta Atualizada com Sucesso'});

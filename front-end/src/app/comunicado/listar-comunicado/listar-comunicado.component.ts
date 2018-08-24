@@ -13,10 +13,9 @@ import { ComunicadoModels } from '../../models/comunicado-models';
   styleUrls: ['./listar-comunicado.component.css']
 })
 export class ListarComunicadoComponent implements OnInit {
-
-
   
-  comunicado = {dataInicio: new Date(), dataFim: new Date()};
+  filtroComunicado = {dataInicio: new Date(), dataFim: new Date()};
+  comunicado = {};  
   idComunicado: any;
   formularioComunicado: boolean = false;
   alterarComunicado: boolean = false;
@@ -24,25 +23,22 @@ export class ListarComunicadoComponent implements OnInit {
   msgs: Message[] = [];
 
   constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient,
-    private messageService: MessageService, private confirmationService: ConfirmationService,
-    private comunicadoService: ComunicadoService) { }
-
+    private confirmationService: ConfirmationService,private comunicadoService: ComunicadoService) { }
 
   ngOnInit() {
     this.buscarListaComunicado();    
   }
-
   
   recebeIdComunicado(idComunicado) {
     this.idComunicado = idComunicado;
   } 
 
-  converteDataComunicado = (r: any) => ({...r, data: new Date(r.data) });
-
   selecionarComunicado(comunicado) {
     this.comunicado = comunicado;
   }
-  
+
+  converteDataComunicado = (r: any) => ({...r, data: new Date(r.data) });
+
   modalComunicado(modal: string) {
     if (modal == "formulario"){
       this.formularioComunicado = true;
@@ -50,13 +46,14 @@ export class ListarComunicadoComponent implements OnInit {
       this.alterarComunicado = true;
     } else if (modal == "detalhar"){
       this.detalharComunicado = true;
-    }
-      
+    }      
   }
-  aoAlterarComunicado(sucesso: boolean){
-    this.alterarComunicado = false;
-    this.mensagem('success', 'Sucesso:', 'Alteracao de comunicado realizado com sucesso.');
-    this.buscarListaComunicado();
+
+  buscarListaComunicado() {    
+    this.comunicadoService.getComunicado(this.filtroComunicado.dataInicio.toString(), this.filtroComunicado.dataFim.toString())
+    .subscribe((res:any) => {      
+      this.comunicadoService.listaComunicado = res.map(this.converteDataComunicado) as ComunicadoModels[];
+    });    
   }
 
   aoSalvarFormularioComunicado(sucesso: boolean) {
@@ -65,13 +62,22 @@ export class ListarComunicadoComponent implements OnInit {
     this.buscarListaComunicado();
   }
 
-  buscarListaComunicado() {    
-    this.comunicadoService.getComunicado(this.comunicado.dataInicio.toString(), this.comunicado.dataFim.toString())
-    .subscribe((res:any) => {      
-      this.comunicadoService.listaComunicado = res.map(this.converteDataComunicado) as ComunicadoModels[];
-    });    
+  aoAlterarComunicado(sucesso: boolean){
+    this.alterarComunicado = false;
+    this.mensagem('success', 'Sucesso:', 'Alteracao de comunicado realizado com sucesso.');
+    this.buscarListaComunicado();
   }
 
+  excluirComunicado(_id: string) {
+    this.comunicadoService.excluirComunicado(_id)
+    .subscribe(res => {
+      this.mensagem('success', 'Sucesso:', 'Comunicado excluido com sucesso.');        
+      this.buscarListaComunicado(); 
+    },(error) => {
+      this.mensagem('error', 'Erro:', 'Nao foi possivel realizar a exclusao do comunicado');        
+    }
+  );
+}   
    
   confirmaExclusaoComunicado() {
     this.confirmationService.confirm({
@@ -81,21 +87,9 @@ export class ListarComunicadoComponent implements OnInit {
       }
     });
   }
-
-  excluirComunicado(_id: string) {
-      this.comunicadoService.excluirComunicado(_id)
-      .subscribe(res => {
-        this.mensagem('success', 'Sucesso:', 'Comunicado excluido com sucesso.');        
-        this.buscarListaComunicado(); 
-      },(error) => {
-        this.mensagem('error', 'Erro:', 'Nao foi possivel realizar a exclusao do comunicado');        
-      }
-    );
-  }   
-
+  
   mensagem(tipoSeverity: string, titulo: string, txtMensagem: string) {
     this.msgs = [];
     this.msgs.push({ severity: tipoSeverity, summary: titulo, detail: txtMensagem });
   }
-
 }

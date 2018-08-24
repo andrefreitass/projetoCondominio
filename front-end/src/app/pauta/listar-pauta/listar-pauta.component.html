@@ -1,3 +1,78 @@
-<p>
-  listar-pauta works!
-</p>
+<form (ngSubmit)="buscarListaPauta()" #enqueteForm="ngForm">
+    <p-messages [(value)]="msgs"></p-messages>
+    <p-fieldset legend="Dados Para Consultar Pauta">
+
+        <div class="ui-g-12 ui-md-2" class="left">
+            <h3>Data Inicio</h3>
+            <p-calendar [showIcon]="true" required name="dataInicio" [(ngModel)]="filtroPauta.dataInicio" tabindex="0" [disabledDates]="invalidDates"
+                [disabledDays]="[0,6]" readonlyInput="true" dateFormat="dd/mm/yy"></p-calendar>
+        </div>
+
+        <div class="ui-g-12 ui-md-2" class="center">
+            <h3>Data Fim</h3>
+            <p-calendar [showIcon]="true" required name="dataFim" [(ngModel)]="filtroPauta.dataFim" tabindex="0" [disabledDates]="invalidDates"
+                [disabledDays]="[0,6]" readonlyInput="true" dateFormat="dd/mm/yy"></p-calendar>
+        </div>
+
+        <br>
+        
+        <div>
+            <button pButton type="submit" label="Consultar" style="float:left"></button>
+            <button pButton type="button" (click)="modalPauta('formulario')" label="Adicionar Pauta" style="float:right" class="ui-button-warning"></button>
+        </div>
+    </p-fieldset>
+</form>
+<br>
+<br>
+<!--Dados de Resposta-->
+
+<p-fieldset legend="Lista de Pauta">
+    <p-table [value]="pautaService.listaPauta">
+        <ng-template pTemplate="header">
+            <tr>
+                <th>Data</th>
+                <th>Local</th>                
+                <th>Assuntos</th>
+                <th></th>
+            </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-pauta>
+            <tr>
+                <td>{{ pauta.data | date:'dd/MM/yyyy' }}</td>
+                <td>{{ pauta.local }}</td>
+                <td>{{ pauta.assuntos }}</td>                
+                <td>
+                    <button type="text" (click)="selecionarPauta(pauta); modalPauta('detalhar');" pButton icon="pi pi-search"></button>
+                    <button type="text" (click)="selecionarPauta(pauta);modalPauta('alterar')" pButton icon="pi pi-refresh"></button>
+                    <button type="text" (click)="recebeIdPauta(pauta._id);confirmaExclusaoPauta()" pButton icon="pi pi-times"></button>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+
+ 
+    <div *ngIf="pautaService?.listaPauta?.length == 0">
+        Nenhum registro cadastrado
+    </div>
+
+<!--   MODALS -->
+
+<p-dialog header="Cadastro de Pauta" [(visible)]="formularioPauta" [modal]="true" [responsive]="true" [width]="500"
+[minWidth]="600" [minY]="600" [baseZIndex]="10000">    
+<formulario-pauta (aoSalvar)="aoSalvarFormularioPauta($event)"></formulario-pauta>    
+</p-dialog>
+
+
+ <p-dialog header="Detalhar Pauta" [(visible)]="detalharPauta" [modal]="true" [responsive]="true" [width]="500"
+ [minWidth]="600" [minY]="600" [baseZIndex]="10000">
+     <detalhar-pauta  [pauta]="pauta"></detalhar-pauta>         
+</p-dialog>
+
+
+<p-dialog header="Alterar Pauta" [(visible)]="alterarPauta" [modal]="true" [responsive]="true" [width]="500" [minWidth]="600"
+[minY]="600" [baseZIndex]="10000">        
+<alterar-pauta [pauta]="pauta" (aoAlterar)="aoAlterarPauta($event)"></alterar-pauta>        
+</p-dialog>
+
+<p-confirmDialog header="Exclusão de Pauta" icon="pi pi-exclamation-triangle" width="425"></p-confirmDialog>

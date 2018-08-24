@@ -4,7 +4,7 @@ import { Message, MessageService } from '../../../../node_modules/primeng/api';
 import { EnqueteModels } from '../../models/enquete-models';
 import { HttpClient } from '../../../../node_modules/@angular/common/http';
 import { Router } from '../../../../node_modules/@angular/router';
-import { ComunicadoService } from '../../comunicado/comunicado.service';
+
 
 @Component({
   selector: 'formulario-enquete',
@@ -26,9 +26,7 @@ export class FormularioEnqueteComponent implements OnInit {
     this.enquete = new EnqueteModels();
   }
 
-
-  salvarEnquete(enquete) {
-    console.log(enquete)    
+  salvarEnquete(enquete) {      
     this.enqueteService.inserirEnquete(enquete.value)
       .subscribe(res => {        
         this.resetarFormulario(enquete);
