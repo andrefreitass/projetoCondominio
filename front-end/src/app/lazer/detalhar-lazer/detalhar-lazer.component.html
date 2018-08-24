@@ -1,26 +1,27 @@
-<form #lazerForm="ngForm" (ngSubmit)="salvarLazer(lazerForm)">
-    <p-messages [(value)]="msgs"></p-messages>
-     <input type="hidden" name="_id"  [(ngModel)]="lazerService.selecionaLazer._id"> 
-    <div>
-        <h3>Local</h3>
-        <input id="float-input" type="text" class="form-control" [(ngModel)]="lazerService.selecionaLazer.local" name="local" size="30"
-            maxlength="40" pInputText>
-    </div>
+<form #lazerForm="ngForm">
 
     <div>
-        <h3>Data</h3>
-        <input type="text" name="data" [(ngModel)]="lazerService.selecionaLazer.data" placeholder="Digite seu data">
+      <h3>Data</h3>
+      <p-calendar [showIcon]="true" [(ngModel)]="lazer.data" name="data" required tabindex="0" [disabled]="true" [disabledDates]="invalidDates"
+        [disabledDays]="[0,6]" readonlyInput="true" dateFormat="dd/mm/yy"></p-calendar>
     </div>
-
-    <!-- <div>
-        <h3>Data</h3>
-        <p-calendar [showIcon]="true" name="data" required tabindex="0" [disabledDates]="invalidDates" [(ngModel)]="lazerService.selecionaLazer.data"
-            [disabledDays]="[0,6]" readonlyInput="true" dateFormat="dd/mm/yy"></p-calendar>
-    </div> -->
-
+  
+  
     <div>
-        <h3>descricao</h3>
-        <textarea class="form-control" [(ngModel)]="lazerService.selecionaLazer.descricao" name="descricao" required [rows]="5" [cols]="30"
-            maxlength="350" pInputTextarea autoResize="autoResize"></textarea>
+      <h3>Local</h3>
+      <input id="local" type="text" class="form-control" [(ngModel)]="lazer.local" [disabled]="true" name="local" maxlength="40" size="60">
     </div>
-</form>
+  
+    <div>
+      <h3>Descrição</h3>
+      <textarea class="form-control" [(ngModel)]="lazer.descricao" name="Descricao" required [disabled]="true" [rows]="5"
+        [cols]="60" maxlength="350" pInputTextarea autoResize="autoResize"></textarea>
+    </div>
+  
+    <div>
+      <h3>Pauta</h3>
+      <textarea class="form-control" [(ngModel)]="lazer.pauta" name="pauta" required [disabled]="true" [rows]="5" [cols]="60"
+        maxlength="350" pInputTextarea autoResize="autoResize"></textarea>
+    </div>
+    
+  </form>

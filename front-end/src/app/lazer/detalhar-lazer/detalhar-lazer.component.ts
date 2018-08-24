@@ -1,5 +1,4 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { NgForm } from '@angular/forms';
 
 import { LazerService } from '../lazer.service';
 import { HttpClient } from '@angular/common/http';
@@ -12,9 +11,9 @@ import { MessageService } from 'primeng/api';
   styleUrls: ['./detalhar-lazer.component.css']
 })
 export class DetalharLazerComponent implements OnInit {
+  @Input() lazer;
   
-  constructor(private lazerService: LazerService, private http: HttpClient, private router: Router, private route: ActivatedRoute,
-    private messageService: MessageService) { }
+  constructor() { }
 
   ngOnInit() {
   }

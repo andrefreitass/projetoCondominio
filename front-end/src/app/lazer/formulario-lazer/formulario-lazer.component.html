@@ -1,29 +1,28 @@
 <form #lazerForm="ngForm" (ngSubmit)="salvarLazer(lazerForm)">
-    <!-- <input type="hidden" name="_id"  [(ngModel)]="lazerService.selecionaLazer._id"> -->
-    <div>
-        <h3>Local</h3>
-        <input type="text" name="local"  [(ngModel)]="lazerService.selecionaLazer.local" placeholder="Digite seu local">
-    </div>
 
     <div>
-        <h3>Data</h3>
-        <input type="text" name="data" [(ngModel)]="lazerService.selecionaLazer.data" placeholder="Digite seu data">
+      <h3>Data</h3>
+      <p-calendar [showIcon]="true"  name="data" #name="ngModel" 
+      required tabindex="0" [disabledDates]="invalidDates" [(ngModel)]="lazer.data"
+        [disabledDays]="[0,6]" readonlyInput="true" dateFormat="dd/mm/yy"></p-calendar>
     </div>
-
-    <!-- <div>
-        <h3>Data</h3>
-        <p-calendar [showIcon]="true" name="data" required tabindex="0" [disabledDates]="invalidDates" [(ngModel)]="lazerService.selecionaLazer.data"
-            [disabledDays]="[0,6]" readonlyInput="true" dateFormat="dd/mm/yy"></p-calendar>
-    </div> -->
-
+  
     <div>
-        <h3>Descricao</h3>
-        <input type="text" name="descricao" [(ngModel)]="lazerService.selecionaLazer.descricao" placeholder="Digite seu descricao">
+      <h3>Local</h3>
+      <input id="local" type="text" class="form-control" name="local" #name="ngModel"
+       [(ngModel)]="lazer.local" required  minlength="5"
+        maxlength="40" size="60">
     </div>
-
+  
     <div>
-        <button  pButton label="Salvar"></button>
-        <button  pButton label="Limpar" (click)="resetForm(lazerForm)"></button>
+      <h3>Descrição</h3>
+      <textarea class="form-control" name="descricao" #name="ngModel"
+      [(ngModel)]="lazer.descricao"
+         required [rows]="5" [cols]="60" maxlength="350"
+        pInputTextarea autoResize="autoResize"></textarea>
     </div>
-
-</form>
+  
+    <div class="form-group">
+      <button type="submit" pButton label="Salvar"></button>    
+    </div>
+  </form>

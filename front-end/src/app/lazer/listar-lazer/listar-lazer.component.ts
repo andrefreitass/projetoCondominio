@@ -1,13 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { Message, ConfirmationService } from 'primeng/api';
+import { Router, ActivatedRoute } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
+import { MessageService } from 'primeng/components/common/messageservice';
 
 // Meus imports
 import { LazerService } from '../lazer.service';
-import { LazerModel } from './../../models/lazer-model';
+import { LazerModels } from './../../models/lazer-models';
 
 // Imports primeng 
-import { MessageService } from 'primeng/components/common/messageservice';
-import { Message, ConfirmationService } from 'primeng/api';
+
 
 @Component({
   selector: 'listar-lazer',
@@ -16,57 +18,86 @@ import { Message, ConfirmationService } from 'primeng/api';
 })
 export class ListarLazerComponent implements OnInit {
 
-  lazer = {};
+  lazer = {dataInicio: new Date(), dataFim: new Date()};
+  idLazer: any;
   formularioLazer: boolean = false;
   alterarLazer: boolean = false;
   detalharLazer: boolean = false;
   msgs: Message[] = [];
 
-  constructor(private lazerService: LazerService) { }
+  constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient,
+    private messageService: MessageService, private confirmationService: ConfirmationService,
+    private lazerService: LazerService) { }
+
 
   ngOnInit() {
-    this.buscarListaLazer();
+    this.buscarListaLazer();    
   }
 
+  
+  recebeIdLazer(idLazer) {
+    this.idLazer = idLazer;
+  } 
+
+  converteDataLazer = (r: any) => ({...r, data: new Date(r.data) });
+
+  selecionarLazer(lazer) {
+    this.lazer = lazer;
+  }
+  
   modalLazer(modal: string) {
-    if (modal == "formulario") {
+    if (modal == "formulario"){
       this.formularioLazer = true;
     } else if (modal == "alterar") {
       this.alterarLazer = true;
-    } else if (modal == "detalhar") {
+    } else if (modal == "detalhar"){
       this.detalharLazer = true;
     }
-
+      
+  }
+  aoAlterarLazer(sucesso: boolean){
+    this.alterarLazer = false;
+    this.mensagem('success', 'Sucesso:', 'Alteracao de lazer realizado com sucesso.');
+    this.buscarListaLazer();
   }
 
-  buscarListaLazer() {
-    this.lazerService.getlazer()
-      .subscribe(res => {
-        this.lazerService.listaLazer = res as LazerModel[];
-      });
+  aoSalvarFormularioLazer(sucesso: boolean) {
+    this.formularioLazer = false;
+    this.mensagem('success', 'Sucesso:', 'Cadastro de lazer realizado com sucesso.');
+    this.buscarListaLazer();
   }
 
-
-  atualizarLazer(lazer: LazerModel) {
-    this.lazerService.selecionaLazer = lazer;
+  buscarListaLazer() {    
+    this.lazerService.getLazer(this.lazer.dataInicio.toString(), this.lazer.dataFim.toString())
+    .subscribe((res:any) => {      
+      this.lazerService.listaLazer = res.map(this.converteDataLazer) as LazerModels[];
+    });    
   }
 
-  excluirLazer(_id: string, form: NgForm) {
-    if (confirm('Deseja excluir o lazer?')) {
+   
+  confirmaExclusaoLazer() {
+    this.confirmationService.confirm({
+      message: 'Deseja excluir o Lazer?',
+      accept: () => {        
+        this.excluirLazer(this.idLazer);
+      }
+    });
+  }
+
+  excluirLazer(_id: string) {
       this.lazerService.excluirLazer(_id)
-        .subscribe(res => {
-          this.buscarListaLazer();
-          // this.resetForm(form);
-        });
-    }
+      .subscribe(res => {
+        this.mensagem('success', 'Sucesso:', 'Lazer excluido com sucesso.');        
+        this.buscarListaLazer(); 
+      },(error) => {
+        this.mensagem('error', 'Erro:', 'Nao foi possivel realizar a exclusao do lazer');        
+      }
+    );
+  }   
+
+  mensagem(tipoSeverity: string, titulo: string, txtMensagem: string) {
+    this.msgs = [];
+    this.msgs.push({ severity: tipoSeverity, summary: titulo, detail: txtMensagem });
   }
-
-  // resetForm(form?: NgForm) {
-  //   if (form) {
-  //     form.reset();
-  //     this.lazerService.selecionaLazer= new Lazer();
-  //   }
-  // }
-
 
 }

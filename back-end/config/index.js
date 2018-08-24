@@ -19,6 +19,8 @@ app.use('/api/lazer', require('../routes/lazer.routes'));
 app.use('/api/comunicado', require('../routes/comunicado.routes'));
 app.use('/api/enquete', require('../routes/enquete.routes'));
 app.use('/api/pauta', require('../routes/pauta.routes'));
+app.use('/api/multa', require('../routes/multa.routes'));
+app.use('/api/advertencia', require('../routes/advertencia.routes'));
 
 
 // Iniciando o servidor 

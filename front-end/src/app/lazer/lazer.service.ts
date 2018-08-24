@@ -1,37 +1,42 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 
-import { LazerModel } from './../models/lazer-model';
+import { LazerModels } from './../models/lazer-models';
 import { ListarLazerComponent } from '../lazer/listar-lazer/listar-lazer.component'
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LazerService {
 
-  selecionaLazer: LazerModel;
-  listaLazer: LazerModel[];
+  listaLazer: LazerModels[];
 
-  readonly URL_API = 'http://localhost:3000/api/lazer';
+  readonly URL_API = `${environment.url_base}/lazer`;
 
   constructor(private http: HttpClient) {
-    this.selecionaLazer = new LazerModel();
   }
 
-  //post
-  InserirLazer(lazer: LazerModel) {
-    return this.http.post(this.URL_API, lazer);
-    //get 
-  }
-  getlazer() {
-    return this.http.get(this.URL_API);
-  }
-  //put 
-  atualizarLazer(lazer: LazerModel) {
+//get 
+getLazer(dataInicio: string, dataFim: string) {
+  const options =
+    {
+      params: new HttpParams()
+        .set('dataInicio', dataInicio)
+        .set('dataFim', dataFim)
+    };
+  return this.http.get(this.URL_API, options);
+}
+//post
+InserirLazer(lazer: LazerModels) {
+  return this.http.post(this.URL_API, lazer);
+}
+//put 
+atualizarLazer(lazer: LazerModels) {
     return this.http.put(this.URL_API + `/${lazer._id}`, lazer);
   }
-  //delete
-  excluirLazer(_id: string) {
+//delete
+excluirLazer(_id: string) {
     return this.http.delete(this.URL_API + `/${_id}`);
   }
 }

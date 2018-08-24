@@ -3,38 +3,36 @@ import { Message } from 'primeng/api';
 import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 
-import { LazerService } from '../lazer.service';
-import { LazerModels } from './../../models/lazer-models';
-
-
+import { AdvertenciaService } from './../advertencia.service';
+import { AdvertenciaModels } from '../../models/advertencia-models';
 
 @Component({
-  selector: 'alterar-lazer',
-  templateUrl: './alterar-lazer.component.html',
-  styleUrls: ['./alterar-lazer.component.css']
+  selector: 'alterar-advertencia',
+  templateUrl: './alterar-advertencia.component.html',
+  styleUrls: ['./alterar-advertencia.component.css']
 })
-export class AlterarLazerComponent implements OnInit {
+export class AlterarAdvertenciaComponent implements OnInit {
 
-  @Input() lazer = {} as any;
+  @Input() advertencia = {} as any;
   @Output() aoAlterar: EventEmitter<boolean> = new EventEmitter<boolean>();
   msgs: Message[] = [];
   
 
   constructor(private http: HttpClient, private router: Router, private route: ActivatedRoute,
-    private lazerService: LazerService) {
+    private advertenciaService: AdvertenciaService) {
             
      }
 
   ngOnInit() {    
   }
 
-atualizarLazer(lazer) {   
-    if(lazer) {          
-      this.lazerService.atualizarLazer(lazer)      
+atualizarAdvertencia(advertencia) {   
+    if(advertencia) {          
+      this.advertenciaService.atualizarAdvertencia(advertencia)      
         .subscribe(res => {          
           this.aoAlterar.emit(true);             
         }, error => this.aoAlterar.emit(false));
     }     
   }
 
-  }
+}

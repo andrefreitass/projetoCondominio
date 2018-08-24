@@ -10,12 +10,15 @@ import { ComunicadoModule } from './comunicado/comunicado.module';
 import { LazerModule } from './lazer/lazer.module';
 import { PautaModule } from './pauta/pauta.module';
 import { EnqueteModule } from './enquete/enquete.module';
+import { AdvertenciaModule } from './advertencia/advertencia.module';
+import { MultaModule } from './multa/multa.module'
 
 //Imports PrimeNG
 import {AccordionModule} from 'primeng/accordion';     
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PanelMenuModule } from 'primeng/panelmenu'; 
 import { CardModule } from 'primeng/card';
+
 
 
 
@@ -32,6 +35,8 @@ import { CardModule } from 'primeng/card';
     LazerModule,
     EnqueteModule,
     PautaModule,
+    AdvertenciaModule,
+    MultaModule,
     //Imports PrimeNG
     AccordionModule,
     BrowserModule,

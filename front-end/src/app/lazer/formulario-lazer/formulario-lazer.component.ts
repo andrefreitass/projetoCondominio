@@ -1,8 +1,11 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Message } from 'primeng/api';
+import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
+import { MessageService } from 'primeng/components/common/messageservice';
 
 import { LazerService } from '../lazer.service';
-import { LazerModel } from '../../models/lazer-model';
+import { LazerModels } from '../../models/lazer-models';
 
 
 @Component({
@@ -12,31 +15,33 @@ import { LazerModel } from '../../models/lazer-model';
 })
 export class FormularioLazerComponent implements OnInit {
 
- 
-  constructor(private lazerService: LazerService) { }
+  msgs: Message[] = [];
 
-  ngOnInit() {
-    this.lazerService.getlazer();
+  @Output() aoSalvar: EventEmitter<boolean> = new EventEmitter<boolean>();
+
+  lazer: LazerModels;
+
+  constructor(private http: HttpClient, private router: Router, private messageService: MessageService,
+    private lazerService: LazerService) { }
+
+  ngOnInit() {   
+    this.lazer = new LazerModels();
   }
 
 
-  salvarLazer(form?: NgForm) {
-    console.log(form.value);
-      this.lazerService.InserirLazer(form.value)
-      .subscribe(res => {
-        this.lazerService.getlazer();
-        this.resetForm(form);
-      });
-
-    
+  salvarLazer(lazer) {    
+    this.lazerService.InserirLazer(lazer.value)
+      .subscribe(res => {        
+        this.resetarFormulario(lazer);
+        this.aoSalvar.emit(true);
+      }, error => this.aoSalvar.emit(false))
   }
 
-  resetForm(form?: NgForm) {
-    if (form) {
-      form.reset();
-      this.lazerService.selecionaLazer= new LazerModel();
+  resetarFormulario(lazer) {
+    if (lazer) {
+      lazer.reset();
+      this.lazer = new LazerModels();
     }
   }
-
 
 }
