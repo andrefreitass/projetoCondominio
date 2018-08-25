@@ -1,3 +1,27 @@
-<p>
-  detalhar-multa works!
-</p>
+<form #multaForm="ngForm">
+
+  <div>
+    <h3>Data</h3>
+    <p-calendar [showIcon]="true" [(ngModel)]="multa.data" name="data" required tabindex="0" [disabled]="true" [disabledDates]="invalidDates"
+      [disabledDays]="[0,6]" readonlyInput="true" dateFormat="dd/mm/yy"></p-calendar>
+  </div>
+
+
+  <div>
+    <h3>Motivo</h3>
+    <input id="motivo" type="text" class="form-control" [(ngModel)]="multa.motivo" [disabled]="true" name="motivo" maxlength="40" size="60">
+  </div>
+
+  <div>
+    <h3>Descrição</h3>
+    <textarea class="form-control" [(ngModel)]="multa.descricao" name="Descricao" required [disabled]="true" [rows]="5"
+      [cols]="60" maxlength="350" pInputTextarea autoResize="autoResize"></textarea>
+  </div>
+
+  <div>
+    <h3>Valores</h3>
+    <input id="valores" type="text" class="form-control" [(ngModel)]="multa.valores" [disabled]="true" name="valores" maxlength="40" size="60">
+  </div>
+
+  
+</form>

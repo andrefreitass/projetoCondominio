@@ -3,10 +3,8 @@ import { Message } from 'primeng/api';
 import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 
-import { LazerService } from '../lazer.service';
-import { LazerModels } from './../../models/lazer-models';
-
-
+import { LazerService } from './../lazer.service';
+import { LazerModels } from '../../models/lazer-models';
 
 @Component({
   selector: 'alterar-lazer',
@@ -37,4 +35,4 @@ atualizarLazer(lazer) {
     }     
   }
 
-  }
+}

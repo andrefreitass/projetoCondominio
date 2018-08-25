@@ -7,6 +7,7 @@ import { ListarEnqueteComponent } from "./enquete/listar-enquete/listar-enquete.
 import { ListarPautaComponent } from "./pauta/listar-pauta/listar-pauta.component";
 import { ListarLazerComponent } from "./lazer/listar-lazer/listar-lazer.component";
 import { ListarAdvertenciaComponent } from './advertencia/listar-advertencia/listar-advertencia.component';
+import { ListarMultaComponent } from './multa/listar-multa/listar-multa.component';
 
 
 
@@ -14,6 +15,7 @@ const appRoutes: Routes = [
   
    { path: 'listar-lazer', component: ListarLazerComponent },
    { path: 'listar-advertencia', component: ListarAdvertenciaComponent },
+   { path: 'listar-multa', component: ListarMultaComponent },
    { path: 'listar-comunicado', component: ListarComunicadoComponent },
    { path: 'listar-enquete', component: ListarEnqueteComponent },
    { path: 'listar-pauta', component: ListarPautaComponent },  

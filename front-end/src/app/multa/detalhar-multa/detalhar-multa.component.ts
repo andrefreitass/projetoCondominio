@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'detalhar-multa',
@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./detalhar-multa.component.css']
 })
 export class DetalharMultaComponent implements OnInit {
-
+  @Input() multa;
   constructor() { }
 
   ngOnInit() {

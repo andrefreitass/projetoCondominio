@@ -1,78 +1,78 @@
 <form (ngSubmit)="buscarListaLazer()" #lazerForm="ngForm">
-  <p-messages [(value)]="msgs"></p-messages>
-  <p-fieldset legend="Dados Para Consultar  Lazer">
+    <p-messages [(value)]="msgs"></p-messages>
+    <p-fieldset legend="Dados Para Consultar  Lazer">
 
-      <div class="ui-g-12 ui-md-2" class="left">
-          <h3>Data Inicio</h3>
-          <p-calendar [showIcon]="true" required name="dataInicio" [(ngModel)]="lazer.dataInicio" tabindex="0" [disabledDates]="invalidDates"
-              [disabledDays]="[0,6]" readonlyInput="true" dateFormat="dd/mm/yy"></p-calendar>
-      </div>
+        <div class="ui-g-12 ui-md-2" class="left">
+            <h3>Data Inicio</h3>
+            <p-calendar [showIcon]="true" required name="dataInicio" [(ngModel)]="filtroLazer.dataInicio" tabindex="0" [disabledDates]="invalidDates"
+                [disabledDays]="[0,6]" readonlyInput="true" dateFormat="dd/mm/yy"></p-calendar>
+        </div>
 
-      <div class="ui-g-12 ui-md-2" class="center">
-          <h3>Data Fim</h3>
-          <p-calendar [showIcon]="true" required name="dataFim" [(ngModel)]="lazer.dataFim" tabindex="0" [disabledDates]="invalidDates"
-              [disabledDays]="[0,6]" readonlyInput="true" dateFormat="dd/mm/yy"></p-calendar>
-      </div>
+        <div class="ui-g-12 ui-md-2" class="center">
+            <h3>Data Fim</h3>
+            <p-calendar [showIcon]="true" required name="dataFim" [(ngModel)]="filtroLazer.dataFim" tabindex="0" [disabledDates]="invalidDates"
+                [disabledDays]="[0,6]" readonlyInput="true" dateFormat="dd/mm/yy"></p-calendar>
+        </div>
 
-      <br>
-      
-      <div>
-          <button pButton type="submit" label="Consultar" style="float:left"></button>
-          <button pButton type="button" (click)="modalLazer('formulario')" label="Adicionar Lazer" style="float:right" class="ui-button-warning"></button>
-      </div>
-  </p-fieldset>
+        <br>
+        
+        <div>
+            <button pButton type="submit" label="Consultar" style="float:left"></button>
+            <button pButton type="button" (click)="modalLazer('formulario')" label="Adicionar Lazer" style="float:right" class="ui-button-warning"></button>
+        </div>
+    </p-fieldset>
 </form>
 <br>
 <br>
 <!--Dados de Resposta-->
 
 <p-fieldset legend="Lista de Lazer">
-  <p-table [value]="lazerService.listaLazer">
-      <ng-template pTemplate="header">
-          <tr>
-              <th>Data</th>
-              <th>Local</th>
-              <th>Descrição</th>
-              <th></th>
-          </tr>
-      </ng-template>
+    <p-table [value]="lazerService.listaLazer">
+        <ng-template pTemplate="header">
+            <tr>
+                <th>Data</th>
+                <th>Local</th>
+                <th>Descrição</th>
+                <th></th>
+            </tr>
+        </ng-template>
 
-      <ng-template pTemplate="body" let-lazer>
-          <tr>
-              <td>{{ lazer.data | date:'dd/MM/yyyy' }}</td>
-              <td>{{ lazer.local }}</td>
-              <td>{{ lazer.descricao }}</td>
-              <td>
-                  <button type="text" (click)="selecionarLazer(lazer); modalLazer('detalhar');" pButton icon="pi pi-search"></button>
-                  <button type="text" (click)="selecionarLazer(lazer);modalLazer('alterar')" pButton icon="pi pi-refresh"></button>
-                  <button type="text" (click)="recebeIdLazer(lazer._id);confirmaExclusaoLazer()" pButton icon="pi pi-times"></button>
-              </td>
-          </tr>
-      </ng-template>
-  </p-table>
+        <ng-template pTemplate="body" let-lazer>
+            <tr>
+                <td>{{ lazer.data | date:'dd/MM/yyyy' }}</td>
+                <td>{{ lazer.local }}</td>
+                <td>{{ lazer.descricao }}</td>
+                <td>
+                    <button type="text" (click)="selecionarLazer(lazer); modalLazer('detalhar');" pButton icon="pi pi-search"></button>
+                    <button type="text" (click)="selecionarLazer(lazer);modalLazer('alterar')" pButton icon="pi pi-refresh"></button>
+                    <button type="text" (click)="recebeIdLazer(lazer._id);confirmaExclusaoLazer()" pButton icon="pi pi-times"></button>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
 
-
-  <div *ngIf="lazerService?.listaLazer?.length == 0">
-      Nenhum registro cadastrado
-  </div>
+ 
+    <div *ngIf="lazerService?.listaLazer?.length == 0">
+        Nenhum registro cadastrado
+    </div>
 
 <!--   MODALS -->
 
-  <p-dialog header="Cadastro de Lazer" [(visible)]="formularioLazer" [modal]="true" [responsive]="true" [width]="500"
-      [minWidth]="600" [minY]="600" [baseZIndex]="10000">    
-      <formulario-lazer (aoSalvar)="aoSalvarFormularioLazer($event)"></formulario-lazer>    
-  </p-dialog>
+    <p-dialog header="Cadastro de Lazer" [(visible)]="formularioLazer" [modal]="true" [responsive]="true" [width]="500"
+        [minWidth]="600" [minY]="600" [baseZIndex]="10000">    
+        <formulario-lazer (aoSalvar)="aoSalvarFormularioLazer($event)"></formulario-lazer>    
+    </p-dialog>
 
 
-  <p-dialog header="Detalhar Lazer" [(visible)]="detalharLazer" [modal]="true" [responsive]="true" [width]="500"
-      [minWidth]="600" [minY]="600" [baseZIndex]="10000">
-          <detalhar-lazer  [lazer]="lazer"></detalhar-lazer>         
-  </p-dialog>
+    <p-dialog header="Detalhar Lazer" [(visible)]="detalharLazer" [modal]="true" [responsive]="true" [width]="500"
+        [minWidth]="600" [minY]="600" [baseZIndex]="10000">
+            <detalhar-lazer  [lazer]="lazer"></detalhar-lazer>         
+    </p-dialog>
 
 
-  <p-dialog header="Alterar Lazer" [(visible)]="alterarLazer" [modal]="true" [responsive]="true" [width]="500" [minWidth]="600"
-      [minY]="600" [baseZIndex]="10000">        
-      <alterar-lazer [lazer]="lazer" (aoAlterar)="aoAlterarLazer($event)"></alterar-lazer>        
-  </p-dialog>
+    <p-dialog header="Alterar Lazer" [(visible)]="alterarLazer" [modal]="true" [responsive]="true" [width]="500" [minWidth]="600"
+        [minY]="600" [baseZIndex]="10000">        
+        <alterar-lazer [lazer]="lazer" (aoAlterar)="aoAlterarLazer($event)"></alterar-lazer>        
+    </p-dialog>
 
-  <p-confirmDialog header="Exclusão de Lazer" icon="pi pi-exclamation-triangle" width="425"></p-confirmDialog>
+    <p-confirmDialog header="Exclusão de Lazer" icon="pi pi-exclamation-triangle" width="425"></p-confirmDialog>
