@@ -57,15 +57,26 @@ export class ListarComunicadoComponent implements OnInit {
   }
 
   aoSalvarFormularioComunicado(sucesso: boolean) {
+    if(sucesso == true){    
     this.formularioComunicado = false;
     this.mensagem('success', 'Sucesso:', 'Cadastro de comunicado realizado com sucesso.');
     this.buscarListaComunicado();
+  }else{
+      this.formularioComunicado = false;
+      this.mensagem('error', 'Erro:', 'Erro ao cadastrar o comunicado.');
+    }
   }
 
   aoAlterarComunicado(sucesso: boolean){
+    if(sucesso == true){
     this.alterarComunicado = false;
     this.mensagem('success', 'Sucesso:', 'Alteracao de comunicado realizado com sucesso.');
     this.buscarListaComunicado();
+    } else {
+      this.alterarComunicado = false;
+      this.mensagem('error', 'Erro:', 'Erro ao alterar o comunicado.');
+    }
+    
   }
 
   excluirComunicado(_id: string) {
