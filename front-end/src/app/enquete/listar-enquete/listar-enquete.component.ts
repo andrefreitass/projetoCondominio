@@ -58,16 +58,27 @@ export class ListarEnqueteComponent implements OnInit {
   }
 
   aoSalvarFormularioEnquete(sucesso: boolean) {
-    this.formularioEnquete = false;
-    this.mensagem('success', 'Sucesso:', 'Cadastro de enquete realizado com sucesso.');
-    this.buscarListaEnquete();
+    if(sucesso == true){
+      this.formularioEnquete = false;
+      this.mensagem('success', 'Sucesso:', 'Cadastro de enquete realizado com sucesso.');
+      this.buscarListaEnquete();
+    } else {
+      this.formularioEnquete = false;
+      this.mensagem('error', 'Erro:', 'Nao foi possivel realizar o cadastro da enquete.');
+    }
+    
   }
 
   aoAlterarEnquete(sucesso: boolean){
-    this.alterarEnquete = false;
-    this.mensagem('success', 'Sucesso:', 'Alteracao de enquete realizado com sucesso.');
-    this.buscarListaEnquete();
+    if(sucesso == true){
+      this.alterarEnquete = false;
+      this.mensagem('success', 'Sucesso:', 'Alteracao de enquete realizado com sucesso.');
+      this.buscarListaEnquete();
+  } else {
+    this.formularioEnquete = false;
+    this.mensagem('error', 'Erro:', 'Nao foi possivel realizar a alteracao da enquete.');
   }
+}
 
   excluirEnquete(_id: string) {
     this.enqueteService.excluirEnquete(_id)

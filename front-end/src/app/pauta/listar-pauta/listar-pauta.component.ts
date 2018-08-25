@@ -56,15 +56,26 @@ export class ListarPautaComponent implements OnInit {
   }
 
   aoSalvarFormularioPauta(sucesso: boolean) {
-    this.formularioPauta = false;
-    this.mensagem('success', 'Sucesso:', 'Cadastro de pauta realizado com sucesso.');
-    this.buscarListaPauta();
+    if(sucesso == true){
+      this.formularioPauta = false;
+      this.mensagem('success', 'Sucesso:', 'Cadastro de pauta realizado com sucesso.');
+      this.buscarListaPauta();
+    } else {
+      this.formularioPauta = false;
+      this.mensagem('error', 'Erro:', 'Nao foi possivel realizar o cadastro da pauta.');
+    }    
   }
 
   aoAlterarPauta(sucesso: boolean){
-    this.alterarPauta = false;
-    this.mensagem('success', 'Sucesso:', 'Alteracao de pauto realizado com sucesso.');
-    this.buscarListaPauta();
+    if(sucesso == true){
+      this.alterarPauta = false;
+      this.mensagem('success', 'Sucesso:', 'Alteracao de pauto realizado com sucesso.');
+      this.buscarListaPauta();
+    } else {
+      this.formularioPauta = false;
+      this.mensagem('error', 'Erro:', 'Nao foi possivel realizar a alteracao da pauta.');
+    }
+
   }
 
   excluirPauta(_id: string) {
