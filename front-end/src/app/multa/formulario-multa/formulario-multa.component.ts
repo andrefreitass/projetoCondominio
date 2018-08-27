@@ -1,11 +1,15 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { Message } from 'primeng/api';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { MessageService } from 'primeng/components/common/messageservice';
 
+// Meus imports
 import { MultaService } from './../multa.service';
 import { MultaModels } from '../../models/multa-models';
+
+// Imports do primeng
+import { MessageService } from 'primeng/components/common/messageservice';
+import { Message } from 'primeng/api';
+
 
 @Component({
   selector: 'formulario-multa',

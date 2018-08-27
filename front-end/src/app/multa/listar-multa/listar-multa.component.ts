@@ -1,11 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { Message, ConfirmationService } from 'primeng/api';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { MessageService } from 'primeng/components/common/messageservice';
 
+// Meus imports
 import { MultaService } from './../multa.service';
 import { MultaModels } from '../../models/multa-models';
+
+// Imports do primeng
+import { MessageService } from 'primeng/components/common/messageservice';
+import { Message, ConfirmationService } from 'primeng/api';
+
 
 @Component({
   selector: 'listar-multa',
@@ -57,16 +61,27 @@ export class ListarMultaComponent implements OnInit {
   }
 
   aoSalvarFormularioMulta(sucesso: boolean) {
-    this.formularioMulta = false;
-    this.mensagem('success', 'Sucesso:', 'Cadastro de multa realizado com sucesso.');
-    this.buscarListaMulta();
+    if(sucesso == true){
+      this.formularioMulta = false;
+      this.mensagem('success', 'Sucesso:', 'Cadastro de multa realizado com sucesso.');
+      this.buscarListaMulta();
+    } else {
+      this.formularioMulta = false;
+      this.mensagem('error', 'Erro:', 'Nao foi possivel realizar o cadastro da multa.');
+    }
+    
   }
 
   aoAlterarMulta(sucesso: boolean){
-    this.alterarMulta = false;
-    this.mensagem('success', 'Sucesso:', 'Alteracao de multa realizado com sucesso.');
-    this.buscarListaMulta();
+    if(sucesso == true){
+      this.alterarMulta = false;
+      this.mensagem('success', 'Sucesso:', 'Alteracao de multa realizado com sucesso.');
+      this.buscarListaMulta();
+  } else {
+    this.formularioMulta = false;
+    this.mensagem('error', 'Erro:', 'Nao foi possivel realizar a alteracao da multa.');
   }
+}
 
   excluirMulta(_id: string) {
     this.multaService.excluirMulta(_id)

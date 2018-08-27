@@ -26,6 +26,7 @@ import { MessageService } from 'primeng/components/common/messageservice';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService } from 'primeng/api';
 import { InputMaskModule} from 'primeng/inputmask';
+import { GrowlModule } from 'primeng/primeng';
 
 
 @NgModule({
@@ -45,7 +46,8 @@ import { InputMaskModule} from 'primeng/inputmask';
     MessagesModule,
     MessageModule,
     InputMaskModule,    
-    ConfirmDialogModule    
+    ConfirmDialogModule,
+    GrowlModule    
   ],
   declarations: [
     AlterarMultaComponent,

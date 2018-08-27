@@ -60,16 +60,26 @@ export class ListarLazerComponent implements OnInit {
   }
 
   aoSalvarFormularioLazer(sucesso: boolean) {
-    this.formularioLazer = false;
-    this.mensagem('success', 'Sucesso:', 'Cadastro de lazer realizado com sucesso.');
-    this.buscarListaLazer();
+    if(sucesso == true){
+      this.formularioLazer = false;
+      this.mensagem('success', 'Sucesso:', 'Cadastro de lazer realizado com sucesso.');
+      this.buscarListaLazer();
+    } else {
+      this.formularioLazer = false;
+      this.mensagem('error', 'Erro:', 'Nao foi possivel realizar o cadastro da lazer.');
+    }
   }
 
   aoAlterarLazer(sucesso: boolean){
-    this.alterarLazer = false;
-    this.mensagem('success', 'Sucesso:', 'Alteracao de lazer realizado com sucesso.');
-    this.buscarListaLazer();
+    if(sucesso == true){
+      this.alterarLazer = false;
+      this.mensagem('success', 'Sucesso:', 'Alteracao de lazer realizado com sucesso.');
+      this.buscarListaLazer();
+  } else {
+    this.formularioLazer = false;
+    this.mensagem('error', 'Erro:', 'Nao foi possivel realizar a alteracao da lazer.');
   }
+}
 
   excluirLazer(_id: string) {
     this.lazerService.excluirLazer(_id)

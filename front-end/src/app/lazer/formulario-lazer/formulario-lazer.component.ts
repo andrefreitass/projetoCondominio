@@ -1,12 +1,14 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { Message } from 'primeng/api';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { MessageService } from 'primeng/components/common/messageservice';
 
+//Meus imports
 import { LazerService } from '../lazer.service';
 import { LazerModels } from '../../models/lazer-models';
 
+//Imports
+import { MessageService } from 'primeng/components/common/messageservice';
+import { Message } from 'primeng/api';
 
 @Component({
   selector: 'formulario-lazer',

@@ -1,11 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { Message, ConfirmationService } from 'primeng/api';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { MessageService } from 'primeng/components/common/messageservice';
 
+//Meus imports
 import { AdvertenciaService } from './../advertencia.service';
 import { AdvertenciaModels } from '../../models/advertencia-models';
+
+//Meus imports
+import { MessageService } from 'primeng/components/common/messageservice';
+import { Message, ConfirmationService } from 'primeng/api';
 
 @Component({
   selector: 'listar-advertencia',
@@ -57,15 +60,25 @@ export class ListarAdvertenciaComponent implements OnInit {
   }
 
   aoSalvarFormularioAdvertencia(sucesso: boolean) {
-    this.formularioAdvertencia = false;
-    this.mensagem('success', 'Sucesso:', 'Cadastro de advertencia realizado com sucesso.');
-    this.buscarListaAdvertencia();
+    if(sucesso == true){
+      this.formularioAdvertencia = false;
+      this.mensagem('success', 'Sucesso:', 'Cadastro de advertencia realizado com sucesso.');
+      this.buscarListaAdvertencia();
+    } else {
+      this.formularioAdvertencia = false;
+      this.mensagem('error', 'Erro:', 'Nao foi possivel realizar o cadastro da advertencia.');
+    }
   }
 
   aoAlterarAdvertencia(sucesso: boolean){
-    this.alterarAdvertencia = false;
-    this.mensagem('success', 'Sucesso:', 'Alteracao de advertencia realizado com sucesso.');
-    this.buscarListaAdvertencia();
+    if(sucesso == true){
+      this.alterarAdvertencia = false;
+      this.mensagem('success', 'Sucesso:', 'Alteracao de advertencia realizado com sucesso.');
+      this.buscarListaAdvertencia();
+  } else {
+    this.formularioAdvertencia = false;
+    this.mensagem('error', 'Erro:', 'Nao foi possivel realizar a alteracao da advertencia.');
+  }
   }
 
   excluirAdvertencia(_id: string) {

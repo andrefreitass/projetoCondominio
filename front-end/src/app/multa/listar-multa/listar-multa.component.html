@@ -1,5 +1,5 @@
 <form (ngSubmit)="buscarListaMulta()" #multaForm="ngForm">
-  <p-messages [(value)]="msgs"></p-messages>
+  <p-growl [(value)]="msgs"></p-growl>
   <p-fieldset legend="Dados Para Consultar  Multa">
 
       <div class="ui-g-12 ui-md-2" class="left">
@@ -46,8 +46,8 @@
               <td>{{ multa.valores }}</td>
               <td>
                   <button type="text" (click)="selecionarMulta(multa); modalMulta('detalhar');" pButton icon="pi pi-search"></button>
-                  <button type="text" (click)="selecionarMulta(multa);modalMulta('alterar')" pButton icon="pi pi-refresh"></button>
-                  <button type="text" (click)="recebeIdMulta(multa._id);confirmaExclusaoMulta()" pButton icon="pi pi-times"></button>
+                  <button type="text" (click)="selecionarMulta(multa);modalMulta('alterar')" pButton icon="pi pi-refresh" class="ui-button-success"></button>
+                  <button type="text" (click)="recebeIdMulta(multa._id);confirmaExclusaoMulta()" pButton icon="pi pi-times" class="ui-button-danger"></button>
               </td>
           </tr>
       </ng-template>

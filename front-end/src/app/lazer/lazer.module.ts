@@ -30,6 +30,7 @@ import { ConfirmationService } from 'primeng/api';
 import { InputMaskModule} from 'primeng/inputmask';
 import { CarouselModule } from 'primeng/carousel';
 import { MultiSelectModule } from 'primeng/multiselect';
+import { GrowlModule } from 'primeng/primeng';
 
 @NgModule({
   imports: [
@@ -52,7 +53,8 @@ import { MultiSelectModule } from 'primeng/multiselect';
    MessageModule,
    InputMaskModule,
    CarouselModule,
-   MultiSelectModule
+   MultiSelectModule,
+   GrowlModule
   ],
   declarations: [
     FormularioLazerComponent,

@@ -1,10 +1,13 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { Message } from 'primeng/api';
 import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 
+//Meus imports 
 import { AdvertenciaService } from './../advertencia.service';
 import { AdvertenciaModels } from '../../models/advertencia-models';
+
+//Imports do primeng 
+import { Message } from 'primeng/api';
 
 @Component({
   selector: 'alterar-advertencia',
@@ -26,13 +29,11 @@ export class AlterarAdvertenciaComponent implements OnInit {
   ngOnInit() {    
   }
 
-atualizarAdvertencia(advertencia) {   
-    if(advertencia) {          
+atualizarAdvertencia(advertencia) {          
       this.advertenciaService.atualizarAdvertencia(advertencia)      
         .subscribe(res => {          
           this.aoAlterar.emit(true);             
         }, error => this.aoAlterar.emit(false));
-    }     
   }
 
 }
