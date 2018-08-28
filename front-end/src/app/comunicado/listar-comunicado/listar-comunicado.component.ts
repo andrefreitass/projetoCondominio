@@ -23,7 +23,8 @@ export class ListarComunicadoComponent implements OnInit {
   msgs: Message[] = [];
 
   constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient,
-    private confirmationService: ConfirmationService,private comunicadoService: ComunicadoService) { }
+    private confirmationService: ConfirmationService,private messageService: MessageService,
+    private comunicadoService: ComunicadoService) { }
 
   ngOnInit() {
     this.buscarListaComunicado();    
@@ -88,19 +89,26 @@ export class ListarComunicadoComponent implements OnInit {
       this.mensagem('error', 'Erro:', 'Nao foi possivel realizar a exclusao do comunicado');        
     }
   );
-}   
-   
-  confirmaExclusaoComunicado() {
-    this.confirmationService.confirm({
-      message: 'Deseja excluir o Comunicado?',
-      accept: () => {        
-        this.excluirComunicado(this.idComunicado);
-      }
-    });
+}  
+
+confirmacaoExclusaoComunicado() {
+  this.messageService.clear();
+  this.messageService.add({key: 'modalConfirmacaoExclusao', sticky: true, severity:'warn',
+   summary:'Tem certeza que deseja excluir o comunicado?', detail:'Confirme para prosseguir'});
+} 
+
+aoConfirmarExclusaoComunicado(sucesso: boolean) { 
+  if(sucesso == true) {
+    this.excluirComunicado(this.idComunicado);  
+  this.messageService.clear('modalConfirmacaoExclusao');
+  } else {
+    this.messageService.clear('modalConfirmacaoExclusao');
+  }  
+}
+
+  mensagem(tipoSeverity: string, titulo: string, txtMensagem: string) {    
+    this.messageService.add({severity: tipoSeverity, summary: titulo, detail:txtMensagem});    
   }
-  
-  mensagem(tipoSeverity: string, titulo: string, txtMensagem: string) {
-    this.msgs = [];
-    this.msgs.push({ severity: tipoSeverity, summary: titulo, detail: txtMensagem });
-  }
+
+
 }

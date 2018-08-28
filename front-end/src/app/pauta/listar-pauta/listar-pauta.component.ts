@@ -99,8 +99,7 @@ export class ListarPautaComponent implements OnInit {
   }
   
   mensagem(tipoSeverity: string, titulo: string, txtMensagem: string) {
-    this.msgs = [];
-    this.msgs.push({ severity: tipoSeverity, summary: titulo, detail: txtMensagem });
+    this.messageService.add({severity: tipoSeverity, summary: titulo, detail:txtMensagem});    
   }
 
 }

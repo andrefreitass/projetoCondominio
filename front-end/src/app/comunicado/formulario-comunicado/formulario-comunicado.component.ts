@@ -33,7 +33,11 @@ export class FormularioComunicadoComponent implements OnInit {
       .subscribe(res => {        
         this.resetarFormulario(comunicado);
         this.aoSalvar.emit(true);
-      }, error => this.aoSalvar.emit(false))
+      }, error => {
+        this.aoSalvar.emit(false);
+        this.resetarFormulario(comunicado);
+      } 
+    );
   }
 
   resetarFormulario(comunicado) {
