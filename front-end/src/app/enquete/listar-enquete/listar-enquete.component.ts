@@ -1,6 +1,6 @@
 import { EnqueteService } from './../enquete.service';
 import { Component, OnInit } from '@angular/core';
-import { Message, MessageService, ConfirmationService } from '../../../../node_modules/primeng/api';
+import { Message, MessageService, ConfirmationService, MenuItem } from '../../../../node_modules/primeng/api';
 import { Router, ActivatedRoute } from '../../../../node_modules/@angular/router';
 import { HttpClient } from '../../../../node_modules/@angular/common/http';
 import { EnqueteModels } from '../../models/enquete-models';
@@ -19,6 +19,7 @@ export class ListarEnqueteComponent implements OnInit {
   alterarEnquete: boolean = false;
   detalharEnquete: boolean = false;
   msgs: Message[] = [];
+  private menu: MenuItem[];
 
   constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient,
     private messageService: MessageService, private confirmationService: ConfirmationService,
@@ -27,7 +28,11 @@ export class ListarEnqueteComponent implements OnInit {
 
   ngOnInit() {
     this.buscarListaEnquete();    
-  }
+    this.menu = [
+      {label:'Inicio', url: 'http://localhost:4200'},
+      {label:'Enquete'}                        
+  ];    
+}
 
   
   recebeIdEnquete(idEnquete) {
@@ -91,14 +96,20 @@ export class ListarEnqueteComponent implements OnInit {
   );
 }   
 
-  confirmaExclusaoEnquete() {
-    this.confirmationService.confirm({
-      message: 'Deseja excluir a Enquete?',
-      accept: () => {        
-        this.excluirEnquete(this.idEnquete);
-      }
-    });
-  }
+confirmacaoExclusaoEnquete() {
+  this.messageService.clear();
+  this.messageService.add({key: 'modalConfirmacaoExclusao', sticky: true, severity:'warn',
+   summary:'Tem certeza que deseja excluir a enquete?', detail:'Confirme para prosseguir'});
+} 
+
+aoConfirmarExclusaoEnquete(sucesso: boolean) { 
+  if(sucesso == true) {
+    this.excluirEnquete(this.idEnquete);  
+  this.messageService.clear('modalConfirmacaoExclusao');
+  } else {
+    this.messageService.clear('modalConfirmacaoExclusao');
+  }  
+}
   
   mensagem(tipoSeverity: string, titulo: string, txtMensagem: string) {
     this.messageService.add({severity: tipoSeverity, summary: titulo, detail:txtMensagem});    

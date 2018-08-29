@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Message, ConfirmationService } from 'primeng/api';
+import { Message, ConfirmationService, MenuItem } from 'primeng/api';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { MessageService } from 'primeng/components/common/messageservice';
@@ -21,13 +21,18 @@ export class ListarComunicadoComponent implements OnInit {
   alterarComunicado: boolean = false;
   detalharComunicado: boolean = false;
   msgs: Message[] = [];
+  private menu: MenuItem[];
 
   constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient,
     private confirmationService: ConfirmationService,private messageService: MessageService,
     private comunicadoService: ComunicadoService) { }
 
   ngOnInit() {
-    this.buscarListaComunicado();    
+    this.buscarListaComunicado();
+    this.menu = [
+            {label:'Inicio', url: 'http://localhost:4200'},
+            {label:'Comunicado'}                        
+        ];    
   }
   
   recebeIdComunicado(idComunicado) {

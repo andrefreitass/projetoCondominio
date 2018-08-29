@@ -26,7 +26,9 @@ import { MessageService } from 'primeng/components/common/messageservice';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService } from 'primeng/api';
 import { InputMaskModule} from 'primeng/inputmask';
+import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { GrowlModule } from 'primeng/growl';
+import { ToastModule } from 'primeng/toast';
 
 
 @NgModule({
@@ -45,9 +47,11 @@ import { GrowlModule } from 'primeng/growl';
     PaginatorModule,
     MessagesModule,
     MessageModule,
-    InputMaskModule,    
+    InputMaskModule,  
+    BreadcrumbModule,  
     ConfirmDialogModule,
-    GrowlModule    
+    GrowlModule,
+    ToastModule    
   ],
   declarations: [
     AlterarEnqueteComponent,

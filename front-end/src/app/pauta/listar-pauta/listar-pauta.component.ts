@@ -1,6 +1,6 @@
 import { PautaModels } from './../../models/pauta-models';
 import { Component, OnInit } from '@angular/core';
-import { Message, MessageService, ConfirmationService } from '../../../../node_modules/primeng/api';
+import { Message, MessageService, ConfirmationService, MenuItem } from '../../../../node_modules/primeng/api';
 import { Router, ActivatedRoute } from '../../../../node_modules/@angular/router';
 import { HttpClient } from '../../../../node_modules/@angular/common/http';
 import { PautaService } from '../pauta.service';
@@ -19,6 +19,7 @@ export class ListarPautaComponent implements OnInit {
   alterarPauta: boolean = false;
   detalharPauta: boolean = false;
   msgs: Message[] = [];
+  private menu: MenuItem[];
 
   constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient,
     private messageService: MessageService, private confirmationService: ConfirmationService,
@@ -26,7 +27,11 @@ export class ListarPautaComponent implements OnInit {
 
   ngOnInit() {
     this.buscarListaPauta();
-  }
+    this.menu = [
+      {label:'Inicio', url: 'http://localhost:4200'},
+      {label:'Pauta'}                        
+  ];    
+}
 
   recebeIdPauta(idPauta){
     this.idPauta = idPauta;
@@ -89,14 +94,20 @@ export class ListarPautaComponent implements OnInit {
   );
 }   
 
-  confirmaExclusaoPauta() {
-    this.confirmationService.confirm({
-      message: 'Deseja excluir a Pauta?',
-      accept: () => {        
-        this.excluirPauta(this.idPauta);
-      }
-    });
-  }
+confirmacaoExclusaoPauta() {
+  this.messageService.clear();
+  this.messageService.add({key: 'modalConfirmacaoExclusao', sticky: true, severity:'warn',
+   summary:'Tem certeza que deseja excluir a pauta?', detail:'Confirme para prosseguir'});
+} 
+
+aoConfirmarExclusaoPauta(sucesso: boolean) { 
+  if(sucesso == true) {
+    this.excluirPauta(this.idPauta);  
+  this.messageService.clear('modalConfirmacaoExclusao');
+  } else {
+    this.messageService.clear('modalConfirmacaoExclusao');
+  }  
+}
   
   mensagem(tipoSeverity: string, titulo: string, txtMensagem: string) {
     this.messageService.add({severity: tipoSeverity, summary: titulo, detail:txtMensagem});    

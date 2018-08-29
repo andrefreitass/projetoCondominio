@@ -1,6 +1,8 @@
+<p-breadcrumb [model]="menu"></p-breadcrumb>
+ <br>
 <form (ngSubmit)="buscarListaEnquete()" #enqueteForm="ngForm">
         <p-growl [(value)]="msgs"></p-growl>
-    <p-fieldset legend="Dados Para Consultar Enquete">
+    <p-fieldset legend="Dados Para Consultar">
 
         <div class="ui-g-12 ui-md-2" class="left">
             <h3>Data Inicio</h3>
@@ -45,7 +47,7 @@
                 <td>
                     <button type="text" (click)="selecionarEnquete(enquete); modalEnquete('detalhar');" pButton icon="pi pi-search"></button>
                     <button type="text" (click)="selecionarEnquete(enquete);modalEnquete('alterar')" pButton icon="pi pi-refresh" class="ui-button-success"></button>
-                    <button type="text" (click)="recebeIdEnquete(enquete._id);confirmaExclusaoEnquete()" pButton icon="pi pi-times" class="ui-button-danger"></button>
+                    <button type="text" (click)="recebeIdEnquete(enquete._id);confirmacaoExclusaoEnquete()" pButton icon="pi pi-times" class="ui-button-danger"></button>
                 </td>
             </tr>
         </ng-template>
@@ -75,4 +77,21 @@
 <alterar-enquete [enquete]="enquete" (aoAlterar)="aoAlterarEnquete($event)"></alterar-enquete>        
 </p-dialog>
 
-<p-confirmDialog header="Exclusão de Enquete" icon="pi pi-exclamation-triangle" width="425"></p-confirmDialog>
+    <!--Nova mensagem de confirmacao-->
+    <p-toast position="center" key="modalConfirmacaoExclusao" (onClose)="onReject()" [modal]="true" [baseZIndex]="5000">
+        <ng-template let-message pTemplate="message">
+            <div style="text-align: center">
+                <i class="pi pi-exclamation-triangle" style="font-size: 3em"></i>
+                <h3>{{message.summary}}</h3>
+                <p>{{message.detail}}</p>
+            </div>
+            <div class="ui-g ui-fluid">
+                <div class="ui-g-6">
+                    <button type="button" pButton (click)="aoConfirmarExclusaoEnquete(true)" label="Yes" class="ui-button-success"></button>
+                </div>
+                <div class="ui-g-6">
+                    <button type="button" pButton (click)="aoConfirmarExclusaoEnquete()" label="No" class="ui-button-secondary"></button>
+                </div>
+            </div>
+        </ng-template>
+    </p-toast>
