@@ -27,7 +27,8 @@ export class ListarMultaComponent implements OnInit {
   msgs: Message[] = [];
 
   constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient,
-    private confirmationService: ConfirmationService,private multaService: MultaService) { }
+    private confirmationService: ConfirmationService,private multaService: MultaService,
+    private messageService: MessageService) { }
 
   ngOnInit() {
     this.buscarListaMulta();    
@@ -94,17 +95,23 @@ export class ListarMultaComponent implements OnInit {
   );
 }   
    
-  confirmaExclusaoMulta() {
-    this.confirmationService.confirm({
-      message: 'Deseja excluir o Multa?',
-      accept: () => {        
-        this.excluirMulta(this.idMulta);
-      }
-    });
+confirmacaoExclusaoMulta() {
+  this.messageService.clear();
+  this.messageService.add({key: 'modalConfirmacaoExclusao', sticky: true, severity:'warn',
+   summary:'Tem certeza que deseja excluir o multa?', detail:'Confirme para prosseguir'});
+} 
+
+aoConfirmarExclusaoMulta(sucesso: boolean) { 
+  if(sucesso == true) {
+    this.excluirMulta(this.idMulta);  
+  this.messageService.clear('modalConfirmacaoExclusao');
+  } else {
+    this.messageService.clear('modalConfirmacaoExclusao');
+  }  
+}
+
+  mensagem(tipoSeverity: string, titulo: string, txtMensagem: string) {    
+    this.messageService.add({severity: tipoSeverity, summary: titulo, detail:txtMensagem});    
   }
-  
-  mensagem(tipoSeverity: string, titulo: string, txtMensagem: string) {
-    this.msgs = [];
-    this.msgs.push({ severity: tipoSeverity, summary: titulo, detail: txtMensagem });
-  }
+
 }

@@ -16,9 +16,9 @@ import { Message, ConfirmationService } from 'primeng/api';
   styleUrls: ['./listar-advertencia.component.css']
 })
 export class ListarAdvertenciaComponent implements OnInit {
-  
-  filtroAdvertencia = {dataInicio: new Date(), dataFim: new Date()};
-  advertencia = {};  
+
+  filtroAdvertencia = { dataInicio: new Date(), dataFim: new Date() };
+  advertencia = {};
   idAdvertencia: any;
   formularioAdvertencia: boolean = false;
   alterarAdvertencia: boolean = false;
@@ -26,41 +26,42 @@ export class ListarAdvertenciaComponent implements OnInit {
   msgs: Message[] = [];
 
   constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient,
-    private confirmationService: ConfirmationService,private advertenciaService: AdvertenciaService) { }
+    private confirmationService: ConfirmationService, private advertenciaService: AdvertenciaService,
+    private messageService: MessageService) { }
 
   ngOnInit() {
-    this.buscarListaAdvertencia();    
+    this.buscarListaAdvertencia();
   }
-  
+
   recebeIdAdvertencia(idAdvertencia) {
     this.idAdvertencia = idAdvertencia;
-  } 
+  }
 
   selecionarAdvertencia(advertencia) {
     this.advertencia = advertencia;
   }
 
-  converteDataAdvertencia = (r: any) => ({...r, data: new Date(r.data) });
+  converteDataAdvertencia = (r: any) => ({ ...r, data: new Date(r.data) });
 
   modalAdvertencia(modal: string) {
-    if (modal == "formulario"){
+    if (modal == "formulario") {
       this.formularioAdvertencia = true;
     } else if (modal == "alterar") {
       this.alterarAdvertencia = true;
-    } else if (modal == "detalhar"){
+    } else if (modal == "detalhar") {
       this.detalharAdvertencia = true;
-    }      
+    }
   }
 
-  buscarListaAdvertencia() {    
+  buscarListaAdvertencia() {
     this.advertenciaService.getAdvertencia(this.filtroAdvertencia.dataInicio.toString(), this.filtroAdvertencia.dataFim.toString())
-    .subscribe((res:any) => {      
-      this.advertenciaService.listaAdvertencia = res.map(this.converteDataAdvertencia) as AdvertenciaModels[];
-    });    
+      .subscribe((res: any) => {
+        this.advertenciaService.listaAdvertencia = res.map(this.converteDataAdvertencia) as AdvertenciaModels[];
+      });
   }
 
   aoSalvarFormularioAdvertencia(sucesso: boolean) {
-    if(sucesso == true){
+    if (sucesso == true) {
       this.formularioAdvertencia = false;
       this.mensagem('success', 'Sucesso:', 'Cadastro de advertencia realizado com sucesso.');
       this.buscarListaAdvertencia();
@@ -70,39 +71,47 @@ export class ListarAdvertenciaComponent implements OnInit {
     }
   }
 
-  aoAlterarAdvertencia(sucesso: boolean){
-    if(sucesso == true){
+  aoAlterarAdvertencia(sucesso: boolean) {
+    if (sucesso == true) {
       this.alterarAdvertencia = false;
       this.mensagem('success', 'Sucesso:', 'Alteracao de advertencia realizado com sucesso.');
       this.buscarListaAdvertencia();
-  } else {
-    this.formularioAdvertencia = false;
-    this.mensagem('error', 'Erro:', 'Nao foi possivel realizar a alteracao da advertencia.');
-  }
+    } else {
+      this.formularioAdvertencia = false;
+      this.mensagem('error', 'Erro:', 'Nao foi possivel realizar a alteracao da advertencia.');
+    }
   }
 
   excluirAdvertencia(_id: string) {
     this.advertenciaService.excluirAdvertencia(_id)
-    .subscribe(res => {
-      this.mensagem('success', 'Sucesso:', 'Advertencia excluido com sucesso.');        
-      this.buscarListaAdvertencia(); 
-    },(error) => {
-      this.mensagem('error', 'Erro:', 'Nao foi possivel realizar a exclusao do advertencia');        
-    }
-  );
-}   
-   
-  confirmaExclusaoAdvertencia() {
-    this.confirmationService.confirm({
-      message: 'Deseja excluir o Advertencia?',
-      accept: () => {        
-        this.excluirAdvertencia(this.idAdvertencia);
+      .subscribe(res => {
+        this.mensagem('success', 'Sucesso:', 'Advertencia excluido com sucesso.');
+        this.buscarListaAdvertencia();
+      }, (error) => {
+        this.mensagem('error', 'Erro:', 'Nao foi possivel realizar a exclusao do advertencia');
       }
+      );
+  }
+
+  confirmaExclusaoAdvertencia() {
+    this.messageService.clear();
+    this.messageService.add({
+      key: 'modalConfirmacaoExclusao', sticky: true, severity: 'warn',
+      summary: 'Tem certeza que deseja excluir o comunicado?', detail: 'Confirme para prosseguir'
     });
   }
-  
+
+  aoConfirmarExclusaoComunicado(sucesso: boolean) {
+    if (sucesso == true) {
+      this.excluirAdvertencia(this.idAdvertencia);
+      this.messageService.clear('modalConfirmacaoExclusao');
+    } else {
+      this.messageService.clear('modalConfirmacaoExclusao');
+    }
+  }
+
+
   mensagem(tipoSeverity: string, titulo: string, txtMensagem: string) {
-    this.msgs = [];
-    this.msgs.push({ severity: tipoSeverity, summary: titulo, detail: txtMensagem });
+    this.messageService.add({ severity: tipoSeverity, summary: titulo, detail: txtMensagem });
   }
 }

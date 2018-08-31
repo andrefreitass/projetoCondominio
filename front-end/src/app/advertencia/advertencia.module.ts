@@ -26,6 +26,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService } from 'primeng/api';
 import { InputMaskModule} from 'primeng/inputmask';
 import { GrowlModule } from 'primeng/primeng';
+import {ToastModule} from 'primeng/toast';
 
 @NgModule({
   imports: [
@@ -45,7 +46,8 @@ import { GrowlModule } from 'primeng/primeng';
     MessageModule,
     InputMaskModule,    
     ConfirmDialogModule,
-    GrowlModule    
+    GrowlModule,
+    ToastModule    
   ],
   declarations: [
     AlterarAdvertenciaComponent,

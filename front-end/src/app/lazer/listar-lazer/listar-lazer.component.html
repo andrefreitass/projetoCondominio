@@ -45,7 +45,7 @@
                 <td>
                     <button type="text" (click)="selecionarLazer(lazer); modalLazer('detalhar');" pButton icon="pi pi-search"></button>
                     <button type="text" (click)="selecionarLazer(lazer);modalLazer('alterar')" pButton icon="pi pi-refresh" class="ui-button-success"></button>
-                    <button type="text" (click)="recebeIdLazer(lazer._id);confirmaExclusaoLazer()" pButton icon="pi pi-times" class="ui-button-danger"></button>
+                    <button type="text" (click)="recebeIdLazer(lazer._id);confirmacaoExclusaoLazer()" pButton icon="pi pi-times" class="ui-button-danger"></button>
                 </td>
             </tr> 
         </ng-template>
@@ -75,4 +75,24 @@
         <alterar-lazer [lazer]="lazer" (aoAlterar)="aoAlterarLazer($event)"></alterar-lazer>        
     </p-dialog>
 
+    <!-- Antiga mensagem de confirmacao-->
     <p-confirmDialog header="Exclusão de Lazer" icon="pi pi-exclamation-triangle" width="425"></p-confirmDialog>
+    
+    <!--Nova mensagem de confirmacao-->
+    <p-toast position="center" key="modalConfirmacaoExclusao" (onClose)="onReject()" [modal]="true" [baseZIndex]="5000">
+        <ng-template let-message pTemplate="message">
+            <div style="text-align: center">
+                <i class="pi pi-exclamation-triangle" style="font-size: 3em"></i>
+                <h3>{{message.summary}}</h3>
+                <p>{{message.detail}}</p>
+            </div>
+            <div class="ui-g ui-fluid">
+                <div class="ui-g-6">
+                    <button type="button" pButton (click)="aoConfirmarExclusaoLazer(true)" label="Yes" class="ui-button-success"></button>
+                </div>
+                <div class="ui-g-6">
+                    <button type="button" pButton (click)="aoConfirmarExclusaoLazer()" label="No" class="ui-button-secondary"></button>
+                </div>
+            </div>
+        </ng-template>
+    </p-toast>

@@ -25,7 +25,7 @@ export class ListarLazerComponent implements OnInit {
   detalharLazer: boolean = false;
   msgs: Message[] = [];
 
-  constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient,
+  constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient,private messageService: MessageService,
     private confirmationService: ConfirmationService,private lazerService: LazerService) { }
 
   ngOnInit() {
@@ -92,17 +92,23 @@ export class ListarLazerComponent implements OnInit {
   );
 }   
    
-  confirmaExclusaoLazer() {
-    this.confirmationService.confirm({
-      message: 'Deseja excluir o Lazer?',
-      accept: () => {        
-        this.excluirLazer(this.idLazer);
-      }
-    });
+confirmacaoExclusaoLazer() {
+  this.messageService.clear();
+  this.messageService.add({key: 'modalConfirmacaoExclusao', sticky: true, severity:'warn',
+   summary:'Tem certeza que deseja excluir o lazer?', detail:'Confirme para prosseguir'});
+} 
+
+aoConfirmarExclusaoLazer(sucesso: boolean) { 
+  if(sucesso == true) {
+    this.excluirLazer(this.idLazer);  
+  this.messageService.clear('modalConfirmacaoExclusao');
+  } else {
+    this.messageService.clear('modalConfirmacaoExclusao');
+  }  
+}
+
+  mensagem(tipoSeverity: string, titulo: string, txtMensagem: string) {    
+    this.messageService.add({severity: tipoSeverity, summary: titulo, detail:txtMensagem});    
   }
-  
-  mensagem(tipoSeverity: string, titulo: string, txtMensagem: string) {
-    this.msgs = [];
-    this.msgs.push({ severity: tipoSeverity, summary: titulo, detail: txtMensagem });
-  }
+
 }

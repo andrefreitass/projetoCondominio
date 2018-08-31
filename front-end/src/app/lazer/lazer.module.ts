@@ -31,6 +31,7 @@ import { InputMaskModule} from 'primeng/inputmask';
 import { CarouselModule } from 'primeng/carousel';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { GrowlModule } from 'primeng/primeng';
+import {ToastModule} from 'primeng/toast';
 
 @NgModule({
   imports: [
@@ -54,7 +55,8 @@ import { GrowlModule } from 'primeng/primeng';
    InputMaskModule,
    CarouselModule,
    MultiSelectModule,
-   GrowlModule
+   GrowlModule,
+   ToastModule
   ],
   declarations: [
     FormularioLazerComponent,
