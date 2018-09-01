@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { ListarComunicadoComponent } from '../../comunicado/listar-comunicado/listar-comunicado.component';
 
 @Component({
   selector: 'detalhar-pauta',
@@ -11,5 +12,4 @@ export class DetalharPautaComponent implements OnInit {
 
   ngOnInit() {
   }
-
 }

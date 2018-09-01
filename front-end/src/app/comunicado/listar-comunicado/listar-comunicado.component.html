@@ -36,7 +36,7 @@
                 <th>Titulo</th>
                 <th>Descrição</th>
                 <th>Pauta</th>
-                <th>Opções</th>
+                <th>Operações</th>
             </tr>
         </ng-template>        
         <ng-template pTemplate="body" let-comunicado>
@@ -81,7 +81,7 @@
     <p-confirmDialog header="Exclusão de Comunicado" icon="pi pi-exclamation-triangle" width="425"></p-confirmDialog>
     
     <!--Nova mensagem de confirmacao-->
-    <p-toast position="center" key="modalConfirmacaoExclusao" (onClose)="onReject()" [modal]="true" [baseZIndex]="5000">
+    <p-toast position="center" key="modalConfirmacaoExclusao" (onClose)="aoConfirmarExclusaoComunicado()" [modal]="true" [baseZIndex]="5000">
             <ng-template let-message pTemplate="message">
                 <div style="text-align: center">
                     <i class="pi pi-exclamation-triangle" style="font-size: 3em"></i>

@@ -1,6 +1,6 @@
 <form (ngSubmit)="buscarListaEnquete()" #enqueteForm="ngForm">
         <p-growl [(value)]="msgs"></p-growl>
-    <p-fieldset legend="Dados Para Consultar">
+    <p-fieldset legend="Dados Para Consultar as Enquetes">
 
         <div class="ui-g-12 ui-md-2" class="left">
             <h3>Data Inicio</h3>
@@ -34,19 +34,21 @@
                 <th>Data</th>
                 <th>Titulo</th>                
                 <th>Assuntos</th>
-                <th></th>
+                <th>Operações</th>
             </tr>
         </ng-template>
 
         <ng-template pTemplate="body" let-enquete>
             <tr>
-                <td>{{ enquete.data | date:'dd/MM/yyyy' }}</td>
+                <td style="text-align:center">{{ enquete.data | date:'dd/MM/yyyy' }}</td>
                 <td>{{ enquete.titulo }}</td>
                 <td>{{ enquete.assuntos }}</td>                
                 <td>
-                    <button type="text" (click)="selecionarEnquete(enquete); modalEnquete('detalhar');" pButton icon="pi pi-search"></button>
-                    <button type="text" (click)="selecionarEnquete(enquete);modalEnquete('alterar')" pButton icon="pi pi-refresh" class="ui-button-success"></button>
-                    <button type="text" (click)="recebeIdEnquete(enquete._id);confirmacaoExclusaoEnquete()" pButton icon="pi pi-times" class="ui-button-danger"></button>
+                    <div style="margin: 0 auto;">
+                        <button type="text" (click)="selecionarEnquete(enquete); modalEnquete('detalhar');" pButton icon="pi pi-search" style="margin-right:10px;"></button>
+                        <button type="text" (click)="selecionarEnquete(enquete);modalEnquete('alterar')" pButton icon="pi pi-refresh" class="ui-button-success" style="margin-right:10px;"></button>
+                        <button type="text" (click)="recebeIdEnquete(enquete._id);confirmacaoExclusaoEnquete()" pButton icon="pi pi-times" class="ui-button-danger" style="margin-right:10px;"></button>
+                    </div>
                 </td>
             </tr>
         </ng-template>
@@ -74,7 +76,7 @@
 </p-dialog>
 
     <!--Nova mensagem de confirmacao-->
-    <p-toast position="center" key="modalConfirmacaoExclusao" (onClose)="onReject()" [modal]="true" [baseZIndex]="5000">
+    <p-toast position="center" key="modalConfirmacaoExclusao" (onClose)="aoConfirmarExclusaoComunicado()" [modal]="true" [baseZIndex]="5000">
         <ng-template let-message pTemplate="message">
             <div style="text-align: center">
                 <i class="pi pi-exclamation-triangle" style="font-size: 3em"></i>

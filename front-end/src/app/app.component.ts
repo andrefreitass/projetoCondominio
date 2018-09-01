@@ -29,44 +29,23 @@ export class AppComponent {
               ]
           },
           {
-              label: 'Edit',
+              label: 'Serviços',
               icon: 'fa fa-fw fa-edit',
               items: [
-                  {label: 'Undo', icon: 'fa fa-fw fa-mail-forward'},
-                  {label: 'Redo', icon: 'fa fa-fw fa-mail-reply'}
+                  {label: 'Envia Comunicado', icon: 'fa fa-fw fa-mail-forward'},
+                  {label: 'Envia Multa', icon: 'fa fa-fw fa-mail-reply'}
               ]
           },
           {
-              label: 'Help',
-              icon: 'fa fa-fw fa-question',
-              items: [
-                  {
-                      label: 'Contents'
-                  },
-                  {
-                      label: 'Search', 
-                      icon: 'fa fa-fw fa-search', 
-                      items: [
-                          {
-                              label: 'Text', 
-                              items: [
-                                  {
-                                      label: 'Workspace'
-                                  }
-                              ]
-                          },
-                          {
-                              label: 'File'
-                          }
-                  ]}
-              ]
-          },
-          {
-              label: 'Sair',
-              icon: 'fa fa-fw fa-gear',
-             
-              
-          }
+            label: 'Relatórios',
+            icon: 'fa fa-fw fa-edit',
+            items: [
+                {label: 'Relatório A', icon: 'fa fa-fw fa-mail-forward'},
+                {label: 'Relatório B', icon: 'fa fa-fw fa-mail-reply'}
+            ]
+        },
+          
+
       ];
   }
 }
