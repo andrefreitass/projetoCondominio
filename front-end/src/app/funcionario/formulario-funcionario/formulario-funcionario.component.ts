@@ -3,7 +3,7 @@ import { Message } from 'primeng/api';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/components/common/messageservice';
-//\import 'rxjs/add/operador/map';
+//import 'rxjs/add/operador/map';
 //import {map} from 'rxjs/add/operator/map';
 import { FuncionarioService } from './../funcionario.service';
 import { FuncionarioModels } from '../../models/funcionario-models';
