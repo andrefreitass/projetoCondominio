@@ -1,0 +1,66 @@
+<form #funcionarioForm="ngForm" (ngSubmit)="salvarFuncionario(funcionarioForm)">
+
+<p-fieldset legend="Dados Pessoais">
+  <div>
+    <h3>Data</h3>
+    <p-calendar [showIcon]="true"  name="data" #name="ngModel" 
+    required tabindex="0" [disabledDates]="invalidDates" [(ngModel)]="funcionario.data"
+      [disabledDays]="[0,6]" readonlyInput="true" dateFormat="dd/mm/yy"></p-calendar>
+  </div>
+
+  <div>
+    <h3>Nome</h3>
+    <input id="titulo" type="text" class="form-control" name="nome" #name="ngModel"
+     [(ngModel)]="funcionario.nome" required  minlength="5"
+      maxlength="40" size="60">
+  </div>
+
+  <div>
+    <h3>Função</h3>
+    <textarea class="form-control" name="funcao" #name="ngModel"
+    [(ngModel)]="funcionario.funcao"
+       required [rows]="5" [cols]="60" maxlength="350"
+      pInputTextarea autoResize="autoResize"></textarea>
+  </div>
+
+  
+
+  <div>
+    <h3>CPF</h3>
+    <p-inputMask mask="999.999.999-99" name="cpf" #name="ngModel" 
+    [(ngModel)]="funcionario.cpf" placeholder="999.999.999-99"></p-inputMask>
+    </div>
+
+</p-fieldset>
+
+<p-fieldset legend="Dados de Endereço">
+
+    <div>
+        <h3>Cep</h3>
+        <input id="cep" type="text" class="form-control" name="cep" #name="ngModel"
+         [(ngModel)]="funcionario.enderecoCep" (blur)="consultaCEP($event.target.value)" required  minlength="5"
+          maxlength="40" size="40">
+      </div>
+
+      <div>
+          <h3>Bairro</h3>
+          <input id="titulo" type="text" class="form-control" name="nome" #name="ngModel"
+           [(ngModel)]="funcionario.enderecoBairro" required  minlength="5"
+            maxlength="40" size="40">
+        </div>
+
+        <div>
+            <h3>Cidade</h3>
+            <input id="titulo" type="text" class="form-control" name="nome" #name="ngModel"
+             [(ngModel)]="funcionario.enderecoCidade" required  minlength="5"
+              maxlength="40" size="40">
+          </div>      
+
+
+</p-fieldset>
+
+
+  <div class="form-group">
+    <button type="submit" pButton label="Salvar"></button>    
+  </div>
+</form>

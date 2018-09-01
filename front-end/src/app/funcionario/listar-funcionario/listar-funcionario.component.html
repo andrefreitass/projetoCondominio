@@ -1,0 +1,74 @@
+<form (ngSubmit)="buscarListaFuncionario()" #funcionarioForm="ngForm">
+    <p-messages [(value)]="msgs"></p-messages>
+    <p-fieldset legend="Dados Para Consultar  Funcionario">
+   <!--
+ -->
+      <div>
+        <h3>CPF</h3>
+        <p-inputMask mask="999.999.999-99" name="pesquisaCpf" #name="ngModel" 
+        [(ngModel)]="filtroFuncionario.pesquisaCpf" placeholder="999.999.999-99"></p-inputMask>
+    </div>
+       <br>
+        
+        <div>
+            <button pButton type="submit" label="Consultar" style="float:left"></button>
+            <button pButton type="button" (click)="modalFuncionario('formulario')" label="Adicionar Funcionario" style="float:right" class="ui-button-warning"></button>
+        </div>
+    </p-fieldset>
+  </form>
+  <br>
+  <br>
+  <!--Dados de Resposta-->
+  
+  <p-fieldset legend="Lista de Funcionario">
+    <p-table [value]="funcionarioService.listaFuncionario">
+        <ng-template pTemplate="header">
+            <tr>
+                <th>Data</th>
+                <th>Nome</th>
+                <th>Função</th>
+                <th>CPF</th>
+                <th></th>
+            </tr>
+        </ng-template>
+  
+        <ng-template pTemplate="body" let-funcionario>
+            <tr>
+                <td>{{ funcionario.data | date:'dd/MM/yyyy' }}</td>
+                <td>{{ funcionario.nome }}</td>
+                <td>{{ funcionario.funcao }}</td>
+                <td>{{ funcionario.cpf }}</td>
+                <td>
+                    <button type="text" (click)="selecionarFuncionario(funcionario); modalFuncionario('detalhar');" pButton icon="pi pi-search"></button>
+                    <button type="text" (click)="selecionarFuncionario(funcionario);modalFuncionario('alterar')" pButton icon="pi pi-refresh"></button>
+                    <button type="text" (click)="recebeIdFuncionario(funcionario._id);confirmaExclusaoFuncionario()" pButton icon="pi pi-times"></button>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+  
+  
+    <div *ngIf="funcionarioService?.listaFuncionario?.length == 0">
+        Nenhum registro cadastrado
+    </div>
+  
+  <!--   MODALS -->
+  
+    <p-dialog header="Cadastro de Funcionario" [(visible)]="formularioFuncionario" [modal]="true" [responsive]="true" [width]="750"
+        [minWidth]="600" [minY]="600" [baseZIndex]="10000">    
+        <formulario-funcionario (aoSalvar)="aoSalvarFormularioFuncionario($event)"></formulario-funcionario>    
+    </p-dialog>
+  
+  
+    <p-dialog header="Detalhar Funcionario" [(visible)]="detalharFuncionario" [modal]="true" [responsive]="true" [width]="500"
+        [minWidth]="600" [minY]="600" [baseZIndex]="10000">
+            <detalhar-funcionario  [funcionario]="funcionario"></detalhar-funcionario>         
+    </p-dialog>
+  
+  
+    <p-dialog header="Alterar Funcionario" [(visible)]="alterarFuncionario" [modal]="true" [responsive]="true" [width]="500" [minWidth]="600"
+        [minY]="600" [baseZIndex]="10000">        
+        <alterar-funcionario [funcionario]="funcionario" (aoAlterar)="aoAlterarFuncionario($event)"></alterar-funcionario>        
+    </p-dialog>
+  
+    <p-confirmDialog header="Exclusão de Funcionario" icon="pi pi-exclamation-triangle" width="425"></p-confirmDialog>

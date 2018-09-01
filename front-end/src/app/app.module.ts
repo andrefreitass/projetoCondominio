@@ -12,6 +12,7 @@ import { PautaModule } from './pauta/pauta.module';
 import { EnqueteModule } from './enquete/enquete.module';
 import { AdvertenciaModule } from './advertencia/advertencia.module';
 import { MultaModule } from './multa/multa.module'
+import { FuncionarioModule } from './funcionario/funcionario.module'
 
 //Imports PrimeNG
 import {AccordionModule} from 'primeng/accordion';     
@@ -22,9 +23,11 @@ import { CardModule } from 'primeng/card';
 
 
 
+
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    
   ],
   imports: [
     BrowserModule,
@@ -37,6 +40,7 @@ import { CardModule } from 'primeng/card';
     PautaModule,
     AdvertenciaModule,
     MultaModule,
+    FuncionarioModule,
     //Imports PrimeNG
     AccordionModule,
     BrowserModule,

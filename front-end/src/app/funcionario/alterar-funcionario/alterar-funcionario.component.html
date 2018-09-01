@@ -1,0 +1,30 @@
+<form (ngSubmit)="atualizarFuncionario(funcionario)" #funcionarioForm="ngForm">
+    
+  <div>
+    <h3>Data</h3>
+    <p-calendar [showIcon]="true" [(ngModel)]="funcionario.data" name="data" tabindex="0" [disabledDates]="invalidDates"
+      [disabledDays]="[0,6]" readonlyInput="true" dateFormat="dd/mm/yy"></p-calendar>
+  </div>
+
+  <div>
+    <h3>Nome</h3>
+    <input id="nome" type="text" class="form-control" [(ngModel)]="funcionario.nome" name="nome" maxlength="40" size="60">
+  </div>
+
+  <div>
+    <h3>Descrição</h3>
+    <textarea class="form-control" [(ngModel)]="funcionario.funcao" name="funcao" required [rows]="5" [cols]="60" maxlength="350"
+      pInputTextarea autoResize="autoResize"></textarea>
+  </div>
+
+  <div>
+    <h3>Pauta</h3>
+    <textarea class="form-control" [(ngModel)]="funcionario.cpf" name="cpf" required [rows]="5" [cols]="60" maxlength="350"
+      pInputTextarea autoResize="autoResize"></textarea>
+  </div>
+
+  <div class="form-group">
+    <button type="submit" pButton label="Salvar" [disabled]="!funcionarioForm.form.valid"></button>
+  </div>
+  
+</form>
