@@ -108,9 +108,5 @@ aoConfirmarExclusaoPauta(sucesso: boolean) {
     this.messageService.clear('modalConfirmacaoExclusao');
   }  
 }
-  
-  mensagem(tipoSeverity: string, titulo: string, txtMensagem: string) {
-    this.messageService.add({severity: tipoSeverity, summary: titulo, detail:txtMensagem});    
-  }
 
 }
