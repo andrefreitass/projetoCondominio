@@ -23,14 +23,38 @@
   </div>
 
   <div>
+    <label> Adicionar Comunicado</label>
+    <button type="text" pButton icon="pi pi-search" (click)= "modalComunicado('consultarPauta');"></button>    
+  </div>
+  <br>
+ 
+<!--
+  <div>
     <h3>Pauta</h3>
     <textarea class="form-control" name="pauta" #name="ngModel"
     [(ngModel)]="comunicado.pauta"
      required [rows]="5" [cols]="60" maxlength="350"
       pInputTextarea autoResize="autoResize"></textarea>
   </div>
+-->
+ 
 
   <div class="form-group">
     <button type="submit" pButton label="Salvar"></button>    
   </div>
 </form>
+
+<!-- Modais-->
+
+<p-dialog  header="Consultar Pauta" [(visible)]="consultarPauta" [modal]="true" [responsive]="true" [width]="500" [minWidth]="600"
+[minY]="600" [baseZIndex]="10000">       
+
+<form #consultaPautaForm="ngForm" (ngSubmit)="salvarComunicado(consultaPautaForm)">
+
+
+
+
+</form>
+
+
+</p-dialog>

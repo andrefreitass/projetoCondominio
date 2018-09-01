@@ -26,11 +26,7 @@ export class ListarPautaComponent implements OnInit {
     private pautaService: PautaService) { }
 
   ngOnInit() {
-    this.buscarListaPauta();
-    this.menu = [
-      {label:'Inicio', url: 'http://localhost:4200'},
-      {label:'Pauta'}                        
-  ];    
+    this.buscarListaPauta();   
 }
 
   recebeIdPauta(idPauta){
@@ -57,6 +53,9 @@ export class ListarPautaComponent implements OnInit {
     this.pautaService.getPauta(this.filtroPauta.dataInicio.toString(),this.filtroPauta.dataFim.toString())
     .subscribe((res:any) => {
       this.pautaService.listaPauta = res.map(this.converteData) as PautaModels[];
+      if(this.pautaService.listaPauta.length == 0){
+        this.mensagem('warn', 'Alerta:', 'Nenhum Registro Encontrado.');
+      }      
     });
   }
 
@@ -77,7 +76,7 @@ export class ListarPautaComponent implements OnInit {
       this.mensagem('success', 'Sucesso:', 'Alteracao de pauto realizado com sucesso.');
       this.buscarListaPauta();
     } else {
-      this.formularioPauta = false;
+      this.alterarPauta = false;
       this.mensagem('error', 'Erro:', 'Nao foi possivel realizar a alteracao da pauta.');
     }
 
@@ -110,7 +109,7 @@ aoConfirmarExclusaoPauta(sucesso: boolean) {
 }
   
   mensagem(tipoSeverity: string, titulo: string, txtMensagem: string) {
-    this.messageService.add({severity: tipoSeverity, summary: titulo, detail:txtMensagem});    
+    this.messageService.add({life: 6000, severity: tipoSeverity, summary: titulo, detail:txtMensagem});    
   }
 
 }

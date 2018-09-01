@@ -1,5 +1,3 @@
-<p-breadcrumb [model]="menu"></p-breadcrumb>
- <br>
 <form (ngSubmit)="buscarListaPauta()" #enqueteForm="ngForm">
         <p-growl [(value)]="msgs"></p-growl>
     <p-fieldset legend="Dados Para Consultar">
@@ -27,38 +25,36 @@
 <br>
 <br>
 <!--Dados de Resposta-->
+<div [hidden]="pautaService?.listaPauta?.length == 0">
 
-<p-fieldset legend="Lista de Pauta">
-    <p-table [value]="pautaService.listaPauta">
-        <ng-template pTemplate="header">
-            <tr>
-                <th>Data</th>
-                <th>Local</th>                
-                <th>Assuntos</th>
-                <th></th>
-            </tr>
-        </ng-template>
+    <p-fieldset legend="Lista de Pauta">
+                <p-table [value]="pautaService.listaPauta">
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th>Data</th>
+                            <th>Local</th>                
+                            <th>Assuntos</th>
+                            <th>Operações</th>
+                        </tr>
+                    </ng-template>
+            
+                    <ng-template pTemplate="body" let-pauta>
+                        <tr>
+                            <td>{{ pauta.data | date:'dd/MM/yyyy' }}</td>
+                            <td>{{ pauta.local }}</td>
+                            <td>{{ pauta.assuntos }}</td>                
+                            <td>
+                                <button type="text" (click)="selecionarPauta(pauta); modalPauta('detalhar');" pButton icon="pi pi-search"></button>
+                                <button type="text" (click)="selecionarPauta(pauta);modalPauta('alterar')" pButton icon="pi pi-refresh" class="ui-button-success"></button>
+                                <button type="text" (click)="recebeIdPauta(pauta._id);confirmacaoExclusaoPauta()" pButton icon="pi pi-times" class="ui-button-danger"></button>
+                            </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+        </p-fieldset>
+</div>
 
-        <ng-template pTemplate="body" let-pauta>
-            <tr>
-                <td>{{ pauta.data | date:'dd/MM/yyyy' }}</td>
-                <td>{{ pauta.local }}</td>
-                <td>{{ pauta.assuntos }}</td>                
-                <td>
-                    <button type="text" (click)="selecionarPauta(pauta); modalPauta('detalhar');" pButton icon="pi pi-search"></button>
-                    <button type="text" (click)="selecionarPauta(pauta);modalPauta('alterar')" pButton icon="pi pi-refresh" class="ui-button-success"></button>
-                    <button type="text" (click)="recebeIdPauta(pauta._id);confirmacaoExclusaoPauta()" pButton icon="pi pi-times" class="ui-button-danger"></button>
-                </td>
-            </tr>
-        </ng-template>
-    </p-table>
-
- 
-    <div *ngIf="pautaService?.listaPauta?.length == 0">
-        Nenhum registro cadastrado
-    </div>
-
-<!--   MODALS -->
+ <!--  MODALS -->
 
 <p-dialog header="Cadastro de Pauta" [(visible)]="formularioPauta" [modal]="true" [responsive]="true" [width]="500"
 [minWidth]="600" [minY]="600" [baseZIndex]="10000">    

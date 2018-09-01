@@ -52,7 +52,7 @@ export class ListarFuncionarioComponent implements OnInit {
   buscarListaFuncionario() {    
     this.funcionarioService.getFuncionario(this.filtroFuncionario.pesquisaCpf.toString())
     .subscribe((res:any) => {      
-      this.funcionarioService.listaFuncionario = res.map(this.converteDataFuncionario) as FuncionarioModels[];
+      this.funcionarioService.listaFuncionario = res as FuncionarioModels[];      
     });    
   }
 

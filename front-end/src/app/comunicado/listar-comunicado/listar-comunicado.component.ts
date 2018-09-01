@@ -28,11 +28,7 @@ export class ListarComunicadoComponent implements OnInit {
     private comunicadoService: ComunicadoService) { }
 
   ngOnInit() {
-    this.buscarListaComunicado();
-    this.menu = [
-            {label:'Inicio', url: 'http://localhost:4200'},
-            {label:'Comunicado'}                        
-        ];    
+    this.buscarListaComunicado();   
   }
   
   recebeIdComunicado(idComunicado) {

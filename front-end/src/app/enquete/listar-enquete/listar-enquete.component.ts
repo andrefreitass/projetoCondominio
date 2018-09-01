@@ -27,11 +27,7 @@ export class ListarEnqueteComponent implements OnInit {
 
 
   ngOnInit() {
-    this.buscarListaEnquete();    
-    this.menu = [
-      {label:'Inicio', url: 'http://localhost:4200'},
-      {label:'Enquete'}                        
-  ];    
+    this.buscarListaEnquete();      
 }
 
   
@@ -58,7 +54,7 @@ export class ListarEnqueteComponent implements OnInit {
   buscarListaEnquete() {    
     this.enqueteService.getEnquete(this.filtroEnquete.dataInicio.toString(), this.filtroEnquete.dataFim.toString())
     .subscribe((res:any) => {      
-      this.enqueteService.listaEnquete = res.map(this.converteData) as EnqueteModels[];
+      this.enqueteService.listaEnquete = res.map(this.converteData) as EnqueteModels[];      
     });    
   }
 

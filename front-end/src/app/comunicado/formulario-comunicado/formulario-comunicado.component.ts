@@ -19,6 +19,7 @@ export class FormularioComunicadoComponent implements OnInit {
   @Output() aoSalvar: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   comunicado: ComunicadoModels;
+  consultarPauta: boolean = false;
 
   constructor(private http: HttpClient, private router: Router, private messageService: MessageService,
     private comunicadoService: ComunicadoService) { }
@@ -44,6 +45,12 @@ export class FormularioComunicadoComponent implements OnInit {
     if (comunicado) {
       comunicado.reset();
       this.comunicado = new ComunicadoModels();
+    }
+  }
+
+  modalComunicado(modal: string) {
+    if (modal == "consultarPauta"){
+      this.consultarPauta = true;
     }
   }
 
