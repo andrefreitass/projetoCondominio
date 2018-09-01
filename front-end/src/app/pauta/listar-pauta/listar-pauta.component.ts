@@ -4,6 +4,7 @@ import { Message, MessageService, ConfirmationService, MenuItem } from '../../..
 import { Router, ActivatedRoute } from '../../../../node_modules/@angular/router';
 import { HttpClient } from '../../../../node_modules/@angular/common/http';
 import { PautaService } from '../pauta.service';
+import { GlobalService } from '../../uteis/global.service';
 
 @Component({
   selector: 'listar-pauta',
@@ -23,7 +24,7 @@ export class ListarPautaComponent implements OnInit {
 
   constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient,
     private messageService: MessageService, private confirmationService: ConfirmationService,
-    private pautaService: PautaService) { }
+    private pautaService: PautaService,private globalService: GlobalService ) { }
 
   ngOnInit() {
     this.buscarListaPauta();   
@@ -54,7 +55,7 @@ export class ListarPautaComponent implements OnInit {
     .subscribe((res:any) => {
       this.pautaService.listaPauta = res.map(this.converteData) as PautaModels[];
       if(this.pautaService.listaPauta.length == 0){
-        this.mensagem('warn', 'Alerta:', 'Nenhum Registro Encontrado.');
+        this.globalService.mensagem('warn', 'Alerta:', 'Nenhum Registro Encontrado.');
       }      
     });
   }
@@ -62,22 +63,22 @@ export class ListarPautaComponent implements OnInit {
   aoSalvarFormularioPauta(sucesso: boolean) {
     if(sucesso == true){
       this.formularioPauta = false;
-      this.mensagem('success', 'Sucesso:', 'Cadastro de pauta realizado com sucesso.');
+      this.globalService.mensagem('success', 'Sucesso:', 'Cadastro de pauta realizado com sucesso.');
       this.buscarListaPauta();
     } else {
       this.formularioPauta = false;
-      this.mensagem('error', 'Erro:', 'Nao foi possivel realizar o cadastro da pauta.');
+      this.globalService.mensagem('error', 'Erro:', 'Nao foi possivel realizar o cadastro da pauta.');
     }    
   }
 
   aoAlterarPauta(sucesso: boolean){
     if(sucesso == true){
       this.alterarPauta = false;
-      this.mensagem('success', 'Sucesso:', 'Alteracao de pauto realizado com sucesso.');
+      this.globalService.mensagem('success', 'Sucesso:', 'Alteracao de pauto realizado com sucesso.');
       this.buscarListaPauta();
     } else {
       this.alterarPauta = false;
-      this.mensagem('error', 'Erro:', 'Nao foi possivel realizar a alteracao da pauta.');
+      this.globalService.mensagem('error', 'Erro:', 'Nao foi possivel realizar a alteracao da pauta.');
     }
 
   }
@@ -85,10 +86,10 @@ export class ListarPautaComponent implements OnInit {
   excluirPauta(_id: string) {
     this.pautaService.excluirPauta(_id)
     .subscribe(res => {
-      this.mensagem('success', 'Sucesso:', 'Pauta excluida com sucesso.');        
+      this.globalService.mensagem('success', 'Sucesso:', 'Pauta excluida com sucesso.');        
       this.buscarListaPauta(); 
     },(error) => {
-      this.mensagem('error', 'Erro:', 'Nao foi possivel realizar a exclusao da pauta');        
+      this.globalService.mensagem('error', 'Erro:', 'Nao foi possivel realizar a exclusao da pauta');        
     }
   );
 }   
@@ -109,7 +110,7 @@ aoConfirmarExclusaoPauta(sucesso: boolean) {
 }
   
   mensagem(tipoSeverity: string, titulo: string, txtMensagem: string) {
-    this.messageService.add({life: 6000, severity: tipoSeverity, summary: titulo, detail:txtMensagem});    
+    this.messageService.add({severity: tipoSeverity, summary: titulo, detail:txtMensagem});    
   }
 
 }

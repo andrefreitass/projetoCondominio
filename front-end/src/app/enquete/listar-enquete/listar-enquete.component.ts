@@ -1,9 +1,10 @@
-import { EnqueteService } from './../enquete.service';
 import { Component, OnInit } from '@angular/core';
 import { Message, MessageService, ConfirmationService, MenuItem } from '../../../../node_modules/primeng/api';
 import { Router, ActivatedRoute } from '../../../../node_modules/@angular/router';
 import { HttpClient } from '../../../../node_modules/@angular/common/http';
 import { EnqueteModels } from '../../models/enquete-models';
+import { GlobalService } from '../../uteis/global.service';
+import { EnqueteService } from './../enquete.service';
 
 @Component({
   selector: 'listar-enquete',
@@ -23,7 +24,7 @@ export class ListarEnqueteComponent implements OnInit {
 
   constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient,
     private messageService: MessageService, private confirmationService: ConfirmationService,
-    private enqueteService: EnqueteService) { }
+    private globalService: GlobalService,private enqueteService: EnqueteService) { }
 
 
   ngOnInit() {
@@ -54,18 +55,21 @@ export class ListarEnqueteComponent implements OnInit {
   buscarListaEnquete() {    
     this.enqueteService.getEnquete(this.filtroEnquete.dataInicio.toString(), this.filtroEnquete.dataFim.toString())
     .subscribe((res:any) => {      
-      this.enqueteService.listaEnquete = res.map(this.converteData) as EnqueteModels[];      
+      this.enqueteService.listaEnquete = res.map(this.converteData) as EnqueteModels[];
+      if(this.enqueteService.listaEnquete.length == 0){
+        this.globalService.mensagem('warn', 'Alerta:', 'Nenhum Registro Encontrado.');
+      }      
     });    
   }
 
   aoSalvarFormularioEnquete(sucesso: boolean) {
     if(sucesso == true){
       this.formularioEnquete = false;
-      this.mensagem('success', 'Sucesso:', 'Cadastro de enquete realizado com sucesso.');
+      this.globalService.mensagem('success', 'Sucesso:', 'Cadastro de enquete realizado com sucesso.');
       this.buscarListaEnquete();
     } else {
       this.formularioEnquete = false;
-      this.mensagem('error', 'Erro:', 'Nao foi possivel realizar o cadastro da enquete.');
+      this.globalService.mensagem('error', 'Erro:', 'Nao foi possivel realizar o cadastro da enquete.');
     }
     
   }
@@ -73,21 +77,21 @@ export class ListarEnqueteComponent implements OnInit {
   aoAlterarEnquete(sucesso: boolean){
     if(sucesso == true){
       this.alterarEnquete = false;
-      this.mensagem('success', 'Sucesso:', 'Alteracao de enquete realizado com sucesso.');
+      this.globalService.mensagem('success', 'Sucesso:', 'Alteracao de enquete realizado com sucesso.');
       this.buscarListaEnquete();
   } else {
     this.formularioEnquete = false;
-    this.mensagem('error', 'Erro:', 'Nao foi possivel realizar a alteracao da enquete.');
+    this.globalService.mensagem('error', 'Erro:', 'Nao foi possivel realizar a alteracao da enquete.');
   }
 }
 
   excluirEnquete(_id: string) {
     this.enqueteService.excluirEnquete(_id)
     .subscribe(res => {
-      this.mensagem('success', 'Sucesso:', 'Enquete excluida com sucesso.');        
+      this.globalService.mensagem('success', 'Sucesso:', 'Enquete excluida com sucesso.');        
       this.buscarListaEnquete(); 
     },(error) => {
-      this.mensagem('error', 'Erro:', 'Nao foi possivel realizar a exclusao da enquete');        
+      this.globalService.mensagem('error', 'Erro:', 'Nao foi possivel realizar a exclusao da enquete');        
     }
   );
 }   

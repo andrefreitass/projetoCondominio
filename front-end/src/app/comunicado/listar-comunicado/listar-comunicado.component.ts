@@ -1,3 +1,4 @@
+import { GlobalService } from './../../uteis/global.service';
 import { Component, OnInit } from '@angular/core';
 import { Message, ConfirmationService, MenuItem } from 'primeng/api';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -24,8 +25,8 @@ export class ListarComunicadoComponent implements OnInit {
   private menu: MenuItem[];
 
   constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient,
-    private confirmationService: ConfirmationService,private messageService: MessageService,
-    private comunicadoService: ComunicadoService) { }
+    private confirmationService: ConfirmationService,private globalService: GlobalService,
+    private messageService: MessageService, private comunicadoService: ComunicadoService) { }
 
   ngOnInit() {
     this.buscarListaComunicado();   
@@ -55,28 +56,31 @@ export class ListarComunicadoComponent implements OnInit {
     this.comunicadoService.getComunicado(this.filtroComunicado.dataInicio.toString(), this.filtroComunicado.dataFim.toString())
     .subscribe((res:any) => {      
       this.comunicadoService.listaComunicado = res.map(this.converteDataComunicado) as ComunicadoModels[];
+      if(this.comunicadoService.listaComunicado.length == 0){
+        this.globalService.mensagem('warn', 'Alerta:', 'Nenhum Registro Encontrado.');
+      }      
     });    
   }
 
   aoSalvarFormularioComunicado(sucesso: boolean) {
     if(sucesso == true){    
     this.formularioComunicado = false;
-    this.mensagem('success', 'Sucesso:', 'Cadastro de comunicado realizado com sucesso.');
+    this.globalService.mensagem('success', 'Sucesso:', 'Cadastro de comunicado realizado com sucesso.');
     this.buscarListaComunicado();
   }else{
       this.formularioComunicado = false;
-      this.mensagem('error', 'Erro:', 'Erro ao cadastrar o comunicado.');
+      this.globalService.mensagem('error', 'Erro:', 'Erro ao cadastrar o comunicado.');
     }
   }
 
   aoAlterarComunicado(sucesso: boolean){
     if(sucesso == true){
     this.alterarComunicado = false;
-    this.mensagem('success', 'Sucesso:', 'Alteracao de comunicado realizado com sucesso.');
+    this.globalService.mensagem('success', 'Sucesso:', 'Alteracao de comunicado realizado com sucesso.');
     this.buscarListaComunicado();
     } else {
       this.alterarComunicado = false;
-      this.mensagem('error', 'Erro:', 'Erro ao alterar o comunicado.');
+      this.globalService.mensagem('error', 'Erro:', 'Erro ao alterar o comunicado.');
     }
     
   }
@@ -84,10 +88,10 @@ export class ListarComunicadoComponent implements OnInit {
   excluirComunicado(_id: string) {
     this.comunicadoService.excluirComunicado(_id)
     .subscribe(res => {
-      this.mensagem('success', 'Sucesso:', 'Comunicado excluido com sucesso.');        
+      this.globalService.mensagem('success', 'Sucesso:', 'Comunicado excluido com sucesso.');        
       this.buscarListaComunicado(); 
     },(error) => {
-      this.mensagem('error', 'Erro:', 'Nao foi possivel realizar a exclusao do comunicado');        
+      this.globalService.mensagem('error', 'Erro:', 'Nao foi possivel realizar a exclusao do comunicado');        
     }
   );
 }  
@@ -95,7 +99,7 @@ export class ListarComunicadoComponent implements OnInit {
 confirmacaoExclusaoComunicado() {
   this.messageService.clear();
   this.messageService.add({key: 'modalConfirmacaoExclusao', sticky: true, severity:'warn',
-   summary:'Tem certeza que deseja excluir o comunicado?', detail:'Confirme para prosseguir'});
+   summary:'Tem certeza que deseja excluir o comuniccado?', detail:'Confirme para prosseguir'});
 } 
 
 aoConfirmarExclusaoComunicado(sucesso: boolean) { 
@@ -106,10 +110,5 @@ aoConfirmarExclusaoComunicado(sucesso: boolean) {
     this.messageService.clear('modalConfirmacaoExclusao');
   }  
 }
-
-  mensagem(tipoSeverity: string, titulo: string, txtMensagem: string) {    
-    this.messageService.add({severity: tipoSeverity, summary: titulo, detail:txtMensagem});    
-  }
-
 
 }

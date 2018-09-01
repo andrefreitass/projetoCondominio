@@ -26,6 +26,7 @@
 <br>
 <!--Dados de Resposta-->
 
+<div [hidden]="enqueteService?.listaEnquete?.length == 0">
 <p-fieldset legend="Lista de Enquete">
     <p-table [value]="enqueteService.listaEnquete">
         <ng-template pTemplate="header">
@@ -50,11 +51,8 @@
             </tr>
         </ng-template>
     </p-table>
-
- 
-    <div *ngIf="enqueteService?.listaEnquete?.length == 0">
-        Nenhum registro cadastrado
-    </div>
+</p-fieldset>
+</div>
 
 <!--   MODALS -->
 
