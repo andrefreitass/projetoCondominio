@@ -19,8 +19,7 @@ import {AccordionModule} from 'primeng/accordion';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PanelMenuModule } from 'primeng/panelmenu'; 
 import { CardModule } from 'primeng/card';
-
-
+import { LoginModule } from './admin/login/login.module';
 
 
 
@@ -41,6 +40,7 @@ import { CardModule } from 'primeng/card';
     AdvertenciaModule,
     MultaModule,
     FuncionarioModule,
+    LoginModule,
     //Imports PrimeNG
     AccordionModule,
     BrowserModule,

@@ -1,5 +1,11 @@
 import { Component } from '@angular/core';
+
+//==Imports Funcionalidades ===
+import { AuthService } from './admin/login/auth.service';
+
+//== Impots PrimeNG ===
 import { MenuItem } from 'primeng/api';
+
 
 @Component({
   selector: 'app-root',
@@ -11,7 +17,16 @@ export class AppComponent {
   
   items: MenuItem[];
 
+  mostrarMenu: boolean = false;
+  constructor(private authService: AuthService){
+  }
+
   ngOnInit() {
+
+    this.authService.mostrarMenuEmitter.subscribe(
+        mostrar => this.mostrarMenu = mostrar
+    );
+    
       this.items = [
           {
               label: 'Administração',

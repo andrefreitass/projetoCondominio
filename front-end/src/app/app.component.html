@@ -21,7 +21,7 @@
                 <router-outlet></router-outlet>
             </p-card>
         </aside>
-        <div class="div">
+        <div class="div" *ngIf="mostrarMenu">
             <p-panelMenu [model]="items" [style]="{'width':'240px'}"></p-panelMenu>
         </div>
         <footer class="footer">

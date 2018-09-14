@@ -1,0 +1,24 @@
+<br>
+<div style="background: #e3f2fd; width: 30%; border-radius: 20px; margin: 0 auto;">
+  <div style="background: #90caf9; height: 100px;">
+    <div  style="padding-left: 10px; padding-top: 10%;"> <span><h3>Dados de acesso:</h3></span> </div>
+  </div>
+
+  <br /><br />
+  <span class="ui-float-label" style="margin-left: 10px;">
+      <input id="usuario" type="text" [(ngModel)]="usuario" pInputText style=" width: 95%; height: 30px;"> 
+      <label for="usuario">Usuário</label>
+  </span>
+  <br />
+  <span class="ui-float-label" style="margin-left: 10px;">
+      <input id="senha" type="password" [(ngModel)]="senha" pInputText style=" width: 95%; height: 30px;"> 
+      <label for="senha">Senha</label>
+  </span>
+  <br >
+  <p-button label="Login" type="submit" (click)="fazerLogin();" styleClass="ui-button-success" style="padding-left: 10px;" ></p-button>
+  <br><br>
+  <div style="padding-left: 14%; font-size: small;">
+    <a href="#"> Esqueceu sua senha?</a> | <a href="#"> Não possue cadastro?</a>
+  </div>
+  <br><br><br>
+</div>
