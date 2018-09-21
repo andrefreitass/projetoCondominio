@@ -12,14 +12,14 @@ import { PautaModule } from './pauta/pauta.module';
 import { EnqueteModule } from './enquete/enquete.module';
 import { AdvertenciaModule } from './advertencia/advertencia.module';
 import { MultaModule } from './multa/multa.module'
-import { FuncionarioModule } from './funcionario/funcionario.module'
+import { FuncionarioModule } from './funcionario/funcionario.module';
+import { LoginModule } from './admin/login/login.module';
 
 //Imports PrimeNG
 import {AccordionModule} from 'primeng/accordion';     
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PanelMenuModule } from 'primeng/panelmenu'; 
 import { CardModule } from 'primeng/card';
-import { LoginModule } from './admin/login/login.module';
 
 
 
