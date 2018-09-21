@@ -8,20 +8,21 @@
     <title>Pagina incial</title>
 </head>
 
-<body>
+<body id="pagina">
     <section id="main">
         <header class="header">
             Topo
         </header>
-        <div class="perfil">
-            Perfil
+        <div class="perfil" >
+            <img src="./../assets/imagem/SemFoto.png" style="width: 35%;"/>
         </div>
         <aside class="aside">
-            <p-card>
+            <div id="conteudo">
                 <router-outlet></router-outlet>
-            </p-card>
+            </div>    
         </aside>
-        <div class="div" *ngIf="mostrarMenu">
+        <div class="div" >
+            <label for="">Menu</label>
             <p-panelMenu [model]="items" [style]="{'width':'240px'}"></p-panelMenu>
         </div>
         <footer class="footer">
@@ -31,4 +32,4 @@
 
 </body>
 
-</html>
+</html><!-- *ngIf="mostrarMenu" -->

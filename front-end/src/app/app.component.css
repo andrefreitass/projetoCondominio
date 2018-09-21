@@ -1,6 +1,7 @@
 #main{
     min-height: 100%;
     display: grid;
+    
     grid-template-columns: 250px;
     grid-template-rows: 15vh 1fr auto;
     grid-template-areas: 
@@ -10,29 +11,49 @@
 }
 .perfil{
     grid-area: perfil;
-    background-color: #876dc2;
-    border: 5px solid #120e14;
+    background-color: #e1f5fe;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+    margin-bottom: 1%;
 }
 .header{
     grid-area: header;
-    background-color: #876dc2
-    ;
-    border: 5px solid #120e14;
+
 }
 .aside{
     grid-area: aside;
-    background-color: #9C9C9C;
-    border: 5px solid #120e14;
 }
 .div{
     grid-area: div;
-    background-color: #9C9C9C;
-    border: 5px solid #120e14;
+    background-color: transparent !important;
+    background-color: whitesmoke;border-right: 2px groove;
+    border-top-right-radius: 20px;
 }
 .footer{
     text-align: center;
     grid-area: footer;
-    background-color: #876dc2;
+   
     height: 40px;
    
+}
+#conteudo {/*
+    background-color: #e1f5fe ;
+    background-image: linear-gradient( to right, #e1f5fe  , #fafafa, #e1f5fe);
+    margin-right: 1%;
+    padding-top: 5%;
+    padding-bottom: 3%;
+    */
+    width: 90%;
+    padding-left: 2%;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    border-radius: 20px;
+}
+#pagina{
+    background-color: #00897b ;
+    background-image: linear-gradient( to bottom, #00897b , #4db6ac, #b2dfdb    , #eceff1  );
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
 }
