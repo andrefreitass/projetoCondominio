@@ -1,5 +1,6 @@
+import { GlobalService } from './../../uteis/global.service';
 import { Component, OnInit } from '@angular/core';
-import { Message, ConfirmationService } from 'primeng/api';
+import { Message, ConfirmationService, MenuItem  } from 'primeng/api';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { MessageService } from 'primeng/components/common/messageservice';
@@ -21,9 +22,11 @@ export class ListarFuncionarioComponent implements OnInit {
   alterarFuncionario: boolean = false;
   detalharFuncionario: boolean = false;
   msgs: Message[] = [];
+  private menu: MenuItem[];
 
   constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient,
-    private confirmationService: ConfirmationService,private funcionarioService: FuncionarioService) { }
+    private confirmationService: ConfirmationService,private messageService: MessageService,
+    private globalService: GlobalService, private funcionarioService: FuncionarioService) { }
 
   ngOnInit() {
     this.buscarListaFuncionario();    
@@ -52,29 +55,33 @@ export class ListarFuncionarioComponent implements OnInit {
   buscarListaFuncionario() {    
     this.funcionarioService.getFuncionario(this.filtroFuncionario.pesquisaCpf.toString())
     .subscribe((res:any) => {      
-      this.funcionarioService.listaFuncionario = res as FuncionarioModels[];      
+      this.funcionarioService.listaFuncionario = res as FuncionarioModels[];
+      if(this.funcionarioService.listaFuncionario.length == 0){
+        this.globalService.mensagem('warn', 'Alerta:', 'Nenhum Registro Encontrado.');
+        
+      }      
     });    
   }
 
   aoSalvarFormularioFuncionario(sucesso: boolean) {
     if(sucesso == true){    
     this.formularioFuncionario = false;
-    this.mensagem('success', 'Sucesso:', 'Cadastro de funcionario realizado com sucesso.');
+    this.globalService.mensagem('success', 'Sucesso:', 'Cadastro de funcionario realizado com sucesso.');
     this.buscarListaFuncionario();
   }else{
       this.formularioFuncionario = false;
-      this.mensagem('error', 'Erro:', 'Erro ao cadastrar o funcionario.');
+      this.globalService.mensagem('error', 'Erro:', 'Erro ao cadastrar o funcionario.');
     }
   }
 
   aoAlterarFuncionario(sucesso: boolean){
     if(sucesso == true){
     this.alterarFuncionario = false;
-    this.mensagem('success', 'Sucesso:', 'Alteracao de funcionario realizado com sucesso.');
+    this.globalService.mensagem('success', 'Sucesso:', 'Alteracao de funcionario realizado com sucesso.');
     this.buscarListaFuncionario();
     } else {
       this.alterarFuncionario = false;
-      this.mensagem('error', 'Erro:', 'Erro ao alterar o funcionario.');
+      this.globalService.mensagem('error', 'Erro:', 'Erro ao alterar o funcionario.');
     }
     
   }
@@ -82,25 +89,26 @@ export class ListarFuncionarioComponent implements OnInit {
   excluirFuncionario(_id: string) {
     this.funcionarioService.excluirFuncionario(_id)
     .subscribe(res => {
-      this.mensagem('success', 'Sucesso:', 'funcionario excluido com sucesso.');        
+      this.globalService.mensagem('success', 'Sucesso:', 'Funcionario excluido com sucesso.');        
       this.buscarListaFuncionario(); 
     },(error) => {
-      this.mensagem('error', 'Erro:', 'Nao foi possivel realizar a exclusao do funcionario');        
+      this.globalService.mensagem('error', 'Erro:', 'Nao foi possivel realizar a exclusao do Funcionario');        
     }
   );
-}   
-   
-  confirmaExclusaoFuncionario() {
-    this.confirmationService.confirm({
-      message: 'Deseja excluir o funcionario?',
-      accept: () => {        
-        this.excluirFuncionario(this.idFuncionario);
-      }
-    });
-  }
-  
-  mensagem(tipoSeverity: string, titulo: string, txtMensagem: string) {
-    this.msgs = [];
-    this.msgs.push({ severity: tipoSeverity, summary: titulo, detail: txtMensagem });
-  }
+}  
+
+confirmacaoExclusaoFuncionario() {
+  this.messageService.clear();
+  this.messageService.add({key: 'modalConfirmacaoExclusao', sticky: true, severity:'warn',
+   summary:'Tem certeza que deseja excluir o Funcionario?', detail:'Confirme para prosseguir'});
+} 
+
+aoConfirmarExclusaoFuncionario(sucesso: boolean) { 
+  if(sucesso == true) {
+    this.excluirFuncionario(this.idFuncionario);  
+  this.messageService.clear('modalConfirmacaoExclusao');
+  } else {
+    this.messageService.clear('modalConfirmacaoExclusao');
+  }  
+}
 }

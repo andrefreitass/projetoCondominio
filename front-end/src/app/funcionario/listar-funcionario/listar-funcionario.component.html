@@ -1,6 +1,6 @@
 <form (ngSubmit)="buscarListaFuncionario()" #funcionarioForm="ngForm">
-    <p-messages [(value)]="msgs"></p-messages>
-    <p-fieldset legend="Dados Para Consultar  Funcionario">
+    <p-growl [(value)]="msgs"></p-growl>
+    <p-fieldset legend="Dados Para Consultar Funcionario">
    <!--
  -->
       <div>
@@ -19,7 +19,7 @@
   <br>
   <br>
   <!--Dados de Resposta-->
-  
+  <div [hidden]="funcionarioService?.listaFucnionario?.length == 0"></div>
   <p-fieldset legend="Lista de Funcionario">
     <p-table [value]="funcionarioService.listaFuncionario">
         <ng-template pTemplate="header">
@@ -34,24 +34,26 @@
   
         <ng-template pTemplate="body" let-funcionario>
             <tr>
-                <td>{{ funcionario.data | date:'dd/MM/yyyy' }}</td>
+                <td style="text-align:center">{{ funcionario.data | date:'dd/MM/yyyy' }}</td>
                 <td>{{ funcionario.nome }}</td>
                 <td>{{ funcionario.funcao }}</td>
                 <td>{{ funcionario.cpf }}</td>
                 <td>
-                    <button type="text" (click)="selecionarFuncionario(funcionario); modalFuncionario('detalhar');" pButton icon="pi pi-search"></button>
-                    <button type="text" (click)="selecionarFuncionario(funcionario);modalFuncionario('alterar')" pButton icon="pi pi-refresh"></button>
-                    <button type="text" (click)="recebeIdFuncionario(funcionario._id);confirmaExclusaoFuncionario()" pButton icon="pi pi-times"></button>
+                    <div style="margin: 0 auto;">
+                    <button type="text" (click)="selecionarFuncionario(funcionario); modalFuncionario('detalhar');" pButton icon="pi pi-search" style="margin-right:10px;"></button>
+                    <button type="text" (click)="selecionarFuncionario(funcionario);modalFuncionario('alterar')" pButton icon="pi pi-refresh" class="ui-button-success" style="margin-right:10px;"></button>
+                    <button type="text" (click)="recebeIdFuncionario(funcionario._id);confirmacaoExclusaoComunicado()" pButton icon="pi pi-times" class="ui-button-danger" style="margin-right:10px;"></button>
+                    </div>
                 </td>
             </tr>
         </ng-template>
     </p-table>
   
-  
+  <!--
     <div *ngIf="funcionarioService?.listaFuncionario?.length == 0">
         Nenhum registro cadastrado
     </div>
-  
+  -->
   <!--   MODALS -->
   
     <p-dialog header="Cadastro de Funcionario" [(visible)]="formularioFuncionario" [modal]="true" [responsive]="true" [width]="750"
@@ -60,7 +62,7 @@
     </p-dialog>
   
   
-    <p-dialog header="Detalhar Funcionario" [(visible)]="detalharFuncionario" [modal]="true" [responsive]="true" [width]="500"
+    <p-dialog header="Detalhar Funcionario" [(visible)]="detalharFuncionario" [modal]="true" [responsive]="true" [width]="750"
         [minWidth]="600" [minY]="600" [baseZIndex]="10000">
             <detalhar-funcionario  [funcionario]="funcionario"></detalhar-funcionario>         
     </p-dialog>
@@ -72,3 +74,21 @@
     </p-dialog>
   
     <p-confirmDialog header="Exclusão de Funcionario" icon="pi pi-exclamation-triangle" width="425"></p-confirmDialog>
+
+    <p-toast position="center" key="modalConfirmacaoExclusao" (onClose)="aoConfirmarExclusaoFuncionario()" [modal]="true" [baseZIndex]="5000">
+        <ng-template let-message pTemplate="message">
+            <div style="text-align: center">
+                <i class="pi pi-exclamation-triangle" style="font-size: 3em"></i>
+                <h3>{{message.summary}}</h3>
+                <p>{{message.detail}}</p>
+            </div>
+            <div class="ui-g ui-fluid">
+                <div class="ui-g-6">
+                    <button type="button" pButton (click)="aoConfirmarExclusaoFuncionario(true)" label="Yes" class="ui-button-success"></button>
+                </div>
+                <div class="ui-g-6">
+                    <button type="button" pButton (click)="aoConfirmarExclusaoFuncionario()" label="No" class="ui-button-secondary"></button>
+                </div>
+            </div>
+        </ng-template>
+    </p-toast>
