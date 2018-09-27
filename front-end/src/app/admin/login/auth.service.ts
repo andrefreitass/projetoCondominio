@@ -20,7 +20,7 @@ export class AuthService {
 
     if(funcionario.nome == 'teste'){
       this.http.post(this.URL_API, funcionario).subscribe(
-        res =>{
+        res => {
           console.log(res);
         }, error => {
           console.log('Falha ao validar usuário.');

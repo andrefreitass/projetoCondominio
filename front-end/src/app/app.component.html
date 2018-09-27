@@ -9,21 +9,26 @@
 </head>
 
 <body id="pagina">
+
     <section id="main">
         <header class="header">
             Topo
         </header>
-        <div class="perfil" >
-            <img src="./../assets/imagem/SemFoto.png" style="width: 35%;"/>
-        </div>
+        
         <aside class="aside">
-            <div id="conteudo">
-                <router-outlet></router-outlet>
-            </div>    
+            <div class="conteudo">
+                <p-card>
+                    <router-outlet></router-outlet>
+                </p-card>
+            </div>
         </aside>
         <div class="div" >
+            <div class="perfil" >
+                <img src="./../assets/imagem/SemFoto.png" style="width: 35%;"/>
+            </div>
+
             <label for="">Menu</label>
-            <p-panelMenu [model]="items" [style]="{'width':'240px'}"></p-panelMenu>
+            <p-panelMenu [model]="items" [style]="{'width':'240px;'}" class="menu">oi</p-panelMenu>
         </div>
         <footer class="footer">
             Rodape
