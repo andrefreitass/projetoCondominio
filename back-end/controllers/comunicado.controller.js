@@ -1,6 +1,28 @@
 var comunicadoModels = require('../models/comunicado.models')
 var comunicadoCrtl = {};
 
+
+comunicadoCrtl.buscaComunicadoDataInicio = async (req,res) => {
+    
+    let {dataInicio} = req.query;        
+    let listaComunicado = await comunicadoModels.find({
+        data: {            
+            $gte: dataInicio
+        }
+    });    
+    res.json(listaComunicado);
+}
+
+comunicadoCrtl.buscaComunicadoDataFim = async (req,res) => {
+    let {dataFim} = req.query;
+    let listaComunicado = await comunicadoModels.find({
+        data:{
+            $lte: dataFim
+        }
+    })    
+    res.json(listaComunicado);
+}
+
 comunicadoCrtl.getComunicado = async (req, res) =>{
 
     let {dataInicio, dataFim} = req.query;
@@ -10,8 +32,6 @@ comunicadoCrtl.getComunicado = async (req, res) =>{
             $gte: dataInicio
         }
     });
-
-    console.log(listaComunicado);
     res.json(listaComunicado);
 }
 

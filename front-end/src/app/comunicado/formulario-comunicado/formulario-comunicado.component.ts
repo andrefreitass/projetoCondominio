@@ -1,3 +1,4 @@
+import { GlobalService } from './../../uteis/global.service';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Message } from 'primeng/api';
 import { HttpClient } from '@angular/common/http';
@@ -22,10 +23,11 @@ export class FormularioComunicadoComponent implements OnInit {
   consultarPauta: boolean = false;
 
   constructor(private http: HttpClient, private router: Router, private messageService: MessageService,
-    private comunicadoService: ComunicadoService) { }
+    private comunicadoService: ComunicadoService, private globalService: GlobalService) { }
 
   ngOnInit() {   
     this.comunicado = new ComunicadoModels();
+    this.globalService.convertCalendario();
   }
 
 

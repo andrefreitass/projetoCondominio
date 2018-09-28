@@ -5,6 +5,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 
 import { ComunicadoService } from './../comunicado.service';
 import { ComunicadoModels } from '../../models/comunicado-models';
+import { GlobalService } from '../../uteis/global.service';
 
 @Component({
   selector: 'alterar-comunicado',
@@ -19,11 +20,12 @@ export class AlterarComunicadoComponent implements OnInit {
   
 
   constructor(private http: HttpClient, private router: Router, private route: ActivatedRoute,
-    private comunicadoService: ComunicadoService) {
+    private comunicadoService: ComunicadoService, private globalService: GlobalService) {
             
      }
 
-  ngOnInit() {    
+  ngOnInit() {   
+    this.globalService.convertCalendario(); 
   }
 
 atualizarComunicado(comunicado) {   

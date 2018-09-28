@@ -3,16 +3,16 @@
     <p-growl [(value)]="msgs"></p-growl>
     <p-fieldset legend="Dados Para Consultar os Comunicados">
 
-        <div class="ui-g-12 ui-md-2" class="left">
+        <div class="left">
             <h3>Data Inicio</h3>
-            <p-calendar [showIcon]="true" required name="dataInicio" [(ngModel)]="filtroComunicado.dataInicio" tabindex="0" [disabledDates]="invalidDates"
-                [disabledDays]="[0,6]" readonlyInput="true" dateFormat="dd/mm/yy"></p-calendar>
+            <p-calendar [showIcon]="true"  name="dataInicio" [(ngModel)]="filtroComunicado.dataInicio" tabindex="0"
+                [disabledDays]="[0,6]"  dateFormat="dd/mm/yy" [locale]="globalService.pt" ></p-calendar>
         </div>
 
-        <div class="ui-g-12 ui-md-2" class="center">
+        <div class="center">
             <h3>Data Fim</h3>
-            <p-calendar [showIcon]="true" required name="dataFim" [(ngModel)]="filtroComunicado.dataFim" tabindex="0" [disabledDates]="invalidDates"
-                [disabledDays]="[0,6]" readonlyInput="true" dateFormat="dd/mm/yy"></p-calendar>
+            <p-calendar [showIcon]="true"  name="dataFim" [(ngModel)]="filtroComunicado.dataFim" tabindex="0" 
+                [disabledDays]="[0,6]" dateFormat="dd/mm/yy" [locale]="globalService.pt"></p-calendar>
         </div>
 
         <br>
