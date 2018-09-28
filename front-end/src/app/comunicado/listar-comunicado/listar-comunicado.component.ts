@@ -33,6 +33,13 @@ export class ListarComunicadoComponent implements OnInit {
     this.globalService.convertCalendario();
   }
 
+  recebeIdComunicado(idComunicado) {
+    this.idComunicado = idComunicado;
+  }
+  selecionarComunicado(comunicado) {
+    this.comunicado = comunicado;
+  }
+
   modalComunicado(modal: string) {
     if (modal == "formulario") {
       this.formularioComunicado = true;
@@ -125,5 +132,5 @@ export class ListarComunicadoComponent implements OnInit {
   }
 
 
-  
+
 }
