@@ -10,33 +10,48 @@ import { environment } from '../../environments/environment';
 })
 export class LazerService {
 
-  listaLazer: LazerModels[];
-
+  listaLazer: LazerModels [];
   readonly URL_API = `${environment.url_base}/lazer`;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient) {        
+   }
+
+   getLazerDataInicio(dataInicio: string) {     
+    const options = 
+    { params: new HttpParams()
+      .set('dataInicio', dataInicio)      
+    } ;         
+    return this.http.get(this.URL_API+'/por-inicio/dataInicio'+ dataInicio, options);    
   }
 
-//get 
-getLazer(dataInicio: string, dataFim: string) {
-  const options =
+  getLazerDataFim(dataFim: string){
+    const options = 
     {
       params: new HttpParams()
-        .set('dataInicio', dataInicio)
         .set('dataFim', dataFim)
-    };
-  return this.http.get(this.URL_API, options);
-}
-//post
-InserirLazer(lazer: LazerModels) {
-  return this.http.post(this.URL_API, lazer);
-}
-//put 
-atualizarLazer(lazer: LazerModels) {
+    };    
+    return this.http.get(this.URL_API+'/por-fim/dataFim' + dataFim, options)
+  }
+
+   getLazer(dataInicio: string, dataFim: string) {
+    const options = 
+    { params: new HttpParams()
+      .set('dataInicio', dataInicio)
+      .set('dataFim', dataFim) 
+    } ;
+    return this.http.get(this.URL_API, options);
+  }
+
+  inserirLazer(lazer: LazerModels) {
+    return this.http.post(this.URL_API, lazer);
+  }
+
+  atualizarLazer(lazer: LazerModels) {
     return this.http.put(this.URL_API + `/${lazer._id}`, lazer);
   }
-//delete
-excluirLazer(_id: string) {
-    return this.http.delete(this.URL_API + `/${_id}`);
+
+  excluirLazer(_id: string) {    
+      return this.http.delete(this.URL_API +`/${_id}`);
   }
+  
 }

@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 // Meus imports
 import { MultaService } from './../multa.service';
 import { MultaModels } from '../../models/multa-models';
+import { GlobalService } from './../../uteis/global.service';
 
 // Imports do primeng
 import { MessageService } from 'primeng/components/common/messageservice';
@@ -23,12 +24,14 @@ export class FormularioMultaComponent implements OnInit {
   @Output() aoSalvar: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   multa: MultaModels;
+  consultarPauta: boolean = false;
 
   constructor(private http: HttpClient, private router: Router, private messageService: MessageService,
-    private multaService: MultaService) { }
+    private multaService: MultaService, private globalService: GlobalService) { }
 
   ngOnInit() {   
     this.multa = new MultaModels();
+    this.globalService.convertCalendario();
   }
 
 
@@ -37,13 +40,23 @@ export class FormularioMultaComponent implements OnInit {
       .subscribe(res => {        
         this.resetarFormulario(multa);
         this.aoSalvar.emit(true);
-      }, error => this.aoSalvar.emit(false))
+      }, error => {
+        this.aoSalvar.emit(false);
+        this.resetarFormulario(multa);
+      } 
+    );
   }
 
   resetarFormulario(multa) {
     if (multa) {
       multa.reset();
       this.multa = new MultaModels();
+    }
+  }
+
+  modalMulta(modal: string) {
+    if (modal == "consultarPauta"){
+      this.consultarPauta = true;
     }
   }
 

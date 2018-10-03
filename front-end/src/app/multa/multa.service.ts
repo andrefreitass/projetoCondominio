@@ -17,6 +17,23 @@ export class MultaService {
   constructor(private http: HttpClient) {        
    }
 
+   getMultaDataInicio(dataInicio: string) {     
+    const options = 
+    { params: new HttpParams()
+      .set('dataInicio', dataInicio)      
+    } ;         
+    return this.http.get(this.URL_API+'/por-inicio/dataInicio'+ dataInicio, options);    
+  }
+
+  getMultaDataFim(dataFim: string){
+    const options = 
+    {
+      params: new HttpParams()
+        .set('dataFim', dataFim)
+    };    
+    return this.http.get(this.URL_API+'/por-fim/dataFim' + dataFim, options)
+  }
+
    getMulta(dataInicio: string, dataFim: string) {
     const options = 
     { params: new HttpParams()

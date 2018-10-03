@@ -5,6 +5,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 //Meus imports 
 import { AdvertenciaService } from './../advertencia.service';
 import { AdvertenciaModels } from '../../models/advertencia-models';
+import { GlobalService } from '../../uteis/global.service';
 
 //Imports do primeng 
 import { Message } from 'primeng/api';
@@ -22,11 +23,12 @@ export class AlterarAdvertenciaComponent implements OnInit {
   
 
   constructor(private http: HttpClient, private router: Router, private route: ActivatedRoute,
-    private advertenciaService: AdvertenciaService) {
+    private advertenciaService: AdvertenciaService, private globalService: GlobalService) {
             
      }
 
-  ngOnInit() {    
+  ngOnInit() { 
+    this.globalService.convertCalendario();   
   }
 
 atualizarAdvertencia(advertencia) {          

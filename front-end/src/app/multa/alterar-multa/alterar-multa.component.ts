@@ -5,6 +5,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 // Meus imports
 import { MultaService } from './../multa.service';
 import { MultaModels } from '../../models/multa-models';
+import { GlobalService } from '../../uteis/global.service';
 
 // Imports do primeng
 import { Message } from 'primeng/api';
@@ -22,11 +23,12 @@ export class AlterarMultaComponent implements OnInit {
   
 
   constructor(private http: HttpClient, private router: Router, private route: ActivatedRoute,
-    private multaService: MultaService) {
+    private multaService: MultaService, private globalService: GlobalService) {
             
      }
 
-  ngOnInit() {    
+  ngOnInit() {  
+    this.globalService.convertCalendario();   
   }
 
 atualizarMulta(multa) {   

@@ -5,6 +5,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 //Meus imports
 import { LazerService } from './../lazer.service';
 import { LazerModels } from '../../models/lazer-models';
+import { GlobalService } from '../../uteis/global.service';
 
 //Imports do primeng
 import { Message } from 'primeng/api';
@@ -22,11 +23,12 @@ export class AlterarLazerComponent implements OnInit {
   
 
   constructor(private http: HttpClient, private router: Router, private route: ActivatedRoute,
-    private lazerService: LazerService) {
+    private lazerService: LazerService, private globalService: GlobalService) {
             
      }
 
-  ngOnInit() {    
+  ngOnInit() {  
+    this.globalService.convertCalendario();   
   }
 
 atualizarLazer(lazer) {   

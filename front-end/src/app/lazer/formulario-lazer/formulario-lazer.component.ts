@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 //Meus imports
 import { LazerService } from '../lazer.service';
 import { LazerModels } from '../../models/lazer-models';
+import { GlobalService } from './../../uteis/global.service';
 
 //Imports
 import { MessageService } from 'primeng/components/common/messageservice';
@@ -22,21 +23,27 @@ export class FormularioLazerComponent implements OnInit {
   @Output() aoSalvar: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   lazer: LazerModels;
+  consultarPauta: boolean = false;
 
   constructor(private http: HttpClient, private router: Router, private messageService: MessageService,
-    private lazerService: LazerService) { }
+    private lazerService: LazerService, private globalService: GlobalService) { }
 
   ngOnInit() {   
     this.lazer = new LazerModels();
+    this.globalService.convertCalendario();
   }
 
 
   salvarLazer(lazer) {    
-    this.lazerService.InserirLazer(lazer.value)
+    this.lazerService.inserirLazer(lazer.value)
       .subscribe(res => {        
         this.resetarFormulario(lazer);
         this.aoSalvar.emit(true);
-      }, error => this.aoSalvar.emit(false))
+      }, error => {
+        this.aoSalvar.emit(false);
+        this.resetarFormulario(lazer);
+      } 
+    );
   }
 
   resetarFormulario(lazer) {
@@ -46,4 +53,11 @@ export class FormularioLazerComponent implements OnInit {
     }
   }
 
+  modalLazer(modal: string) {
+    if (modal == "consultarPauta"){
+      this.consultarPauta = true;
+    }
+  }
+
 }
+

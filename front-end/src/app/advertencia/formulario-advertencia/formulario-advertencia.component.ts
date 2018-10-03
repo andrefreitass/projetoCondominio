@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 //Meus imports 
 import { AdvertenciaService } from './../advertencia.service';
 import { AdvertenciaModels } from '../../models/advertencia-models';
+import { GlobalService } from './../../uteis/global.service';
 
 //Imports do Primeng
 import { MessageService } from 'primeng/components/common/messageservice';
@@ -22,12 +23,14 @@ export class FormularioAdvertenciaComponent implements OnInit {
   @Output() aoSalvar: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   advertencia: AdvertenciaModels;
+  consultarPauta: boolean = false;
 
   constructor(private http: HttpClient, private router: Router, private messageService: MessageService,
-    private advertenciaService: AdvertenciaService) { }
+    private advertenciaService: AdvertenciaService, private globalService: GlobalService) { }
 
   ngOnInit() {   
     this.advertencia = new AdvertenciaModels();
+    this.globalService.convertCalendario();
   }
 
 
@@ -36,7 +39,11 @@ export class FormularioAdvertenciaComponent implements OnInit {
       .subscribe(res => {        
         this.resetarFormulario(advertencia);
         this.aoSalvar.emit(true);
-      }, error => this.aoSalvar.emit(false))
+      }, error => {
+        this.aoSalvar.emit(false);
+        this.resetarFormulario(advertencia);
+      } 
+    );
   }
 
   resetarFormulario(advertencia) {
@@ -46,4 +53,11 @@ export class FormularioAdvertenciaComponent implements OnInit {
     }
   }
 
+  modalAdvertencia(modal: string) {
+    if (modal == "consultarPauta"){
+      this.consultarPauta = true;
+    }
+  }
+
 }
+

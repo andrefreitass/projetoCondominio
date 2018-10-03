@@ -85,3 +85,18 @@
 #26333b
 
 */
+
+/*  alteraçoes da tabela  */
+.ui-table .ui-table-tbody > tr {
+    text-align: center;
+}
+
+.espaco-btn{
+    margin: 5px;;
+}
+
+.ui-table .ui-table-thead > tr > th{
+    background-color: #909bad;
+}
+
+/* fim  alteraçoes da tabela  */

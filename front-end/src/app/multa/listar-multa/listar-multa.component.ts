@@ -5,10 +5,11 @@ import { HttpClient } from '@angular/common/http';
 // Meus imports
 import { MultaService } from './../multa.service';
 import { MultaModels } from '../../models/multa-models';
+import { GlobalService } from './../../uteis/global.service';
 
 // Imports do primeng
 import { MessageService } from 'primeng/components/common/messageservice';
-import { Message, ConfirmationService } from 'primeng/api';
+import { Message, ConfirmationService, MenuItem } from 'primeng/api';
 
 
 @Component({
@@ -18,100 +19,122 @@ import { Message, ConfirmationService } from 'primeng/api';
 })
 export class ListarMultaComponent implements OnInit {
   
-  filtroMulta = {dataInicio: new Date(), dataFim: new Date()};
-  multa = {};  
+  filtroMulta = { dataInicio: new Date(), dataFim: new Date() };
+  multa = {};
   idMulta: any;
   formularioMulta: boolean = false;
   alterarMulta: boolean = false;
   detalharMulta: boolean = false;
   msgs: Message[] = [];
+  private menu: MenuItem[];
 
   constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient,
-    private confirmationService: ConfirmationService,private multaService: MultaService,
-    private messageService: MessageService) { }
+    private globalService: GlobalService, private messageService: MessageService,
+    private multaService: MultaService) { }
 
   ngOnInit() {
-    this.buscarListaMulta();    
+    this.buscarListaMulta();
+    this.globalService.convertCalendario();
   }
-  
+
   recebeIdMulta(idMulta) {
     this.idMulta = idMulta;
-  } 
-
+  }
   selecionarMulta(multa) {
     this.multa = multa;
   }
 
-  converteDataMulta = (r: any) => ({...r, data: new Date(r.data) });
-
   modalMulta(modal: string) {
-    if (modal == "formulario"){
+    if (modal == "formulario") {
       this.formularioMulta = true;
     } else if (modal == "alterar") {
       this.alterarMulta = true;
-    } else if (modal == "detalhar"){
+    } else if (modal == "detalhar") {
       this.detalharMulta = true;
-    }      
+    }
   }
 
-  buscarListaMulta() {    
-    this.multaService.getMulta(this.filtroMulta.dataInicio.toString(), this.filtroMulta.dataFim.toString())
-    .subscribe((res:any) => {      
-      this.multaService.listaMulta = res.map(this.converteDataMulta) as MultaModels[];
-    });    
+  buscarListaMulta() {
+    if (this.filtroMulta.dataInicio != null && this.filtroMulta.dataFim != null) {
+      this.multaService.getMulta(this.filtroMulta.dataInicio.toString(), this.filtroMulta.dataFim.toString())
+        .subscribe((res: any) => {
+          this.multaService.listaMulta = res.map(this.globalService.converteData) as MultaModels[];
+          if (this.multaService.listaMulta.length == 0) {
+            this.globalService.mensagem('warn', 'Alerta:', 'Nenhum Registro Encontrado.');
+          }
+        });
+    } else if (this.filtroMulta.dataInicio != null && this.filtroMulta.dataFim == null) {
+      this.multaService.getMultaDataInicio(this.filtroMulta.dataInicio.toString())
+        .subscribe((res: any) => {
+          this.multaService.listaMulta = res.map(this.globalService.converteData) as MultaModels[];
+          if (this.multaService.listaMulta.length == 0) {
+            this.globalService.mensagem('warn', 'Alerta:', 'Nenhum Registro Encontrado.');
+          }
+        });
+    } else if (this.filtroMulta.dataInicio == null && this.filtroMulta.dataFim != null) {
+      this.multaService.getMultaDataFim(this.filtroMulta.dataFim.toString())
+        .subscribe((res: any) => {
+          this.multaService.listaMulta = res.map(this.globalService.converteData) as MultaModels[];
+          if (this.multaService.listaMulta.length == 0) {
+            this.globalService.mensagem('warn', 'Alerta:', 'Nenhum Registro Encontrado.');
+          }
+        });
+    } else if (this.filtroMulta.dataInicio == null && this.filtroMulta.dataFim == null) {
+      this.globalService.mensagem('warn', 'Alerta:', 'A data inicio ou data fim deve ser informada.');
+    }
   }
 
   aoSalvarFormularioMulta(sucesso: boolean) {
-    if(sucesso == true){
+    if (sucesso == true) {
       this.formularioMulta = false;
-      this.mensagem('success', 'Sucesso:', 'Cadastro de multa realizado com sucesso.');
+      this.globalService.mensagem('success', 'Sucesso:', 'Cadastro de multa realizado com sucesso.');
       this.buscarListaMulta();
     } else {
       this.formularioMulta = false;
-      this.mensagem('error', 'Erro:', 'Nao foi possivel realizar o cadastro da multa.');
+      this.globalService.mensagem('error', 'Erro:', 'Erro ao cadastrar o multa.');
     }
-    
   }
 
-  aoAlterarMulta(sucesso: boolean){
-    if(sucesso == true){
+  aoAlterarMulta(sucesso: boolean) {
+    if (sucesso == true) {
       this.alterarMulta = false;
-      this.mensagem('success', 'Sucesso:', 'Alteracao de multa realizado com sucesso.');
+      this.globalService.mensagem('success', 'Sucesso:', 'Alteracao de multa realizado com sucesso.');
       this.buscarListaMulta();
-  } else {
-    this.formularioMulta = false;
-    this.mensagem('error', 'Erro:', 'Nao foi possivel realizar a alteracao da multa.');
+    } else {
+      this.alterarMulta = false;
+      this.globalService.mensagem('error', 'Erro:', 'Erro ao alterar o multa.');
+    }
+
   }
-}
 
   excluirMulta(_id: string) {
     this.multaService.excluirMulta(_id)
-    .subscribe(res => {
-      this.mensagem('success', 'Sucesso:', 'Multa excluido com sucesso.');        
-      this.buscarListaMulta(); 
-    },(error) => {
-      this.mensagem('error', 'Erro:', 'Nao foi possivel realizar a exclusao do multa');        
-    }
-  );
-}   
-   
-confirmacaoExclusaoMulta() {
-  this.messageService.clear();
-  this.messageService.add({key: 'modalConfirmacaoExclusao', sticky: true, severity:'warn',
-   summary:'Tem certeza que deseja excluir o multa?', detail:'Confirme para prosseguir'});
-} 
-
-aoConfirmarExclusaoMulta(sucesso: boolean) { 
-  if(sucesso == true) {
-    this.excluirMulta(this.idMulta);  
-  this.messageService.clear('modalConfirmacaoExclusao');
-  } else {
-    this.messageService.clear('modalConfirmacaoExclusao');
-  }  
-}
-
-  mensagem(tipoSeverity: string, titulo: string, txtMensagem: string) {    
-    this.messageService.add({severity: tipoSeverity, summary: titulo, detail:txtMensagem});    
+      .subscribe(res => {
+        this.globalService.mensagem('success', 'Sucesso:', 'Multa excluido com sucesso.');
+        this.buscarListaMulta();
+      }, (error) => {
+        this.globalService.mensagem('error', 'Erro:', 'Nao foi possivel realizar a exclusao do multa');
+      }
+      );
   }
+
+  confirmacaoExclusaoMulta() {
+    this.messageService.clear();
+    this.messageService.add({
+      key: 'modalConfirmacaoExclusao', sticky: true, severity: 'warn',
+      summary: 'Tem certeza que deseja excluir o multa?', detail: 'Confirme para prosseguir!'
+    });
+  }
+
+  aoConfirmarExclusaoMulta(sucesso: boolean) {
+    if (sucesso == true) {
+      this.excluirMulta(this.idMulta);
+      this.messageService.clear('modalConfirmacaoExclusao');
+    } else {
+      this.messageService.clear('modalConfirmacaoExclusao');
+    }
+  }
+
+
 
 }

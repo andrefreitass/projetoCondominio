@@ -5,13 +5,13 @@
         <div class="ui-g-12 ui-md-2" class="left">
             <h3>Data Inicio</h3>
             <p-calendar [showIcon]="true" required name="dataInicio" [(ngModel)]="filtroLazer.dataInicio" tabindex="0" [disabledDates]="invalidDates"
-                [disabledDays]="[0,6]" readonlyInput="true" dateFormat="dd/mm/yy"></p-calendar>
+                [disabledDays]="[0,6]" readonlyInput="true" dateFormat="dd/mm/yy" [locale]="globalService.pt"></p-calendar>
         </div>
 
         <div class="ui-g-12 ui-md-2" class="center">
             <h3>Data Fim</h3>
             <p-calendar [showIcon]="true" required name="dataFim" [(ngModel)]="filtroLazer.dataFim" tabindex="0" [disabledDates]="invalidDates"
-                [disabledDays]="[0,6]" readonlyInput="true" dateFormat="dd/mm/yy"></p-calendar>
+                [disabledDays]="[0,6]" readonlyInput="true" dateFormat="dd/mm/yy" [locale]="globalService.pt"></p-calendar>
         </div>
 
         <br>
@@ -25,7 +25,7 @@
 <br>
 <br>
 <!--Dados de Resposta-->
-
+<div [hidden]="lazerService?.listaLazer?.length == 0">
 <p-fieldset legend="Lista de Lazer">
     <p-table [value]="lazerService.listaLazer">
         <ng-template pTemplate="header">
@@ -33,7 +33,7 @@
                 <th>Data</th>
                 <th>Local</th>
                 <th>Descrição</th>
-                <th></th>
+                <th>Operações</th>
             </tr>
         </ng-template>
 
@@ -43,18 +43,15 @@
                 <td>{{ lazer.local }}</td>
                 <td>{{ lazer.descricao }}</td>
                 <td>
-                    <button type="text" (click)="selecionarLazer(lazer); modalLazer('detalhar');" pButton icon="pi pi-search"></button>
-                    <button type="text" (click)="selecionarLazer(lazer);modalLazer('alterar')" pButton icon="pi pi-refresh" class="ui-button-success"></button>
-                    <button type="text" (click)="recebeIdLazer(lazer._id);confirmacaoExclusaoLazer()" pButton icon="pi pi-times" class="ui-button-danger"></button>
+                    <button type="text" (click)="selecionarLazer(lazer); modalLazer('detalhar');" pButton icon="pi pi-search" class="espaco-btn"></button>
+                    <button type="text" (click)="selecionarLazer(lazer);modalLazer('alterar')" pButton icon="pi pi-refresh" class="ui-button-success espaco-btn"></button>
+                    <button type="text" (click)="recebeIdLazer(lazer._id);confirmacaoExclusaoLazer()" pButton icon="pi pi-times" class="ui-button-danger espaco-btn"></button>
                 </td>
             </tr> 
         </ng-template>
     </p-table>
-
- 
-    <div *ngIf="lazerService?.listaLazer?.length == 0">
-        Nenhum registro cadastrado
-    </div>
+</p-fieldset>
+</div>
 
 <!--   MODALS -->
 

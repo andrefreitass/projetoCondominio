@@ -16,6 +16,23 @@ export class AdvertenciaService {
   constructor(private http: HttpClient) {        
    }
 
+   getAdvertenciaDataInicio(dataInicio: string) {     
+    const options = 
+    { params: new HttpParams()
+      .set('dataInicio', dataInicio)      
+    } ;         
+    return this.http.get(this.URL_API+'/por-inicio/dataInicio'+ dataInicio, options);    
+  }
+
+  getAdvertenciaDataFim(dataFim: string){
+    const options = 
+    {
+      params: new HttpParams()
+        .set('dataFim', dataFim)
+    };    
+    return this.http.get(this.URL_API+'/por-fim/dataFim' + dataFim, options)
+  }
+
    getAdvertencia(dataInicio: string, dataFim: string) {
     const options = 
     { params: new HttpParams()

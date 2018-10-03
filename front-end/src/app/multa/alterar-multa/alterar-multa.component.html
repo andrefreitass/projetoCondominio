@@ -3,7 +3,7 @@
   <div>
     <h3>Data</h3>
     <p-calendar [showIcon]="true" [(ngModel)]="multa.data" name="data" tabindex="0" [disabledDates]="invalidDates"
-      [disabledDays]="[0,6]" readonlyInput="true" dateFormat="dd/mm/yy"></p-calendar>
+      [disabledDays]="[0,6]" readonlyInput="true" dateFormat="dd/mm/yy" [locale]="globalService.pt"></p-calendar>
   </div>
 
   <div>
