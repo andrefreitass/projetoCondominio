@@ -1,9 +1,9 @@
 <form #comunicadoForm="ngForm">
 
     <div>
-      <h3>Data</h3>
+      <h3>Data e Hora</h3>
       <p-calendar [showIcon]="true" [(ngModel)]="comunicado.data" name="data" required tabindex="0" [disabled]="true" [disabledDates]="invalidDates"
-        [disabledDays]="[0,6]" readonlyInput="true" dateFormat="dd/mm/yy"></p-calendar>
+      [disabledDays]="[0,6]"  dateFormat="dd/mm/yy" [monthNavigator]="true" [yearNavigator]="true" yearRange="2018:2030" [showTime]="true" ></p-calendar>
     </div>
   
   

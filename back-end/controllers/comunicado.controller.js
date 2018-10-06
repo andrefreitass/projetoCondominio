@@ -9,7 +9,7 @@ comunicadoCrtl.buscaComunicadoDataInicio = async (req,res) => {
         data: {            
             $gte: dataInicio
         }
-    });    
+    }).sort({data:-1});    
     res.json(listaComunicado);
 }
 
@@ -19,7 +19,7 @@ comunicadoCrtl.buscaComunicadoDataFim = async (req,res) => {
         data:{
             $lte: dataFim
         }
-    })    
+    }).sort({data:-1});    
     res.json(listaComunicado);
 }
 
@@ -31,7 +31,7 @@ comunicadoCrtl.getComunicado = async (req, res) =>{
             $lte: dataFim,
             $gte: dataInicio
         }
-    });
+    }).sort({data:-1});
     res.json(listaComunicado);
 }
 
