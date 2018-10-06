@@ -1,6 +1,28 @@
 var enqueteModels = require('../models/enquete.models')
 var enqueteCrtl = {};
 
+enqueteCrtl.buscaEnqueteDataInicio = async (req,res) => {
+    
+    let {dataInicio} = req.query;        
+    let listaEnquete = await enqueteModels.find({
+        data: {            
+            $gte: dataInicio
+        }
+    }).sort({data:-1});    
+    res.json(listaEnquete);
+}
+
+enqueteCrtl.buscaEnqueteDataFim = async (req,res) => {
+    let {dataFim} = req.query;
+    let listaEnquete = await enqueteModels.find({
+        data:{
+            $lte: dataFim
+        }
+    }).sort({data:-1});    
+    res.json(listaEnquete);
+}
+
+
 enqueteCrtl.getEnquete = async (req, res) =>{
 
     let {dataInicio, dataFim} = req.query;
@@ -9,7 +31,7 @@ enqueteCrtl.getEnquete = async (req, res) =>{
             $lte: dataFim,
             $gte: dataInicio
         }
-    });    
+    }).sort({data:-1});;    
     res.json(listaEnquete);
 }
 

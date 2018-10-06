@@ -29,7 +29,7 @@
 <!--Dados de Resposta-->
 <div [hidden]="comunicadoService?.listaComunicado?.length == 0">
 <p-fieldset legend="Lista de Comunicado">
-    <p-table [value]="comunicadoService.listaComunicado">
+    <p-table [value]="comunicadoService.listaComunicado" [paginator]="true" [rows]="10">
         <ng-template pTemplate="header">
             <tr>
                 <th>Data e Hora</th>

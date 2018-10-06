@@ -14,7 +14,24 @@ export class EnqueteService {
 
   constructor(private http: HttpClient) { }
 
-  
+  getEnqueteDataInicio(dataInicio: string) {     
+    const options = 
+    { params: new HttpParams()
+      .set('dataInicio', dataInicio)      
+    } ;         
+    return this.http.get(this.URL_API+'/por-inicio/dataInicio'+ dataInicio, options);    
+  }
+
+  getEnqueteDataFim(dataFim: string){
+    const options = 
+    {
+      params: new HttpParams()
+        .set('dataFim', dataFim)
+    };    
+    return this.http.get(this.URL_API+'/por-fim/dataFim' + dataFim, options)
+  }
+
+
   getEnquete(dataInicio: string, dataFim: string){
     const options = 
     { params: new HttpParams()

@@ -29,6 +29,7 @@ export class ListarEnqueteComponent implements OnInit {
 
   ngOnInit() {
     this.buscarListaEnquete();      
+    this.globalService.convertCalendario();
 }
 
   
@@ -40,8 +41,6 @@ export class ListarEnqueteComponent implements OnInit {
     this.enquete = enquete;
   }
 
-  converteData = (r: any) => ({...r, data: new Date(r.data) });
-
   modalEnquete(modal: string) {
     if (modal == "formulario"){
       this.formularioEnquete = true;
@@ -52,15 +51,36 @@ export class ListarEnqueteComponent implements OnInit {
     }      
   }
 
-  buscarListaEnquete() {    
-    this.enqueteService.getEnquete(this.filtroEnquete.dataInicio.toString(), this.filtroEnquete.dataFim.toString())
-    .subscribe((res:any) => {      
-      this.enqueteService.listaEnquete = res.map(this.converteData) as EnqueteModels[];
-      if(this.enqueteService.listaEnquete.length == 0){
-        this.globalService.mensagem('warn', 'Alerta:', 'Nenhum Registro Encontrado.');
-      }      
-    });    
+  buscarListaEnquete() {
+    if (this.filtroEnquete.dataInicio != null && this.filtroEnquete.dataFim != null) {
+      this.enqueteService.getEnquete(this.filtroEnquete.dataInicio.toString(), this.filtroEnquete.dataFim.toString())
+        .subscribe((res: any) => {
+          this.enqueteService.listaEnquete = res.map(this.globalService.converteData) as EnqueteModels[];
+          if (this.enqueteService.listaEnquete.length == 0) {
+            this.globalService.mensagem('warn', 'Alerta:', 'Nenhum Registro Encontrado.');
+          }
+        });
+    } else if (this.filtroEnquete.dataInicio != null && this.filtroEnquete.dataFim == null) {
+      this.enqueteService.getEnqueteDataInicio(this.filtroEnquete.dataInicio.toString())
+        .subscribe((res: any) => {
+          this.enqueteService.listaEnquete = res.map(this.globalService.converteData) as EnqueteModels[];
+          if (this.enqueteService.listaEnquete.length == 0) {
+            this.globalService.mensagem('warn', 'Alerta:', 'Nenhum Registro Encontrado.');
+          }
+        });
+    } else if (this.filtroEnquete.dataInicio == null && this.filtroEnquete.dataFim != null) {
+      this.enqueteService.getEnqueteDataFim(this.filtroEnquete.dataFim.toString())
+        .subscribe((res: any) => {
+          this.enqueteService.listaEnquete = res.map(this.globalService.converteData) as EnqueteModels[];
+          if (this.enqueteService.listaEnquete.length == 0) {
+            this.globalService.mensagem('warn', 'Alerta:', 'Nenhum Registro Encontrado.');
+          }
+        });
+    } else if (this.filtroEnquete.dataInicio == null && this.filtroEnquete.dataFim == null) {
+      this.globalService.mensagem('warn', 'Alerta:', 'A data inicio ou data fim deve ser informada.');
+    }
   }
+
 
   aoSalvarFormularioEnquete(sucesso: boolean) {
     if(sucesso == true){
@@ -69,7 +89,7 @@ export class ListarEnqueteComponent implements OnInit {
       this.buscarListaEnquete();
     } else {
       this.formularioEnquete = false;
-      this.globalService.mensagem('error', 'Erro:', 'Nao foi possivel realizar o cadastro da enquete.');
+      this.globalService.mensagem('error', 'Erro:', 'Não foi possivel realizar o cadastro da enquete.');
     }
     
   }
@@ -77,11 +97,11 @@ export class ListarEnqueteComponent implements OnInit {
   aoAlterarEnquete(sucesso: boolean){
     if(sucesso == true){
       this.alterarEnquete = false;
-      this.globalService.mensagem('success', 'Sucesso:', 'Alteracao de enquete realizado com sucesso.');
+      this.globalService.mensagem('success', 'Sucesso:', 'Alteração de enquete realizado com sucesso.');
       this.buscarListaEnquete();
   } else {
     this.formularioEnquete = false;
-    this.globalService.mensagem('error', 'Erro:', 'Nao foi possivel realizar a alteracao da enquete.');
+    this.globalService.mensagem('error', 'Erro:', 'Não foi possivel realizar a alteração da enquete.');
   }
 }
 
@@ -91,7 +111,7 @@ export class ListarEnqueteComponent implements OnInit {
       this.globalService.mensagem('success', 'Sucesso:', 'Enquete excluida com sucesso.');        
       this.buscarListaEnquete(); 
     },(error) => {
-      this.globalService.mensagem('error', 'Erro:', 'Nao foi possivel realizar a exclusao da enquete');        
+      this.globalService.mensagem('error', 'Erro:', 'Não foi possivel realizar a exclusão da enquete');        
     }
   );
 }   

@@ -4,6 +4,7 @@ import { Message, MessageService } from '../../../../node_modules/primeng/api';
 import { EnqueteModels } from '../../models/enquete-models';
 import { HttpClient } from '../../../../node_modules/@angular/common/http';
 import { Router } from '../../../../node_modules/@angular/router';
+import { GlobalService } from '../../uteis/global.service';
 
 
 @Component({
@@ -20,7 +21,7 @@ export class FormularioEnqueteComponent implements OnInit {
   enquete: EnqueteModels;
 
   constructor(private http: HttpClient, private router: Router, private messageService: MessageService,
-    private enqueteService: EnqueteService) { }
+    private enqueteService: EnqueteService, private globalService: GlobalService) { }
 
   ngOnInit() {   
     this.enquete = new EnqueteModels();
