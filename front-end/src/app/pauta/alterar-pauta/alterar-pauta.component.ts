@@ -3,6 +3,7 @@ import { Message } from '../../../../node_modules/primeng/api';
 import { HttpClient } from '../../../../node_modules/@angular/common/http';
 import { Router, ActivatedRoute } from '../../../../node_modules/@angular/router';
 import { PautaService } from '../pauta.service';
+import { GlobalService } from '../../uteis/global.service';
 
 @Component({
   selector: 'alterar-pauta',
@@ -16,7 +17,7 @@ export class AlterarPautaComponent implements OnInit {
   msgs: Message[] = [];
 
   constructor(private http: HttpClient, private router: Router, private route: ActivatedRoute,
-    private pautaService: PautaService) { }
+    private pautaService: PautaService, private globalService: GlobalService) { }
 
   ngOnInit() {
   }

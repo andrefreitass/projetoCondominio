@@ -1,27 +1,24 @@
 <form #enqueteForm="ngForm" (ngSubmit)="salvarEnquete(enqueteForm)">
 
-    <div>
-      <h3>Data</h3>
-      <p-calendar [showIcon]="true" name="data" [(ngModel)]="enquete.data" tabindex="0" [disabledDates]="invalidDates"
-            [disabledDays]="[0]"  dateFormat="dd/mm/yy" [locale]="globalService.pt" [monthNavigator]="true" [yearNavigator]="true" yearRange="2018:2030" ></p-calendar>
-    </div>
-  
-    <div>
-      <h3>Titulo</h3>
-      <input id="titulo" type="text" class="form-control" name="titulo" #name="ngModel"
-       [(ngModel)]="enquete.titulo" required  minlength="5"
-        maxlength="40" size="60">
-    </div>
-  
-    <div>
-      <h3>Assuntos</h3>
-      <textarea class="form-control" name="assuntos" #name="ngModel"
-      [(ngModel)]="enquete.assuntos"
-         required [rows]="5" [cols]="60" maxlength="350"
-        pInputTextarea autoResize="autoResize"></textarea>
-    </div>
-      
-    <div class="form-group">
-      <button type="submit" pButton label="Salvar"></button>    
-    </div>
-  </form>
+  <div>
+    <h3>Data</h3>
+    <p-calendar [showIcon]="true" required name="data" [(ngModel)]="enquete.data" tabindex="0" [disabledDates]="invalidDates" [disabledDays]="[0]"
+      dateFormat="dd/mm/yy" [locale]="globalService.pt" [monthNavigator]="true" [yearNavigator]="true" yearRange="2018:2030"></p-calendar>
+  </div>
+
+  <div>
+    <h3>Titulo</h3>
+    <input id="titulo" type="text" class="form-control" name="titulo" #name="ngModel" [(ngModel)]="enquete.titulo" required minlength="5"
+      maxlength="40" size="60">
+  </div>
+
+  <div>
+    <h3>Assuntos</h3>
+    <textarea class="form-control" name="assuntos" #name="ngModel" [(ngModel)]="enquete.assuntos" required [rows]="5" [cols]="60"
+      minlength="5" maxlength="350" pInputTextarea autoResize="autoResize"></textarea>
+  </div>
+
+  <div class="form-group">
+    <button type="submit" pButton label="Salvar" [disabled]="!enqueteForm.form.valid"></button>
+  </div>
+</form>

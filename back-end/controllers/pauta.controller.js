@@ -1,6 +1,26 @@
 var pautaModels = require('../models/pauta.models')
 var pautaCrtl = {};
 
+pautaCrtl.buscaPautaDataInicio = async (req,res) => {    
+    let {dataInicio} = req.query;        
+    let listaPauta = await pautaModels.find({
+        data: {            
+            $gte: dataInicio
+        }
+    }).sort({data:-1});    
+    res.json(listaPauta);
+}
+
+pautaCrtl.buscaPautaDataFim = async (req,res) => {
+    let {dataFim} = req.query;
+    let listaPauta = await pautaModels.find({
+        data:{
+            $lte: dataFim
+        }
+    }).sort({data:-1});    
+    res.json(listaPauta);
+}
+
 pautaCrtl.getPauta = async (req, res) =>{
    let {dataInicio, dataFim} = req.query;
    let listaPauta = await pautaModels.find({
@@ -8,7 +28,7 @@ pautaCrtl.getPauta = async (req, res) =>{
            $lte:dataFim,
            $gte: dataInicio
        }
-   });
+   }).sort({data:-1});
    res.json(listaPauta);
 }
 

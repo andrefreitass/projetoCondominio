@@ -3,6 +3,7 @@ import { Message } from '../../../../node_modules/primeng/api';
 import { HttpClient } from '../../../../node_modules/@angular/common/http';
 import { Router, ActivatedRoute } from '../../../../node_modules/@angular/router';
 import { EnqueteService } from '../enquete.service';
+import { GlobalService } from '../../uteis/global.service';
 
 
 @Component({
@@ -17,7 +18,7 @@ export class AlterarEnqueteComponent implements OnInit {
   msgs: Message[] = [];
   
   constructor(private http: HttpClient, private router: Router, private route: ActivatedRoute,
-    private enqueteService: EnqueteService) {            
+    private enqueteService: EnqueteService, private globalService: GlobalService) {            
      }
 
   ngOnInit() {    

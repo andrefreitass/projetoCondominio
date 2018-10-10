@@ -4,6 +4,7 @@ import { PautaModels } from '../../models/pauta-models';
 import { HttpClient } from '../../../../node_modules/@angular/common/http';
 import { PautaService } from '../pauta.service';
 import { Router } from '../../../../node_modules/@angular/router';
+import { GlobalService } from '../../uteis/global.service';
 
 @Component({
   selector: 'formulario-pauta',
@@ -17,7 +18,7 @@ export class FormularioPautaComponent implements OnInit {
   pauta: PautaModels;
 
   constructor(private http: HttpClient, private router: Router, private messageService: MessageService,
-    private pautaService: PautaService) { }
+    private pautaService: PautaService, private globalService: GlobalService) { }
 
   ngOnInit() {
     this.pauta = new PautaModels();
