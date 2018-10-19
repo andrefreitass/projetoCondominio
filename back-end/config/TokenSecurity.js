@@ -1,4 +1,6 @@
 var jwt = require('jsonwebtoken');
+var bcrypt = require('bcrypt-nodejs');
+
 var tokenSecurity = {};
 
 tokenSecurity.registrarToken = async() => {
@@ -28,6 +30,30 @@ tokenSecurity.validarJWT = async(req, res, next) => {
       next();
     });
   }
+
+tokenSecurity.validarUsuario = async(req, res, next) =>{
+  if(req.body.nome != null){
+    let senhaUsuario = "";
+    bcrypt.genSalt(5, function(erro, salt){
+      if(erro) return next(erro);
+      bcrypt.hash("teste", salt, null, function(erro, hash){
+        if(erro) return next(erro);
+        senhaUsuario = hash;
+      });
+
+      bcrypt.hash(req.body.nome, salt, null, function(erro, hash){
+        if(erro) return next(erro);
+        if(senhaUsuario === hash){
+          console.log("senha correta");
+          next();
+        } else {
+          console.log("senha incorreta");
+          res.status(500).send('Login inválido!');
+        }
+      });
+    });
+  }
+}  
 
   module.exports = tokenSecurity;
 
