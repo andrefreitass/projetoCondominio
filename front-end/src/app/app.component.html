@@ -22,13 +22,13 @@
                 </p-card>
             </div>
         </aside>
-        <div class="div" >
+        <div class="div" *ngIf="mostrarMenu">
             <div class="perfil" >
                 <img src="./../assets/imagem/SemFoto.png" style="width: 35%;"/>
             </div>
 
             <label for="">Menu</label>
-            <p-panelMenu [model]="items" [style]="{'width':'240px;'}" class="menu">oi</p-panelMenu>
+            <p-panelMenu [model]="items" [style]="{'width':'240px;'}" class="menu"></p-panelMenu>
         </div>
         <footer class="footer">
             Rodape

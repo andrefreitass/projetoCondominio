@@ -18,16 +18,15 @@ export class AuthService {
 
   fazerLogin(funcionario: FuncionarioModels){
 
-    if(funcionario.nome == 'teste'){
+    if(funcionario.nome != null){
       this.http.post(this.URL_API, funcionario).subscribe(
         res => {
-          console.log(res);
+          this.mostrarMenuEmitter.emit(true);
+          this.router.navigate(['/']);
         }, error => {
           console.log('Falha ao validar usuário.');
         }
       );
-      this.mostrarMenuEmitter.emit(true);
-      this.router.navigate(['/']);
       return true;
     } else {
       this.mostrarMenuEmitter.emit(false);
