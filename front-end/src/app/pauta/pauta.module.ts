@@ -28,12 +28,14 @@ import { ConfirmationService } from 'primeng/api';
 import { InputMaskModule} from 'primeng/inputmask';
 import { GrowlModule, BreadcrumbModule } from 'primeng/primeng';
 import { ToastModule } from 'primeng/toast';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 
 
 @NgModule({
   imports: [
     CommonModule,
+    FormsModule, ReactiveFormsModule,
     //Imports PRIMENG
     AccordionModule,
     BrowserAnimationsModule,    

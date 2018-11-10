@@ -6,6 +6,10 @@ import { PautaService } from '../pauta.service';
 import { Router } from '../../../../node_modules/@angular/router';
 import { GlobalService } from '../../uteis/global.service';
 
+
+import {Validators,FormControl,FormGroup,FormBuilder} from '@angular/forms';
+
+
 @Component({
   selector: 'formulario-pauta',
   templateUrl: './formulario-pauta.component.html',
@@ -13,15 +17,23 @@ import { GlobalService } from '../../uteis/global.service';
 })
 export class FormularioPautaComponent implements OnInit {
 
+  pautaForm: FormGroup;
+
   msgs: Message[] = [];
   @Output() aoSalvar: EventEmitter<boolean> = new EventEmitter<boolean>();
   pauta: PautaModels;
 
   constructor(private http: HttpClient, private router: Router, private messageService: MessageService,
-    private pautaService: PautaService, private globalService: GlobalService) { }
+    private pautaService: PautaService, private globalService: GlobalService, private fb: FormBuilder) { }
 
   ngOnInit() {
     this.pauta = new PautaModels();
+    this.pautaForm = this.fb.group({
+      'data': new FormControl('', Validators.required),
+      'local': new FormControl('',  Validators.compose([Validators.required, Validators.minLength(5)])),
+      'assuntos': new FormControl('',  Validators.compose([Validators.required, Validators.minLength(5)]))
+     
+  });
   }
 
   salvarPauta(pauta){
