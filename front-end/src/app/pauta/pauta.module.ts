@@ -35,7 +35,8 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 @NgModule({
   imports: [
     CommonModule,
-    FormsModule, ReactiveFormsModule,
+    FormsModule, 
+    ReactiveFormsModule,
     //Imports PRIMENG
     AccordionModule,
     BrowserAnimationsModule,    

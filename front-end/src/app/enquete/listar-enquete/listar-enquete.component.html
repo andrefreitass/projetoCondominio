@@ -3,13 +3,13 @@
     <p-fieldset legend="Dados Para Consultar as Enquetes">
 
         <div class="left">
-            <h3>Data Inicio</h3>
+            <h3>Data Inicio:</h3>
             <p-calendar [showIcon]="true" name="dataInicio" [(ngModel)]="filtroEnquete.dataInicio" tabindex="0" [disabledDates]="invalidDates"
             [disabledDays]="[0]"  dateFormat="dd/mm/yy" [locale]="globalService.pt"  [maxDate]="filtroEnquete.dataFim"  [monthNavigator]="true" [yearNavigator]="true" yearRange="2018:2030" ></p-calendar>
         </div>
 
         <div>
-            <h3>Data Fim</h3>
+            <h3>Data Fim:</h3>
             <p-calendar [showIcon]="true" name="dataFim" [(ngModel)]="filtroEnquete.dataFim" tabindex="0" [disabledDates]="invalidDates"
             [disabledDays]="[0,6]" dateFormat="dd/mm/yy" [locale]="globalService.pt" [minDate]="filtroEnquete.dataInicio"  [monthNavigator]="true" [yearNavigator]="true" yearRange="2018:2030"></p-calendar>
         </div>

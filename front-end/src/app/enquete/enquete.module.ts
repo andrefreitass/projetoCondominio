@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 //Imports da Funcionalidade de Enquete
 import { EnqueteService } from './enquete.service';
@@ -31,9 +32,12 @@ import { GrowlModule } from 'primeng/growl';
 import { ToastModule } from 'primeng/toast';
 
 
+
 @NgModule({
   imports: [
     CommonModule,
+    FormsModule, 
+    ReactiveFormsModule,
     //Imports PRIMENG
     AccordionModule,
     BrowserAnimationsModule,    

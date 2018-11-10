@@ -1,24 +1,39 @@
-<form #enqueteForm="ngForm" (ngSubmit)="salvarEnquete(enqueteForm)">
+<form [formGroup]="enqueteForm" (ngSubmit)="salvarEnquete(enqueteForm)">
+    
+  <div>
+        <div>
+          <h3>Data:</h3>
+          <p-calendar id="data" [showIcon]="true" required tabindex="0" [disabledDates]="invalidDates" [disabledDays]="[0]"
+            dateFormat="dd/mm/yy" [locale]="globalService.pt" [monthNavigator]="true" [yearNavigator]="true" yearRange="2018:2030"
+            formControlName="data"></p-calendar>
+        </div>
+        <div>
+          <p-message severity="error" text="A data deve ser informada!" *ngIf="!enqueteForm.controls['data'].valid&&enqueteForm.controls['data'].dirty"></p-message>
+        </div>
+      </div>
+  <div>
+    <div>
+      <h3>Titulo:</h3>
+      <input id="titulo" type="text" formControlName="titulo" required minlength="6" maxlength="40" size="60">
+    </div>
+    <div>
+      <p-message severity="error" text="O campo titulo deve ser informado com mais de 6 caracteres!" *ngIf="!enqueteForm.controls['titulo'].valid&&enqueteForm.controls['titulo'].dirty"></p-message>
+    </div>
+  </div>
 
   <div>
-    <h3>Data</h3>
-    <p-calendar [showIcon]="true" required name="data" [(ngModel)]="enquete.data" tabindex="0" [disabledDates]="invalidDates" [disabledDays]="[0]"
-      dateFormat="dd/mm/yy" [locale]="globalService.pt" [monthNavigator]="true" [yearNavigator]="true" yearRange="2018:2030"></p-calendar>
+    <div>
+      <h3>Assuntos:</h3>
+      <textarea id="assuntos" formControlName="assuntos" required [rows]="5" [cols]="60" minlength="5" maxlength="350"
+        pInputTextarea autoResize="autoResize"></textarea>
+    </div>
+    <div>
+      <p-message severity="error" text="O campo assuntos deve ser informado com mais de 6 caracteres!" *ngIf="!enqueteForm.controls['assuntos'].valid&&enqueteForm.controls['assuntos'].dirty"></p-message>
+    </div>
   </div>
-
+  
   <div>
-    <h3>Titulo</h3>
-    <input id="titulo" type="text" class="form-control" name="titulo" #name="ngModel" [(ngModel)]="enquete.titulo" required minlength="5"
-      maxlength="40" size="60">
+    <button type="submit" pButton label="Salvar" [disabled]="!enqueteForm.valid"></button>
   </div>
-
-  <div>
-    <h3>Assuntos</h3>
-    <textarea class="form-control" name="assuntos" #name="ngModel" [(ngModel)]="enquete.assuntos" required [rows]="5" [cols]="60"
-      minlength="5" maxlength="350" pInputTextarea autoResize="autoResize"></textarea>
-  </div>
-
-  <div class="form-group">
-    <button type="submit" pButton label="Salvar" [disabled]="!enqueteForm.form.valid"></button>
-  </div>
+  
 </form>
