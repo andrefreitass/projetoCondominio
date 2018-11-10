@@ -1,14 +1,12 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { Message, MessageService } from '../../../../node_modules/primeng/api';
-import { PautaModels } from '../../models/pauta-models';
-import { HttpClient } from '../../../../node_modules/@angular/common/http';
-import { PautaService } from '../pauta.service';
-import { Router } from '../../../../node_modules/@angular/router';
-import { GlobalService } from '../../uteis/global.service';
-
-
 import {Validators,FormControl,FormGroup,FormBuilder} from '@angular/forms';
+import { Message, MessageService } from '../../../../node_modules/primeng/api';
+import { HttpClient } from '../../../../node_modules/@angular/common/http';
+import { Router } from '../../../../node_modules/@angular/router';
 
+import { PautaModels } from '../../models/pauta-models';
+import { PautaService } from '../pauta.service';
+import { GlobalService } from '../../uteis/global.service';
 
 @Component({
   selector: 'formulario-pauta',
@@ -18,7 +16,6 @@ import {Validators,FormControl,FormGroup,FormBuilder} from '@angular/forms';
 export class FormularioPautaComponent implements OnInit {
 
   pautaForm: FormGroup;
-
   msgs: Message[] = [];
   @Output() aoSalvar: EventEmitter<boolean> = new EventEmitter<boolean>();
   pauta: PautaModels;

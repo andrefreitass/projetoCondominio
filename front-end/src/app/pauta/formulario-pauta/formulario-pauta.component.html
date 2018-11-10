@@ -2,7 +2,7 @@
 
   <div>
     <div>
-      <h3>Data</h3>
+      <h3>Data:</h3>
       <p-calendar id="data" [showIcon]="true" required tabindex="0" [disabledDates]="invalidDates" [disabledDays]="[0]"
         dateFormat="dd/mm/yy" [locale]="globalService.pt" [monthNavigator]="true" [yearNavigator]="true" yearRange="2018:2030"
         formControlName="data"></p-calendar>
@@ -14,7 +14,7 @@
 
   <div>
     <div>
-      <h3>Local</h3>
+      <h3>Local:</h3>
       <input id="local" type="text" formControlName="local" required minlength="5" maxlength="40" size="60">
     </div>
 
@@ -25,7 +25,7 @@
 
   <div>
     <div>
-      <h3>Assuntos</h3>
+      <h3>Assuntos:</h3>
       <textarea id="assuntos" formControlName="assuntos" required [rows]="5" [cols]="60" minlength="5" maxlength="350"
         pInputTextarea autoResize="autoResize"></textarea>
     </div>

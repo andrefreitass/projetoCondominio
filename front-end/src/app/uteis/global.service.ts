@@ -16,7 +16,6 @@ export class GlobalService {
   mensagem(tipoSeverity: string, titulo: string, txtMensagem: string) {     
     this.messageService.add({severity: tipoSeverity, summary: titulo, detail:txtMensagem});    
   }
-
   
   convertCalendario() {
     this.pt = {

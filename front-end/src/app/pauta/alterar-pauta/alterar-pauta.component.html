@@ -1,24 +1,40 @@
-<form (ngSubmit)="atualizarPauta(pauta)" #pautaForm="ngForm">
-    
-  <div>
-    <h3>Data e Hora</h3>
-    <p-calendar [showIcon]="true" [(ngModel)]="pauta.data" name="data" tabindex="0" [disabledDates]="invalidDates"
-    [disabledDays]="[0]"  dateFormat="dd/mm/yy" [locale]="globalService.pt" [monthNavigator]="true" [yearNavigator]="true" yearRange="2018:2030"></p-calendar>
-  </div>
-  
-    <div>
-      <h3>Local</h3>
-      <input id="local" type="text" class="form-control" [(ngModel)]="pauta.local" name="local" minlength="5" maxlength="40" size="60">
-    </div>
-  
-    <div>
-      <h3>Assuntos</h3>
-      <textarea class="form-control" [(ngModel)]="pauta.assuntos" name="assuntos" required [rows]="5" [cols]="60" minlength="5" maxlength="350"
-        pInputTextarea autoResize="autoResize"></textarea>
-    </div>
+<form [formGroup]="pautaForm" (ngSubmit)="atualizarPauta(pauta)">
 
-    <div class="form-group">
-      <button type="submit" pButton label="Salvar" [disabled]="!pautaForm.form.valid"></button>
+  <div>
+    <div>
+      <h3>Data:</h3>
+      <p-calendar id="data" [showIcon]="true" formControlName="data" [(ngModel)]="pauta.data" tabindex="0" [disabledDates]="invalidDates"
+        [disabledDays]="[0]" dateFormat="dd/mm/yy" [locale]="globalService.pt" [monthNavigator]="true" [yearNavigator]="true"
+        yearRange="2018:2030"></p-calendar>
     </div>
-    
-  </form>
+    <div>
+      <p-message severity="error" text="A data deve ser informado!" *ngIf="!pautaForm.controls['data'].valid&&pautaForm.controls['data'].dirty"></p-message>
+    </div>
+  </div>
+
+  <div>
+    <div>
+      <h3>Local:</h3>
+      <input id="local" type="text" formControlName="local" [(ngModel)]="pauta.local" minlength="5" maxlength="40" size="60">
+    </div>
+    <div>
+      <p-message severity="error" text="O campo local deve ser informado com mais de 5 caracteres!" *ngIf="!pautaForm.controls['local'].valid&&pautaForm.controls['local'].dirty"></p-message>
+    </div>
+  </div>
+
+  <div>
+    <div>
+      <h3>Assuntos:</h3>
+      <textarea id="assuntos" formControlName="assuntos" [(ngModel)]="pauta.assuntos" required [rows]="5" [cols]="60"
+        minlength="5" maxlength="350" pInputTextarea autoResize="autoResize"></textarea>
+    </div>
+    <div>
+      <p-message severity="error" text="O campo assuntos deve ser informado com mais de 5 caracteres!" *ngIf="!pautaForm.controls['assuntos'].valid&&pautaForm.controls['assuntos'].dirty"></p-message>
+    </div>
+  </div>
+
+  <div>
+    <button type="submit" pButton label="Salvar" [disabled]="!pautaForm.valid"></button>
+  </div>
+
+</form>
