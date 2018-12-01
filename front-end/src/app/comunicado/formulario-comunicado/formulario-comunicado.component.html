@@ -1,5 +1,6 @@
 <form [formGroup]="comunicadoForm" (ngSubmit)="salvarComunicado(comunicadoForm)">
 
+  <div id="formulario">
   <div>
     <div>
       <h3>Data e Hora:</h3>
@@ -45,6 +46,7 @@
       </ng-template>
   </p-autoComplete>
   <span style="margin-left:50px">Assuntos: {{pautaAssuntos||'assuntos'}}</span>
+</div>
   <!--
   <div>
     <h3>Pauta:</h3>
@@ -58,9 +60,14 @@
   </div>
 
   -->
-  
+  <div id="pauta" style="display: none;">
+    teste
+  </div>
+
   <div>
     <button type="submit" pButton label="Salvar" [disabled]="!comunicadoForm.valid"></button>
+    <button type="submit" pButton label="Pauta" (click)="ocultarExibirDiv('pauta')"></button>
+    <button type="submit" pButton label="formulario" (click)="ocultarExibirDiv('formulario')"></button>
   </div>
 
 </form>

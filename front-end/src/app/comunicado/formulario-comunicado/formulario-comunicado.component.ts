@@ -43,6 +43,17 @@ export class FormularioComunicadoComponent implements OnInit {
     });
   }
 
+  ocultarExibirDiv(nomeDiv){
+    if(nomeDiv === "formulario"){
+      document.getElementById("pauta").style.display = "none";
+      document.getElementById("formulario").style.display = "block";
+    }else if(nomeDiv === "pauta"){
+      document.getElementById("formulario").style.display = "none";
+      document.getElementById("pauta").style.display = "block";
+    }
+    
+  }
+
   buscaPautaAssuntos(event) {
     this.filtroPautaAssuntos = [];
     for(let i = 0; i < this.pautaService.getPautaDataFim.length; i++) {
