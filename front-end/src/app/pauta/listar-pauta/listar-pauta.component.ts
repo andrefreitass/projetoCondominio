@@ -28,6 +28,7 @@ export class ListarPautaComponent implements OnInit {
 
   ngOnInit() {
     this.buscarListaPauta();   
+    this.globalService.convertCalendario();
 }
 
   recebeIdPauta(idPauta){

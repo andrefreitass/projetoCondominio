@@ -19,6 +19,7 @@ pautaCrtl.buscaPautaDataFim = async (req,res) => {
         }
     }).sort({data:-1});    
     res.json(listaPauta);
+    console.log(listaPauta);
 }
 
 pautaCrtl.getPauta = async (req, res) =>{
@@ -30,6 +31,14 @@ pautaCrtl.getPauta = async (req, res) =>{
        }
    }).sort({data:-1});
    res.json(listaPauta);
+}
+
+pautaCrtl.buscaListaPautaPorAssunto = async (req,res) =>{
+    let buscaListaPautaPorAssunto = await pautaModels.find({
+        assuntos:1
+    }).buscaListaPautaPorAssunto({data:-1});
+    res.json(buscaListaPautaPorAssunto);
+    console.log(buscaListaPautaPorAssunto)
 }
 
 pautaCrtl.inserirPauta = async (req, res) =>{

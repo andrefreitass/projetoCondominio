@@ -38,6 +38,10 @@ readonly URL_API = `${environment.url_base}/pauta`;
     return this.http.get(this.URL_API, options);
   }
 
+  getListaPautaAssunto(){
+    return this.http.get(this.URL_API+'/listar-comunicado');
+  }
+
   inserirPauta(pauta: PautaModels){
     return this.http.post(this.URL_API, pauta);
   }

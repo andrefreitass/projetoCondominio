@@ -1,12 +1,14 @@
-import { GlobalService } from './../../uteis/global.service';
+import { PautaService } from './../../pauta/pauta.service';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Message } from 'primeng/api';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/components/common/messageservice';
+import { Validators, FormControl, FormGroup, FormBuilder } from '@angular/forms';
 
 import { ComunicadoService } from './../comunicado.service';
 import { ComunicadoModels } from '../../models/comunicado-models';
+import { GlobalService } from './../../uteis/global.service';
 
 @Component({
   selector: 'formulario-comunicado',
@@ -14,33 +16,53 @@ import { ComunicadoModels } from '../../models/comunicado-models';
   styleUrls: ['./formulario-comunicado.component.css']
 })
 export class FormularioComunicadoComponent implements OnInit {
-  
+
   msgs: Message[] = [];
-
   @Output() aoSalvar: EventEmitter<boolean> = new EventEmitter<boolean>();
-
+  comunicadoForm: FormGroup;
   comunicado: ComunicadoModels;
-  consultarPauta: boolean = false;
+
+  pautaAssuntos: string;
+  filtroPautaAssuntos: any[];  
+  listaPautaAssuntos: string[];
+  //listaPautaAssuntos: string[] = ['Audi','BMW','Fiat','Ford','Honda','Jaguar','Mercedes','Renault','Volvo','VW'];
 
   constructor(private http: HttpClient, private router: Router, private messageService: MessageService,
-    private comunicadoService: ComunicadoService, private globalService: GlobalService) { }
+    private comunicadoService: ComunicadoService, private globalService: GlobalService,
+    private pautaService:PautaService,private fb: FormBuilder) { }
 
-  ngOnInit() {   
+  ngOnInit() {
     this.comunicado = new ComunicadoModels();
     this.globalService.convertCalendario();
+    this.pautaService.getListaPautaAssunto();
+    this.comunicadoForm = this.fb.group({
+      'data': new FormControl('', Validators.required),
+      'titulo': new FormControl('', Validators.compose([Validators.required, Validators.minLength(5)])),
+      'descricao': new FormControl('', Validators.compose([Validators.required, Validators.minLength(5)])),
+      'pautaAssuntos': new FormControl(''),
+    });
   }
 
+  buscaPautaAssuntos(event) {
+    this.filtroPautaAssuntos = [];
+    for(let i = 0; i < this.pautaService.getPautaDataFim.length; i++) {
+        let pautaAssuntos = this.pautaService.getPautaDataFim[i];
+            this.filtroPautaAssuntos.push(pautaAssuntos);
+            console.log(this.filtroPautaAssuntos);
+       
+    }
+}
 
-  salvarComunicado(comunicado) {    
+  salvarComunicado(comunicado) {
     this.comunicadoService.inserirComunicado(comunicado.value)
-      .subscribe(res => {        
+      .subscribe(res => {
         this.resetarFormulario(comunicado);
         this.aoSalvar.emit(true);
       }, error => {
         this.aoSalvar.emit(false);
         this.resetarFormulario(comunicado);
-      } 
-    );
+      }
+      );
   }
 
   resetarFormulario(comunicado) {
@@ -50,11 +72,12 @@ export class FormularioComunicadoComponent implements OnInit {
     }
   }
 
-  modalComunicado(modal: string) {
-    if (modal == "consultarPauta"){
-      this.consultarPauta = true;
-    }
+  buscaListaPauta() {
+    this.pautaService.getListaPautaAssunto();
+  }
+
+  buscaListaEnquete() {
+
   }
 
 }
-

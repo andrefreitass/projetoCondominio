@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 //Imports da Funcionalidade de Comunicado
 import { ComunicadoService } from './comunicado.service';
@@ -28,10 +29,13 @@ import { ConfirmationService } from 'primeng/api';
 import { InputMaskModule} from 'primeng/inputmask';
 import { GrowlModule } from 'primeng/growl';
 import { ToastModule } from 'primeng/toast';
+import {AutoCompleteModule} from 'primeng/autocomplete';
 
 @NgModule({
   imports: [
     CommonModule,
+    FormsModule, 
+    ReactiveFormsModule,
     //Imports PRIMENG
     AccordionModule,
     BrowserAnimationsModule,    
@@ -48,7 +52,8 @@ import { ToastModule } from 'primeng/toast';
     InputMaskModule,    
     ConfirmDialogModule,
     GrowlModule,
-    ToastModule,    
+    ToastModule, 
+    AutoCompleteModule   
   ],
   declarations: [
     AlterarComunicadoComponent,

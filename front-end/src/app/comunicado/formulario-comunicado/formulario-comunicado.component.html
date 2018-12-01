@@ -1,30 +1,66 @@
-<form #comunicadoForm="ngForm" (ngSubmit)="salvarComunicado(comunicadoForm)">
+<form [formGroup]="comunicadoForm" (ngSubmit)="salvarComunicado(comunicadoForm)">
 
   <div>
-    <h3>Data e Hora</h3>
-    <p-calendar [showIcon]="true" name="data" #name="ngModel" required tabindex="0" [disabledDates]="invalidDates" [(ngModel)]="comunicado.data"
-    [disabledDays]="[0]"  dateFormat="dd/mm/yy" [locale]="globalService.pt" [monthNavigator]="true" [yearNavigator]="true" yearRange="2018:2030" [showTime]="true" ></p-calendar>
-  </div>
-
-  <div>
-    <h3>Titulo</h3>
-    <input id="titulo" type="text" class="form-control" name="titulo" #name="ngModel" [(ngModel)]="comunicado.titulo" required
-      minlength="5" maxlength="40" size="60">
-  </div>
-
-  <div>
-    <h3>Descrição</h3>
-    <textarea class="form-control" name="descricao" #name="ngModel" [(ngModel)]="comunicado.descricao" required [rows]="5" [cols]="60"
-      maxlength="350" pInputTextarea autoResize="autoResize"></textarea>
+    <div>
+      <h3>Data e Hora:</h3>
+      <p-calendar id="data" [showIcon]="true" required tabindex="0" [disabledDates]="invalidDates" [disabledDays]="[0]"
+        dateFormat="dd/mm/yy" [locale]="globalService.pt" [monthNavigator]="true" [yearNavigator]="true" yearRange="2018:2030"
+        [showTime]="true" formControlName="data"></p-calendar>
+    </div>
+    <div>
+      <p-message severity="error" text="A data e hora deve ser informada!" *ngIf="!comunicadoForm.controls['data'].valid&&comunicadoForm.controls['data'].dirty"></p-message>
+    </div>
   </div>
 
   <div>
-    <h3>Pauta</h3>
-    <textarea class="form-control" name="pauta" #name="ngModel" [(ngModel)]="comunicado.pauta" required [rows]="5" [cols]="60"
-      maxlength="350" pInputTextarea autoResize="autoResize"></textarea>      
+    <div>
+      <h3>Titulo:</h3>
+      <input id="titulo" type="text" formControlName="titulo" required minlength="6" maxlength="40" size="60">
+    </div>
+    <div>
+      <p-message severity="error" text="O campo titulo deve ser informado com mais de 6 caracteres!" *ngIf="!comunicadoForm.controls['titulo'].valid&&comunicadoForm.controls['titulo'].dirty"></p-message>
+    </div>
   </div>
 
-  <div class="form-group">
-    <button type="submit" pButton label="Salvar" [disabled]="!comunicadoForm.form.valid"></button>
+
+  <div>
+    <div>
+      <h3>Descrição:</h3>
+      <textarea id="descricao" formControlName="descricao" required [rows]="5" [cols]="60" minlength="5" maxlength="350"
+        pInputTextarea autoResize="autoResize"></textarea>
+    </div>
+    <div>
+      <p-message severity="error" text="O campo descrição deve ser informado com mais de 6 caracteres!" *ngIf="!comunicadoForm.controls['descricao'].valid&&comunicadoForm.controls['descricao'].dirty"></p-message>
+    </div>
   </div>
+
+
+  <h3>Pauta</h3>
+  <p-autoComplete formControlName="pautaAssuntos" [suggestions]="filtroPautaAssuntos"(completeMethod)="buscaPautaAssuntos($event)" [size]="30"
+      [minLength]="3">
+      <ng-template let-pautaAssuntos pTemplate="item">
+          <div class="ui-helper-clearfix" style="border-bottom:1px solid #D5D5D5">              
+              <div style="font-size:18px;float:right;margin:10px 10px 0 0">{{pautaAssuntos}}</div>
+          </div>
+      </ng-template>
+  </p-autoComplete>
+  <span style="margin-left:50px">Assuntos: {{pautaAssuntos||'assuntos'}}</span>
+  <!--
+  <div>
+    <h3>Pauta:</h3>
+    <textarea class="form-control" name="pauta" #name="ngModel" [(ngModel)]="comunicado.pauta" required [rows]="5"
+      [cols]="60" maxlength="350" pInputTextarea autoResize="autoResize"></textarea>
+  </div>
+  
+
+  <div>
+    <h3>Enquete:</h3>
+  </div>
+
+  -->
+  
+  <div>
+    <button type="submit" pButton label="Salvar" [disabled]="!comunicadoForm.valid"></button>
+  </div>
+
 </form>
