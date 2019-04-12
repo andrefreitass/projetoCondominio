@@ -18,7 +18,7 @@ export class AuthService {
 
   fazerLogin(funcionario: FuncionarioModels){
 
-    if(funcionario.nome != null){
+    if(funcionario.nome != null) {
       this.http.post(this.URL_API, funcionario).subscribe(
         res => {
           this.mostrarMenuEmitter.emit(true);

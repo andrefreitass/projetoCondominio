@@ -20,12 +20,14 @@ import {AccordionModule} from 'primeng/accordion';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PanelMenuModule } from 'primeng/panelmenu'; 
 import { CardModule } from 'primeng/card';
+import { FormularioLoginComponent } from './admin/formulario-login/formulario-login.component';
 
 
 
 @NgModule({
   declarations: [
     AppComponent,
+    FormularioLoginComponent,
     
   ],
   imports: [

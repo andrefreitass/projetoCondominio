@@ -1,0 +1,17 @@
+<form #loginForm="ngForm" (ngSubmit)="salvarLogin(loginForm)" >
+  <span class="ui-float-label" style="margin-left: 10px;">
+    <input id="login" type="text" class="form-control" name="login" #name="ngModel" 
+      [(ngModel)]="login.login" required> 
+    <label for="login">Login</label>
+  </span>
+  <span class="ui-float-label" style="margin-left: 10px;">
+    <input id="senha" type="text" class="form-control" name="senha" #name="ngModel"
+      [(ngModel)]="login.senha" required> 
+    <label for="senha">Senha</label>
+  </span>
+
+  <div class="form-group">
+    <button type="submit" pButton label="Salvar"></button>    
+  </div>
+
+</form>

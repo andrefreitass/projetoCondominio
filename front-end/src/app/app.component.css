@@ -48,9 +48,6 @@
     background-image: linear-gradient( to bottom, #00897b , #f9fbe7 , #f1f8e9     , #c8e6c9   );    */
     background-color: #26333b   ;
     background-image: linear-gradient( to bottom, #26333b, #00838f   , #b2dfdb  , #fafafa, #ffffff); 
-    -webkit-border-radius: 10px;
-    -moz-border-radius: 10px;
-    border-radius: 10px;
 }
 
 /*  Atualização do CSS do P-CARD  */

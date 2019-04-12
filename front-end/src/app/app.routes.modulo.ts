@@ -10,6 +10,7 @@ import { ListarAdvertenciaComponent } from './advertencia/listar-advertencia/lis
 import { ListarMultaComponent } from './multa/listar-multa/listar-multa.component';
 import { ListarFuncionarioComponent } from "./funcionario/listar-funcionario/listar-funcionario.component";
 import { LoginComponent } from "./admin/login/login.component";
+import { FormularioLoginComponent } from "./admin/formulario-login/formulario-login.component";
 
 
 
@@ -22,7 +23,8 @@ const appRoutes: Routes = [
    { path: 'listar-enquete', component: ListarEnqueteComponent },
    { path: 'listar-pauta', component: ListarPautaComponent },  
    { path: 'listar-funcionario', component: ListarFuncionarioComponent }, 
-   { path: 'login', component: LoginComponent} 
+   { path: 'login', component: LoginComponent },
+   { path: 'formulario-login', component: FormularioLoginComponent } 
 ];
 
 @NgModule({
