@@ -42,7 +42,7 @@ app.use('/api/pauta', require('../routes/pauta.routes'));
 app.use('/api/multa', require('../routes/multa.routes'));
 app.use('/api/advertencia', require('../routes/advertencia.routes'));
 app.use('/api/funcionario', require('../routes/funcionario.routes'));
-
+//app.use('/api/login', require('../routes/login.routes'));
 
 // Iniciando o servidor 
 app.listen(app.get('port'), () =>{
